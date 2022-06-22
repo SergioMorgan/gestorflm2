@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\UserController;
+use App\Http\Livewire\ShowSites;
+use App\Http\Livewire\ShowUsers;
 use Illuminate\Support\Facades\Route;
 
 
@@ -15,13 +18,45 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+// Route::get('/', function () {
+//     return view('welcome');
+// })->name('home');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('home');
+});
 
 // esta ruta de tipo resource va a reemplazar a todas las 7 definiciones CRUD
 // siempre y cuando  hayamos seguido la convencion de nombres singular/plural
-Route::resource('sites', SiteController::class);
+// y tengamos las vistas en un mismo directorio con los nombres create/edit/index/show
+
+// Route::resource('sites', SiteController::class);
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::resource('sites', SiteController::class);
+});
+
+// Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites', ShowSites::class)->name('sites.index');
+// Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('users', ShowUsers::class)->name('users.index');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::resource('users', UserController::class);
+});
+
 
 Route::middleware([
     'auth:sanctum',
