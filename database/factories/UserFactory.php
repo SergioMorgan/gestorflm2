@@ -32,7 +32,7 @@ class UserFactory extends Factory
             'remember_token'    => Str::random(10),
             'profile'           => $this->faker->randomElement(['USUARIO']),
             'status'            => $this->faker->randomElement(['ACTIVO', 'INACTIVO']),
-            'image'             => 'users/' . $this->faker->image('public/storage/users', 640, 480, null, false)
+            // 'image'             => 'users/' . $this->faker->image('public/storage/users', 640, 480, null, false)
 
 
         ];

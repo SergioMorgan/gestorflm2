@@ -11,8 +11,8 @@ class CreateUser extends Component
 {
     use WithFileUploads;
 
-    public $open = true;
-    public $name, $email, $password, $image;
+    public $open = false;
+    public $name, $email, $password; //, $image;
     public $profile = 'USUARIO';
     public $status = 'ACTIVO';
     
@@ -22,7 +22,7 @@ class CreateUser extends Component
         'password'  => 'required|min:8',
         'profile'   => 'required',
         'status'    => 'required',
-        'image'     => 'required|image|max:2048',
+        // 'image'     => 'required|image|max:2048',
     ];
     
 
@@ -35,7 +35,7 @@ class CreateUser extends Component
     public function save() {
 
         $this->validate();
-        $image = $this->image->store('users');
+        // $image = $this->image->store('users');
 
         User::create([
             'name'     => $this->name,
@@ -43,10 +43,10 @@ class CreateUser extends Component
             'password' => Hash::make($this->password),
             'profile'  => $this->profile,
             'status'   => $this->status,
-            'image'    => $image,
+            // 'image'    => $image,
         ]);
 
-        $this->reset(['open', 'name', 'email', 'password', 'profile', 'status', 'image']);
+        $this->reset(['open', 'name', 'email', 'password', 'profile', 'status']); //, 'image']);
         $this->emitTo('show-users', 'render');
         $this->emit('alert', 'Registro creado correctamente');
     }
@@ -54,5 +54,12 @@ class CreateUser extends Component
     public function render()
     {
         return view('livewire.create-user');
+    }
+
+    public function updatingOpen() { //se ejecuta antes (udatepOpen para DESPUES) de que se modifica de true a false o vicev
+        if ($this->open == false) {
+            $this->reset(['name', 'email', 'password']);
+        }
+
     }
 }

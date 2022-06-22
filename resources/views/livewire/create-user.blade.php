@@ -57,10 +57,9 @@
                     </option>
                 </select>
             </div>
-
+{{-- 
             @if ($image)
                 <img class="mb-4" src="{{ $image->temporaryUrl() }}" alt="">
-                {{-- @else --}}
             @endif
 
             <div wire:loading wire:target="image" class=" mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
@@ -73,14 +72,14 @@
                 <x-jet-input-error for="image" />
 
             </div>
-
+ --}}
         </x-slot>
         <x-slot name="footer">
             <x-jet-secondary-button class="mr-2" wire:click="$set('open', false)">
                 Cancelar
             </x-jet-secondary-button>
 
-            <x-jet-danger-button class="mr-2" wire:click="save" wire:loading.attr="disabled" wire:target="save, image"
+            <x-jet-danger-button class="mr-2" wire:click="save" wire:loading.attr="disabled" wire:target="save"  {{-- , image" --}}
                 class="disabled:opacity-25">
                 Guardar
             </x-jet-danger-button>
