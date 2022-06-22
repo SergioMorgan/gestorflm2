@@ -2,25 +2,29 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class CreateUser extends Component
 {
+    use WithFileUploads;
+
+    public $open = true;
+    public $name, $email, $password, $image;
+    public $profile = 'USUARIO';
+    public $status = 'ACTIVO';
+    
     protected $rules = [
         'name'      => 'required|min:5',
         'email'     => 'required|email|unique:users,email',
         'password'  => 'required|min:8',
         'profile'   => 'required',
         'status'    => 'required',
+        'image'     => 'required|image|max:2048',
     ];
     
-    public $open = false;
-    public $name, $email, $password;
-    public $profile = 'USUARIO';
-    public $status = 'ACTIVO';
 
     // este metodo se activa cada vez que se modifique una de las propuedas definidas arriba
     // para activarlo, borrar los .defer en los campos de la vista
@@ -31,6 +35,7 @@ class CreateUser extends Component
     public function save() {
 
         $this->validate();
+        $image = $this->image->store('users');
 
         User::create([
             'name'     => $this->name,
@@ -38,9 +43,10 @@ class CreateUser extends Component
             'password' => Hash::make($this->password),
             'profile'  => $this->profile,
             'status'   => $this->status,
+            'image'    => $image,
         ]);
 
-        $this->reset(['open', 'name', 'email', 'password', 'profile', 'status']);
+        $this->reset(['open', 'name', 'email', 'password', 'profile', 'status', 'image']);
         $this->emitTo('show-users', 'render');
         $this->emit('alert', 'Registro creado correctamente');
     }
