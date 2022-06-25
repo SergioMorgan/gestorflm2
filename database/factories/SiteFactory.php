@@ -21,7 +21,7 @@ class SiteFactory extends Factory
             'zonal'             =>$this->faker->randomElement(['AREQUIPA', 'CUSCO', 'LIMA', 'TACNA']),
             'nombre'            =>$this->faker->name(),
             'estado'            =>$this->faker->optional($weight = 0.05, $default = "ACTIVO")->randomElement(['ACTIVO', 'INACTIVO']),
-            'clasificacion'     =>$this->faker->randomElement(['TIPO 8_K', 'TIPO_8L', '12_CLIENTES', 'TIPO 8_C', 'TIPO 8_1']),
+            'clasificacion'     =>$this->faker->randomElement(['TIPO 8_K', 'TIPO 8_L', '12_CLIENTES', 'TIPO 8_C', 'TIPO 8_1']),
             'prioridad'         =>$this->faker->randomElement(['BLACK', 'ORO', 'PLATA', 'CLASICO']),
             'facturacion'       =>$this->faker->randomElement(['FEE MENSUAL', 'RUTA', 'BAJO DEMANDA']),
             'tipolocal'         =>$this->faker->randomElement(['URA', 'URA/EBC', 'CT', 'EBC']),
