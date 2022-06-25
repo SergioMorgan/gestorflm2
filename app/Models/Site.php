@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
+
 
 class Site extends Model
 {
     use HasFactory;
+    use HasRoles;
 
     // Especificar los campos que llenara el usuario, excluir los que se llenan de forma automatica
     // y aquellos que no queremos que el usuario llene a travez de formulario convencional
@@ -24,4 +27,10 @@ class Site extends Model
     protected $guarded = [
         // especificar los campos de la tabla a proteger
     ];
+    
+
+    //relacion uno a varios
+    public function ostickets() {
+        return $this->hasMany('App\Models\Osticket');
+    }
 }

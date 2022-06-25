@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('localid', 10)->unique();
             $table->string('zonal', 20);
-            $table->string('subzona', 20)->nullable();
             $table->string('nombre', 50);
             $table->string('estado', 20);
             $table->string('clasificacion', 20)->nullable();
@@ -34,6 +33,7 @@ return new class extends Migration
             $table->string('provincia', 100)->nullable();
             $table->string('distrito', 100)->nullable();
             $table->string('direccion')->nullable();
+            $table->string('urlimagen')->nullable();
             $table->text('observaciones')->nullable();
             $table->string('slapresencia', 10)->nullable();
             $table->string('slaresolucion', 10)->nullable();

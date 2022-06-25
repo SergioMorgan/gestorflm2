@@ -30,10 +30,9 @@
                 <x-jet-input-error for="password" />
 
             </div>
-
+{{-- 
             <div class="mb-4">
                 <x-jet-label value="Perfil" />
-                {{-- <x-jet-input type="text" class="w-full"  wire:model.defer="profile" /> --}}
                 <select id="profile" class="form-control w-full" wire:model.defer="profile">
                     <option value="USUARIO" selected>
                         USUARIO
@@ -42,7 +41,7 @@
                         ADMINISTRADOR
                     </option>
                 </select>
-            </div>
+            </div> --}}
 
             <div class="mb-4">
                 <x-jet-label value="Estado" />

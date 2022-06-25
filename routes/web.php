@@ -58,20 +58,20 @@ Route::middleware([
 });
 
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified'
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('dashboard');
+//     })->name('dashboard');
+// });
 
-Route::get('prueba', function() {
-    return 'Has accedido correctamente a la pagina de prueba';
-})->middleware(['age', 'auth:sanctum']);
+// Route::get('prueba', function() {
+//     return 'Has accedido correctamente a la pagina de prueba';
+// })->middleware(['age', 'auth:sanctum']);
 
-Route::get('no-autorizado', function() {
-    return 'No eres mayor de edad';
-});
+// Route::get('no-autorizado', function() {
+//     return 'No eres mayor de edad';
+// });

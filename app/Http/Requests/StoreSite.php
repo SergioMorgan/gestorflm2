@@ -13,10 +13,10 @@ class StoreSite extends FormRequest
      */
 
     // VALIDA SI EL USUARIO TIENE EL PERFIL NECESARIO PARA ACCIONAR
-    public function authorize()
-    {
-        return false;
-    }
+    // public function authorize()
+    // {
+    //     return false;
+    // }
 
     /**
      * Get the validation rules that apply to the request.

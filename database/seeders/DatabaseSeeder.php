@@ -22,7 +22,9 @@ class DatabaseSeeder extends Seeder
         // Storage::deleteDirectory('users');
         // Storage::makeDirectory('users');
         
-        Site::factory(50)->create();
-        User::factory(10)->create();
+        $this->call(RoleSeeder::class);
+        $this->call(UserSeeder::class);
+        Site::factory(5000)->create();
+        // User::factory(5)->create();
     }
 }

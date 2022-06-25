@@ -1,4 +1,4 @@
-<div>
+{{-- <div>
     
     <a class="btn btn-red" href=#" wire:click="$set('open', true)"> 
         <i class="fa-solid fa-trash"></i>
@@ -19,7 +19,7 @@
                 Cancelar
             </x-jet-secondary-button>
 
-            <x-jet-danger-button class="mr-2" wire:click="delete" wire:loading.attr="disabled" wire:target="delete" {{-- , image" --}}
+            <x-jet-danger-button class="mr-2" wire:click="delete" wire:loading.attr="disabled" wire:target="delete" 
                 class="disabled:opacity-25">
                 Borrar
             </x-jet-danger-button>
@@ -28,4 +28,4 @@
 
 
     </x-jet-dialog-modal>
-</div>
+</div> --}}

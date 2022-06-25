@@ -4,14 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
+
 // use App\Http\Requests\StoreUser;
+
 
 class UserController extends Controller
 {
     public function index () {
+
+        $roles =  Role::all();
         // $users = User::orderBy('created_at', 'desc')->paginate(5);
         // return view('users.index',['users' => $users]);
-        return view('users.index');
+        return view('users.index', compact('roles'));
     }
 
     // public function create () {

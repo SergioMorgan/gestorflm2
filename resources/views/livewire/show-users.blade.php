@@ -1,10 +1,7 @@
 <div wire:init="loadUsers">
-    {{-- <img src="{{ asset('/img/loading.gif') }}" alt="" class="w-30 p-5"> --}}
-
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <x-table>
             <div class="px-6 py-4 flex items-center">
-
                 <div class="flex items-center">
                     <span>Mostrar</span>
                     <select wire:model="cant" class="mx-2 form-control">
@@ -13,11 +10,12 @@
                         <option value="50">50</option>
                         <option value="100">100</option>
                     </select>
-                    <span> entradas</span>
+                    <span>entradas</span>
                 </div>
-
                 <x-jet-input type="text" wire:model="search" class="flex-1 mx-4" placeholder="buscar..." />
-                @livewire('create-user')
+                @can('users.create')
+                    @livewire('create-user')
+                @endcan
             </div>
             @if (count($users))
                 <table class="min-w-full leading-normal">
@@ -92,10 +90,12 @@
                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Estado
                             </th>
-                            <th
-                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Config.
-                            </th>
+                            @can('users.create')
+                                <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Config.
+                                </th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -114,7 +114,18 @@
                                     <p class="text-gray-900 whitespace-no-wrap">{{ $item->created_at }}</p>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <p class="text-gray-900 whitespace-no-wrap">{{ $item->profile }}</p>
+
+
+                                    @if (!empty($item->getRoleNames()))
+                                        @foreach ($item->getRoleNames() as $role)
+                                            <label class="badge badge-success">{{ $role }}</label>
+                                        @endforeach
+                                    @endif
+
+
+                                    <p class="text-gray-900 whitespace-no-wrap">
+                                        xxxxxxx
+                                    </p>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     {{-- <span
@@ -125,26 +136,27 @@
                                     </span> --}}
                                     <p class="text-gray-900 whitespace-no-wrap">{{ $item->status }}</p>
                                 </td>
-                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    {{-- <span class="flex justify-between"> --}}
-                                    {{-- @livewire('edit-user', ['user' => $item], key($item->id)) --}}
-                                    <a class="btn btn-green"
-                                        wire:click="edit({{ $item }})">{{-- wire:click="$set('open', true)" --}}
-                                        <i class="fa-solid fa-edit"></i>
-                                    </a>
+                                @can('users.create')    
+                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        {{-- <span class="flex justify-between"> --}}
+                                        {{-- @livewire('edit-user', ['user' => $item], key($item->id)) --}}
+                                        <a class="btn btn-green"
+                                            wire:click="edit({{ $item }})">{{-- wire:click="$set('open', true)" --}}
+                                            <i class="fa-solid fa-edit"></i>
+                                        </a>
 
-                                    <a class="btn btn-red ml-2"
-                                        wire:click="$emit('deleteUser', {{ $item->id }})">{{-- wire:click="$set('open', true)" --}}
-                                        <i class="fa-solid fa-trash"></i>
-                                    </a>
-                                    {{-- @livewire('delete-user', ['user' => $user], key($user->id)) --}}
-                                    {{-- </span> --}}
-                                </td>
+                                        <a class="btn btn-red ml-2"
+                                            wire:click="$emit('deleteUser', {{ $item->id }})">{{-- wire:click="$set('open', true)" --}}
+                                            <i class="fa-solid fa-trash"></i>
+                                        </a>
+                                        {{-- @livewire('delete-user', ['user' => $user], key($user->id)) --}}
+                                        {{-- </span> --}}
+                                    </td>
+                                @endcan
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-
                 @if ($users->hasPages())
                     <div class="px-6 py-3">
                         {{ $users->links() }}
@@ -183,14 +195,13 @@
 
             <div class="mb-4">
                 <x-jet-label value="Perfil" />
-                <select id="profile" class="form-control w-full" wire:model="user.profile">
-                    <option value="USUARIO" selected>
-                        USUARIO
-                    </option>
-                    <option value="ADMINISTRADOR">
-                        ADMINISTRADOR
-                    </option>
-                </select>
+                <div class=" px-4 py-2 div-control">
+
+                    {{-- @foreach ($roles as $role)
+                            <x-jet-label value="{{$role->name}}" />
+                            <input class="" type="checkbox"  value="{{$role->id}} " >
+                        @endforeach --}}
+                </div>
             </div>
 
             <div class="mb-4">
@@ -210,7 +221,6 @@
             <x-jet-secondary-button class="mr-2" wire:click="$set('open_edit', false)">
                 Cancelar
             </x-jet-secondary-button>
-
             <x-jet-danger-button class="mr-2" wire:click="update" wire:loading.attr="disabled" {{-- wire:target="save"  , image" --}}
                 class="disabled:opacity-25">
                 Guardar

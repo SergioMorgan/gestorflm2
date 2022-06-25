@@ -1,4 +1,4 @@
-@php
+{{-- @php
     $nav_links=[
         [
             'name'      => 'Inicio',
@@ -29,12 +29,10 @@
             'route'     => route('users.index'),
             'active'    => request()->routeIs('users.*')
         ],
-
     ];
-@endphp
+@endphp --}}
 
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100 shadow">
-
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -45,14 +43,30 @@
                         <x-jet-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
-
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <!-- Navigation Links -->
-                    @foreach ($nav_links as $nav_link)
-                        <x-jet-nav-link href="{{ $nav_link['route'] }}" :active="$nav_link['active']">
-                            {{  $nav_link['name'] }}
-                        </x-jet-nav-link>
-                    @endforeach
+                    {{-- @foreach ($nav_links as $nav_link) --}}
+                            
+                                {{-- <x-jet-nav-link href="{{ $nav_link['route'] }}" :active="$nav_link['active']"> --}}
+                                <x-jet-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
+                                    Inicio
+                                </x-jet-nav-link>
+                                <x-jet-nav-link href="#" :active="false">
+                                    OS Pendientes
+                                </x-jet-nav-link>
+                                <x-jet-nav-link href="#" :active="false">
+                                    Tickets OS
+                                </x-jet-nav-link>
+                                <x-jet-nav-link href="{{ route('sites.index') }}" :active="request()->routeIs('sites.*')">
+                                    Locales
+                                </x-jet-nav-link>
+                            @can('users.index')
+                                <x-jet-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">
+                                    Usuarios
+                                </x-jet-nav-link>
+                            @endcan
+                                
+                    {{-- @endforeach --}}
 
                 </div>
             </div>
@@ -116,13 +130,13 @@
                                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                                     <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
                                         <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
-                                        
+
                                     </button>
                                     @else
                                     <span class="inline-flex rounded-md">
                                         <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
                                             {{ Auth::user()->name ." (" . Auth::user()->email .")" }}
-                                            
+
                                             {{-- <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div> --}}
                                             <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -184,11 +198,32 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <!-- Navigation Links -->
-            @foreach ($nav_links as $nav_link)
+
+            <x-jet-responsive-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
+                Inicio
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="#" :active="false">
+                OS Pendientes
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="#" :active="false">
+                Tickets OS
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('sites.index') }}" :active="request()->routeIs('sites.*')">
+                Locales
+            </x-jet-responsive-nav-link>
+        @can('users.index')
+            <x-jet-responsive-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">
+                Usuarios
+            </x-jet-responsive-nav-link>
+        @endcan
+
+
+
+            {{-- @foreach ($nav_links as $nav_link)
                 <x-jet-responsive-nav-link href="{{ $nav_link['route'] }}" :active="$nav_link['active']">
                     {{ $nav_link['name'] }}
                 </x-jet-responsive-nav-link>
-            @endforeach
+            @endforeach --}}
         </div>
 
         <!-- Responsive Settings Options -->

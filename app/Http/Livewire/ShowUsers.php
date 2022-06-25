@@ -6,14 +6,14 @@ use Livewire\Component;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 use Livewire\WithPagination;
+use Spatie\Permission\Models\Role;
 
 class ShowUsers extends Component
 {
 
     use WithPagination;
 
-
-    public $title; 
+    public $title;
     public $user;
     public $search = '';
     public $sort = 'id';
@@ -31,8 +31,6 @@ class ShowUsers extends Component
         'search' => ['except' => ''],
     ];
 
-
-
     // protected $listeners = ['render' => 'render'];
     // se puede simplificar por lo siguiente, cuando los nombres de variable y lstener coinciden
 
@@ -42,6 +40,8 @@ class ShowUsers extends Component
     //     'user.profile'   => 'required',
     //     'user.status'    => 'required',
     // ];
+
+
 
 
     public function updatingSearch() {
@@ -58,21 +58,22 @@ class ShowUsers extends Component
         ];
     }
 
+    public function render() {
 
-    public function render()
-    {
+        $roles = Role::all();
+
         if ($this->readyToLoad) {
             $users = User::where('name', 'like', '%' . $this->search . '%')
-            ->orWhere('email', 'like', '%' . $this->search . '%')
-            ->orderby($this->sort, $this->direcion)
-            ->paginate($this->cant);
-            // ->get();
+                        ->orWhere('email', 'like', '%' . $this->search . '%')
+                        ->orderby($this->sort, $this->direcion)
+                        ->paginate($this->cant);
+                        // ->get();
+
         } else {
             $users = [];
         }
-        return view('livewire.show-users', compact('users'));
+        return view('livewire.show-users', compact('users', 'roles'));
     }
-
 
     public function loadUsers() {
         $this->readyToLoad=true;
