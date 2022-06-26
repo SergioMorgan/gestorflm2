@@ -3,6 +3,7 @@
         <x-table>
             <div class="px-6 py-4 flex items-center">
                 <div class="flex items-center">
+                    
                     <span>Mostrar</span>
                     <select wire:model="cant" class="mx-2 form-control">
                         <option value="50">50</option>
@@ -14,7 +15,10 @@
                 </div>
                 <x-jet-input type="text" wire:model="search" class="flex-1 mx-4" placeholder="buscar..." />
                 @can('sites.create')
-                    <x-jet-button>Crear nuevo site</x-jet-button>
+                    <a class="btn btn-green" href="{{ route('sites.create') }}">
+                        {{-- <i class="fa-solid fa-edit"></i> --}}
+                        Crear local
+                    </a>
                 @endcan
             </div>
             @if (count($sites))

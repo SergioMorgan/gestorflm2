@@ -1,14 +1,9 @@
 <x-app-layout>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-2 lg:px-4 py-4">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-
                 @can('users.index')
-                    @livewire('show-users', ['title' => 'Listado de usuarios'])
+                    @livewire('show-users')
                 @endcan
-
-
             </div>
-        </div>
     </div>
 </x-app-layout>

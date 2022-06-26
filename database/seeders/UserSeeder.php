@@ -47,16 +47,24 @@ class UserSeeder extends Seeder
             'status'            => 'ACTIVO',
         ])->assignRole('cliente');
 
-        // User::factory(2)->create()->each(function($user){
-        //     $user->assignRole('operador');
-        // });
+        User::factory(20)->create()->each(function($user){
+            $user->assignRole('admin');
+        });
 
-        // User::factory(2)->create()->each(function($user){
-        //     $user->assignRole('supervisor');
-        // });
+        User::factory(20)->create()->each(function($user){
+            $user->assignRole('supervisor');
+        });
 
-        // User::factory(2)->create()->each(function($user){
-        //     $user->assignRole('usuario');
-        // });
+        User::factory(20)->create()->each(function($user){
+            $user->assignRole('operador');
+        });
+
+        User::factory(20)->create()->each(function($user){
+            $user->assignRole('usuario');
+        });
+
+        User::factory(20)->create()->each(function($user){
+            $user->assignRole('cliente');
+        });
     }
 }

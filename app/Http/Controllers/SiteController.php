@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Site;
 use App\Http\Requests\StoreSite;
+use Livewire\Component;
+// use Livewire\WithFileUploads;
 
 class SiteController extends Controller
 {
@@ -24,9 +26,15 @@ class SiteController extends Controller
     public function update(StoreSite $request, Site $site) {
         $site->update($request->all());
         return redirect()->route('sites.index', $site);
-        
-
     }
+
+
+    public function store (StoreSite $request) {
+        $site = Site::create($request->all());
+        $this->emit('alert', 'Registro creado correctamente');
+        return redirect()->route('sites.index');
+    }
+
 
     public function destroy(Site $site){
         // $site->delete();
