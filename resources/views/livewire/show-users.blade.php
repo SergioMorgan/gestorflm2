@@ -1,5 +1,6 @@
 <div wire:init="loadUsers">
-<!-- Al cargar el formulario, llama a la funcion loadUser() = $this->readyToLoad=true; -->
+    <!-- Al cargar el formulario, llama a la funcion loadUser() = $this->readyToLoad=true; -->
+    LISTADO DE USUARIOS
     <x-table>
 
         <!--Elemento para mostrar lista de registros, barra de busqueda y boton (objeto) para creacion-->
@@ -174,7 +175,6 @@
                 No existen registros
             </div>
         @endif
-
     </x-table>
 
     <!-- GIF de carga mientras se encuentra cargado, eso se controla con el wire:loading-->
@@ -183,6 +183,9 @@
     </div>
 
 
+
+
+    <!-- *******MODAL DE EDICION****** -->
     <!-- ESTE es el modal para edicion, se carga fuera para no generar uno por cada registro-->
     <x-jet-dialog-modal wire:model="open_edit">
         <!-- en su lugar, solo se llama desde el ShowUsers con el nombre definido en el wire:model-->
@@ -224,8 +227,7 @@
                 Cancelar
             </x-jet-secondary-button>
 
-            {{-- <x-jet-danger-button class="mr-2" wire:click="update" wire:loading.attr="disabled" class="disabled:opacity-25"> --}}
-            <x-jet-danger-button wire:click="update">
+            <x-jet-danger-button class="mr-2" wire:click="update" wire:loading.attr="disabled" class="disabled:opacity-25">
                 Guardar
             </x-jet-danger-button>
         </x-slot>
@@ -234,7 +236,7 @@
 
 
     <!-- script que se pasa a app.blade.php para mensaje de confirmacion de borrado-->
-    <!-- si se acepta, emite al formulario show.users(por ende, al controlador ShowUsers) y ejecuta funcion delente con el id asociado-->
+    <!-- si se acepta, emite al formulario show.users(por ende, al controlador ShowXxxxx) y ejecuta funcion delente con el id asociado-->
     @push('js')
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- $item->id-->

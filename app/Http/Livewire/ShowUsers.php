@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
-use Illuminate\Validation\Rule;
 use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
 
@@ -54,12 +53,12 @@ class ShowUsers extends Component
                         ->orWhere('email', 'like', '%' . $this->search . '%')
                         ->orderby($this->sort, $this->direcion)
                         ->paginate($this->cant);
-                        // ->get();
         } else {
             $users = [];
         }
         return view('livewire.show-users', compact('users', 'roles'));
     }
+
 
     // tiempo de espera para carga de formulario, trabaja con la carga del gif de espera
     public function loadUsers() {
@@ -96,7 +95,8 @@ class ShowUsers extends Component
         $this->emit('alertOk', 'Registro guardado correctamente');    //dispara la alerta guardada en app.blade
     }
 
-    //
+    // recibe desde el formulario principal la peticion de borrar a travez del script del sweetalert
+    // que manda a ejecutar este evento una vez que se pasa la confirmacion solicitada
     public function delete(User $user) {
         $user->delete();
     }
