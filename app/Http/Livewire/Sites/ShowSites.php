@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Sites;
 
 use Livewire\Component;
 use App\Models\Site;
@@ -53,7 +53,7 @@ class ShowSites extends Component
         } else {
             $sites = [];
         }
-        return view('livewire.show-sites', compact('sites', 'roles'));
+        return view('livewire.sites.show-sites', compact('sites', 'roles'));
     }
 
     // tiempo de espera para carga de formulario, trabaja con la carga del gif de espera

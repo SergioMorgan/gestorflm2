@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Users;
 
 use Livewire\Component;
 use App\Models\User;
@@ -56,7 +56,7 @@ class ShowUsers extends Component
         } else {
             $users = [];
         }
-        return view('livewire.show-users', compact('users', 'roles'));
+        return view('livewire.users.show-users', compact('users', 'roles'));
     }
 
 

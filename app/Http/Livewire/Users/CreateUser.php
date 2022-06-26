@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Users;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -36,7 +36,7 @@ class CreateUser extends Component
 
     // El render recargara eñ formulario asociado, en este caso el html que le corresponde
     public function render() {
-        return view('livewire.create-user');
+        return view('livewire.users.create-user');
     }
 
     //el metodo updating se pone antes del valor de la variable, paa ejecutar esto antes de que cambie de valor

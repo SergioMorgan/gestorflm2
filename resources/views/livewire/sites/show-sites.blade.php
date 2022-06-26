@@ -17,9 +17,7 @@
             </div>
             <x-jet-input type="text" wire:model="search" class="flex-1 mx-4" placeholder="buscar..." />
             @can('sites.create')
-                <a class="btn btn-green" href="{{ route('sites.create') }}">
-                    Crear local
-                </a>
+                @livewire('sites.create-sites')
             @endcan
         </div>
 
@@ -197,7 +195,7 @@
     <!-- si se acepta, emite al formulario show.users(por ende, al controlador ShowXxxxx) y ejecuta funcion delente con el id asociado-->
     @push('js')
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        {{-- $site->id --}}
+        <!-- $site->id -->
         <script>
             livewire.on('deleteSite', siteId => {
                 Swal.fire({
@@ -210,7 +208,7 @@
                     confirmButtonText: 'Si, borrar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        livewire.emitTo('show-sites', 'delete', siteId);
+                        livewire.emitTo('sites.show-sites', 'delete', siteId);
                         Swal.fire(
                             'Hecho!',
                             'El registro fue eliminado',

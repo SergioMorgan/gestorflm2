@@ -17,7 +17,7 @@
             </div>
             <x-jet-input type="text" wire:model="search" class="flex-1 mx-4" placeholder="buscar..." />
             @can('users.create')
-                @livewire('create-user')
+                @livewire('users.create-user')
             @endcan
         </div>
 
@@ -252,7 +252,7 @@
                     confirmButtonText: 'Si, borrar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        livewire.emitTo('show-users', 'delete', userId);
+                        livewire.emitTo('users.show-users', 'delete', userId);
                         Swal.fire(
                             'Hecho!',
                             'El registro fue eliminado',
