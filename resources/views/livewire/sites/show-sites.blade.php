@@ -1,3 +1,6 @@
+<div class="max-w-7xl mx-auto sm:px-2 lg:px-4 py-4">
+    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+
 <div wire:init="loadSites">
     <!-- Al cargar el formulario, llama a la funcion loadUser() = $this->readyToLoad=true; -->
     <span class="bg-amber-300">LISTADO DE LOCALES </span> 
@@ -14,11 +17,14 @@
                     <option value="500">500</option>
                 </select>
                 <span>entradas</span>
+                <div>
+                    <a href="{{route('sites.create')}}">Crear</a>
+                </div>
             </div>
-            <x-jet-input type="text" wire:model="search" class="flex-1 mx-4" placeholder="buscar..." />
+            {{-- <x-jet-input type="text" wire:model="search" class="flex-1 mx-4" placeholder="buscar..." />
             @can('sites.create')
                 @livewire('sites.create-sites')
-            @endcan
+            @endcan --}}
         </div>
 
 
@@ -28,6 +34,11 @@
                 <thead>
                     <!--cabecera de tabla-->
                     <tr>
+                        <th class=" w-[100px] cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                            wire:click="order('id')"> <!--asocia la funcion order a la cabecera-->
+                            xx
+                        </th>
+
                         <th class=" w-[100px] cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
                             wire:click="order('localid')"> <!--asocia la funcion order a la cabecera-->
                             ID
@@ -103,6 +114,10 @@
                     @foreach ($sites as $item)
                         <tr>
                             <td class="w-[75px] px-3 py-3 border-b border-gray-200 bg-white text-sm">
+                                <p class="text-gray-900 whitespace-no-wrap">{{ $item->id }}</p>
+                            </td>
+
+                            <td class="w-[75px] px-3 py-3 border-b border-gray-200 bg-white text-sm">
                                 <p class="text-gray-900 whitespace-no-wrap">{{ $item->localid }}</p>
                             </td>
 
@@ -124,23 +139,21 @@
 
                             <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
                                 @switch($item->prioridad)
+                                    @case('CLASICO')
+                                        <div class="mx-4 flex place-content-center text-xs font-bold bg-orange-300 text-gray-900 whitespace-no-wrap"><p>{{ $item->prioridad }}</p></div>
+                                    @break
+
+                                    @case('ORO')
+                                        <div class="mx-4 flex place-content-center text-xs font-bold bg-yellow-300 text-gray-900 whitespace-no-wrap"><p>{{ $item->prioridad }}</p></div>
+                                    @break
+
+                                    @case('PLATA')
+                                        <div class="mx-4 flex place-content-center text-xs font-bold bg-stone-300 text-gray-900 whitespace-no-wrap"><p>{{ $item->prioridad }}</p></div>
+                                    @break
+
                                     @case('BLACK')
-                                        @break
-                                        @case('CLASICO')
-                                            <div class="mx-4 flex place-content-center text-xs font-bold bg-orange-300 text-gray-900 whitespace-no-wrap"><p>{{ $item->prioridad }}</p></div>
-                                        @break
-
-                                        @case('ORO')
-                                            <div class="mx-4 flex place-content-center text-xs font-bold bg-yellow-300 text-gray-900 whitespace-no-wrap"><p>{{ $item->prioridad }}</p></div>
-                                        @break
-
-                                        @case('PLATA')
-                                            <div class="mx-4 flex place-content-center text-xs font-bold bg-stone-300 text-gray-900 whitespace-no-wrap"><p>{{ $item->prioridad }}</p></div>
-                                        @break
-
-                                        @case('BLACK')
-                                            <div class="mx-4 flex place-content-center text-xs font-bold bg-stone-800 text-gray-100 whitespace-no-wrap"><p>{{ $item->prioridad }}</p></div>
-                                        @break
+                                        <div class="mx-4 flex place-content-center text-xs font-bold bg-stone-800 text-gray-100 whitespace-no-wrap"><p>{{ $item->prioridad }}</p></div>
+                                    @break
                                     @default
                                 @endswitch
                             </td>
@@ -159,7 +172,7 @@
                                 <!-- si el componente fuera exteno como el de creacion, usar (arroba)livewire para invocarlo, junto con los parametros --->
                                 <!-- ['site' => $item], key($item->id)) -->
                                 <!-- Llama a la funcion EDIT declarada en showusers -->
-                                    <a class="btn btn-green" href="{{ route('sites.edit', $item) }}">
+                                    <a class="btn btn-green" href="{{ route('sites.edit', $item->id) }}">
                                         <i class="fa-solid fa-edit"></i>
                                     </a>
                                     <!-- En vez de llamar a una funcion, emite una alerta de sweetalert2 definida al final de la hoja -->
@@ -219,4 +232,7 @@
             })
         </script>
     @endpush
+</div>
+
+</div>
 </div>

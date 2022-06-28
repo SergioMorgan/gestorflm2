@@ -14,14 +14,13 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
-    
+
     @livewireStyles
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
-    
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -43,7 +42,7 @@
     </div>
 
     {{-- va a colocar acá todo lo que venga de push('modals') 
-    creo que no hay ninguno aun--}}
+    creo que no hay ninguno aun --}}
     @stack('modals')
 
     @livewireScripts
@@ -61,6 +60,8 @@
             )
         })
     </script>
+
+
 </body>
 
 </html>

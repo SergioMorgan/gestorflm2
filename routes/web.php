@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// })->name('home');
+Route::get('/prueba', function () {
+    return view('prueba');
+})->name('prueba');
 
 Route::middleware([
     'auth:sanctum',
@@ -38,15 +38,19 @@ Route::middleware([
 
 // Route::resource('sites', SiteController::class);
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::resource('sites', SiteController::class);
-});
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified'
+// ])->group(function () {
+//     Route::resource('sites', SiteController::class);
+// });
 
-// Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites', ShowSites::class)->name('sites.index');
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites', \App\Http\Livewire\sites\ShowSites::class)->name('sites.index');
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites/create', \App\Http\Livewire\sites\CreateSites::class)->name('sites.create');
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites/{item}/edit', \App\Http\Livewire\sites\CreateSites::class)->name('sites.edit');
+
+// Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites/{$site}', CreateSites::class)->name('sites.create');
 // Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('users', ShowUsers::class)->name('users.index');
 
 Route::middleware([

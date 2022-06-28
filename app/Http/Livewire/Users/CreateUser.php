@@ -30,8 +30,8 @@ class CreateUser extends Component
             'status'   => $this->status,
         ]);
         $this->reset(['open', 'name', 'email', 'password',  'status']); //, 'image']);
-        $this->emitTo('show-users', 'render');
-        $this->emit('alert', 'Registro creado correctamente');
+        $this->emitTo('users.show-users', 'render');
+        $this->emit('alertOk', 'Registro creado correctamente');
     }
 
     // El render recargara eñ formulario asociado, en este caso el html que le corresponde

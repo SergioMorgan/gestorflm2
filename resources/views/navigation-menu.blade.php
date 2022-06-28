@@ -51,8 +51,8 @@
                                 <x-jet-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
                                     Inicio
                                 </x-jet-nav-link>
-                                <x-jet-nav-link href="#" :active="false">
-                                    OS Pendientes
+                                <x-jet-nav-link href="{{ route('prueba') }}" :active="request()->routeIs('prueba')">
+                                    Prueba
                                 </x-jet-nav-link>
                                 <x-jet-nav-link href="#" :active="false">
                                     Tickets OS

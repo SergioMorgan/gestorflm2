@@ -4,49 +4,154 @@ namespace App\Http\Livewire\Sites;
 
 use Livewire\Component;
 use App\Models\Site;
-use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 
-class CreateSites extends Component
-{
-    public $open = false;           //para controlar reseteo de campos, se establece con SET desde el html
-    // public $name, $email, $password;    //variables para cada campo que vamos a llenar
-    // public $status = 'ACTIVO';      //VALOR POR DEFECTO del campo, para prevenir posibles llenados vacios
+class CreateSites extends Component {
 
-    // Aca se definen las reglas, FALTA CAMBIAR A PROTECTED FUNCION (evaluar si es necesario)
-    // protected $rules = [
-    //     'name'      => 'required|min:5',
-    //     'email'     => 'required|email|unique:users,email',
-    //     'password'  => 'required|min:8',
-    //     'status'    => 'required',
-    // ];
+    public $item;   //para identificar el elemento a editar
+    public $site;   //para almacenar la instancia (registro) de la BBDD
 
-    // Guarda los valores ingresados en el formulario
-    // public function save() {
-    //     $this->validate();
-    //     Site::create([
-    //         'name'     => $this->name,
-    //         'email'    => $this->email,
-    //         'password' => Hash::make($this->password),
-    //         'status'   => $this->status,
-    //     ]);
-    //     $this->reset(['open', 'name', 'email', 'password',  'status']); //, 'image']);
-    //     $this->emitTo('show-users', 'render');
-    //     $this->emit('alert', 'Registro creado correctamente');
-    // }
+    public $colorEtiquetas = 'bg-green-300';  //estilos del formulario (color fondo etiquetas)
 
-    // El render recargara eñ formulario asociado, en este caso el html que le corresponde
+    // Inicializar los campos de la tabla
+    public $localid, $estado, $zonal, $nombre, $slapresencia, $slaresolucion, $clasificacion, $prioridad, $facturacion, $tipolocal, $tipozona, $departamento, $provincia, $distrito, $direccion, $latitud, $longitud, $urlimagen, $suministro, $distribuidor, $torrera, $observaciones;
 
-    //el metodo updating se pone antes del valor de la variable, paa ejecutar esto antes de que cambie de valor
-    // EXPLICACION SUJETA A REVISION;
-    // public function updatingOpen() {
-    //     if ($this->open == false) {
-    //         $this->reset(['name', 'email', 'password']);
-    //     }
-    // }
+    // Inicializar los valores de los controles SELECT del formulario
+    public $selectEstado = ['ACTIVO', 'INACTIVO'];
+    public $selectZonal = ['LIMA', 'AREQUIPA', 'CUSCO', 'PUNO', 'TACNA'];
+    public $selectClasificacion = ['TIPO 8_K', 'TIPO 8_L', '12_CLIENTES', 'TIPO 8_C', 'TIPO 8_1'];
+    public $selectPrioridad = ['BLACK', 'ORO', 'PLATA', 'CLASICO'];
+    public $selectFacturacion = ['FEE MENSUAL', 'RUTA', 'BAJO DEMANDA'];
+    public $selectTipolocal = ['URA', 'URA/EBC', 'CT', 'EBC'];
+    public $selectTipozona = ['URBANO', 'INTERURBANO', 'RURAL'];
+    public $selectSlapresencia = ['05:00', '08:00', '10:00', '35:00'];
+    public $selectSlaresolucion = ['07:30', '09:30', '15:30', '35:00'];
+
+    //Reglas de validacion
+    //FALTA EXTENDER
+    protected $rules = [
+        'localid'   => 'required|unique:sites,localid',
+        'estado'    => 'required|',
+        'zonal'     => 'required|',
+        'nombre'    => 'required',
+        'latitud'   => 'nullable|numeric|between:-180,180',
+        'longitud'  => 'nullable|numeric|between:-180,180',
+        'urlimagen' => 'nullable|url',
+    ];
+
+    // Equivale a constructo, recibe la variable item (elemento a modificar en caso sea EDIT)
+    public function mount($item = null) {
+        $this->init($item);
+    }
+    // La primera funcion al ejecutarse, recibe como parametro el valor de item
+    public function init($item) {
+        $site = null;       //inicializar la instancia de site
+
+        // si hay un valor en item, busca el registro correspondiente y lo guarda en $site
+        if ($item)
+            $site =  Site::findOrFail($item);
+
+        // Asigna el registro encontrado a site. Este será NULL si no ha encontrado registro o no se ha pasado parametros
+        $this->site = $site;
+
+        // Si estamos en modo edicion (se ha enviado un parametro item)
+        if ($this->site) {          // asigna los valores de los campos a las variables locales creadas
+            $this->localid         = $this->site->localid;
+            $this->estado          = $this->site->estado;
+            $this->zonal           = $this->site->zonal;
+            $this->nombre          = $this->site->nombre;
+            $this->slapresencia    = $this->site->slapresencia;
+            $this->slaresolucion   = $this->site->slaresolucion;
+            $this->clasificacion   = $this->site->clasificacion;
+            $this->prioridad       = $this->site->prioridad;
+            $this->facturacion     = $this->site->facturacion;
+            $this->tipolocal       = $this->site->tipolocal;
+            $this->tipozona        = $this->site->tipozona;
+            $this->departamento    = $this->site->departamento;
+            $this->provincia       = $this->site->provincia;
+            $this->distrito        = $this->site->distrito;
+            $this->direccion       = $this->site->direccion;
+            $this->latitud         = $this->site->latitud;
+            $this->longitud        = $this->site->longitud;
+            $this->urlimagen       = $this->site->urlimagen;
+            $this->suministro      = $this->site->suministro;
+            $this->distribuidor    = $this->site->distribuidor;
+            $this->torrera         = $this->site->torrera;
+            $this->observaciones   = $this->site->observaciones;
+        }
+    }
+
+    // funcion principal para agregar o modificar datos en la BBDD
+    public function submit() {
+        // Si se trata de una edicion, modificar la regla para que no de error al validar localid como campo unico
+        // aplicar para todos los campos con regla UNIQUE
+        if ($this->site)
+            $this->rules['localid'] = 'required|unique:sites,localid,' . $this->site->id;
+
+        $this->validate();      // aplica las validaciones del array $RULES
+
+        // Si estamos en modo edicion (se ha enviado un parametro item en la funcion init() )
+        if ($this->site) {
+            $this->site->update([   //actualiza los valores de la BBDD segun lo valores del formulario
+                'localid'           => $this->localid,
+                'estado'            => $this->estado,
+                'zonal'             => $this->zonal,
+                'nombre'            => $this->nombre,
+                'slapresencia'      => $this->slapresencia,
+                'slaresolucion'     => $this->slaresolucion,
+                'clasificacion'     => $this->clasificacion,
+                'prioridad'         => $this->prioridad,
+                'facturacion'       => $this->facturacion,
+                'tipolocal'         => $this->tipolocal,
+                'tipozona'          => $this->tipozona,
+                'departamento'      => $this->departamento,
+                'provincia'         => $this->provincia,
+                'distrito'          => $this->distrito,
+                'direccion'         => $this->direccion,
+                'latitud'           => $this->latitud,
+                'longitud'          => $this->longitud,
+                'urlimagen'         => $this->urlimagen,
+                'suministro'        => $this->suministro,
+                'distribuidor'      => $this->distribuidor,
+                'torrera'           => $this->torrera,
+                'observaciones'     => $this->observaciones,
+            ]);
+            $this->emit('alertOk', 'Actualizado');
+
+        //Si estamos en modo crecion (no se ha enviado parametro item en la funcion init() ))
+        } else {
+            Site::create([          //actualiza los valores de la BBDD segun lo valores del formulario
+                'localid'           => $this->localid,
+                'estado'            => $this->estado,
+                'zonal'             => $this->zonal,
+                'nombre'            => $this->nombre,
+                'slapresencia'      => $this->slapresencia,
+                'slaresolucion'     => $this->slaresolucion,
+                'clasificacion'     => $this->clasificacion,
+                'prioridad'         => $this->prioridad,
+                'facturacion'       => $this->facturacion,
+                'tipolocal'         => $this->tipolocal,
+                'tipozona'          => $this->tipozona,
+                'departamento'      => $this->departamento,
+                'provincia'         => $this->provincia,
+                'distrito'          => $this->distrito,
+                'direccion'         => $this->direccion,
+                'latitud'           => $this->latitud,
+                'longitud'          => $this->longitud,
+                'urlimagen'         => $this->urlimagen,
+                'suministro'        => $this->suministro,
+                'distribuidor'      => $this->distribuidor,
+                'torrera'           => $this->torrera,
+                'observaciones'     => $this->observaciones,
+            ]);
+            $this->emit('alertOk', 'Registro creado');
+        }
+    }
 
     public function render()
     {
+        // $roles = Role::all();
         return view('livewire.sites.create-sites');
     }
 }
