@@ -1,14 +1,17 @@
 <div class="max-w-7xl mx-auto sm:px-2 lg:px-4 py-4">
     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
         <div class="container">
+        @can('sites.create')
             <form wire:submit.prevent="submit"> <!-- onkeydown="return event.key != 'Enter';"> -->
-
+        @endcan
                 {{-- <x-jet-danger-button class="mr-2" wire:click="save" wire:loading.attr="disabled" wire:target="save" class="disabled:opacity-25"> --}}
                 <div class="pt-4 px-4 w-full flex justify-between ">
                     <span>LOCALES</span>
+                    @can('sites.create')
                     <x-jet-danger-button type="submit">
                         Guardar
                     </x-jet-danger-button>
+                    @endcan
                 </div>
                 <div class="p-6 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
                     <div class="{{ $colorEtiquetas }}">
@@ -41,8 +44,8 @@
 
                     <div class="{{ $colorEtiquetas }} sm:col-span-3 md:col-span-2 lg:col-span-3">
                         <x-jet-label value="Nombre" />
-                        {{-- <x-jet-input type="text" class="w-full" wire:model.defer="nombre" /> --}}
-                        <textarea name="nombre" id="nombre" cols="30" rows="10"></textarea>
+                        <x-jet-input type="text" class="w-full" wire:model.defer="nombre" />
+                        {{-- <textarea name="nombre" id="nombre" cols="30" rows="10"></textarea> --}}
                         <x-jet-input-error for="nombre" />
                     </div>
 

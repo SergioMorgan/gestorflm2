@@ -68,6 +68,11 @@ class ShowSites extends Component
         }
     }
 
+    // funcion llamada por el boton de creacion, para redirigir al otro componente
+    public function gotocreate() {
+        return redirect()->route('sites.create');
+    }
+
     // recibe desde el formulario principal la peticion de borrar a travez del script del sweetalert
     // que manda a ejecutar este evento una vez que se pasa la confirmacion solicitada
     public function delete(Site $site) {
