@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Livewire\Sites;
+namespace App\Http\Livewire\Ostickets;
 
 use Livewire\Component;
-use App\Models\Site;
+use App\Models\Osticket;
 use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
 
-class ShowSites extends Component
+class ShowOstickets extends Component
 {
 
     use WithPagination;
 
-    public $site;
+    public $osticket;
     public $search = '';
-    public $sort = 'nombre';
-    public $direcion = 'asc';
+    public $sort = 'siom';
+    public $direcion = 'desc';
     public $cant='50';
     public $readyToLoad = false; //para aplarzar la carga
 
@@ -24,8 +24,8 @@ class ShowSites extends Component
     //para que se refrlejen en la url los cambios en el filtro
     protected $queryString = [ //para que se refrlejen en la url los cambios en el filtro
         'cant' => ['except' => '50'],
-        'sort' => ['except' => 'nombre'],
-        'direcion' => ['except' => 'asc'],
+        'sort' => ['except' => 'siom'],
+        'direcion' => ['except' => 'desc'],
         'search' => ['except' => ''],
     ];
 
@@ -38,22 +38,21 @@ class ShowSites extends Component
     public function render() {
         $roles = Role::all();
         if ($this->readyToLoad) {
-            $sites = Site::where('nombre', 'like', '%' . $this->search . '%')
-                        ->orWhere('zonal', 'like', '%' . $this->search . '%')
-                        ->orWhere('localid', 'like', '%' . $this->search . '%')
-                        ->orWhere('tipolocal', 'like', '%' . $this->search . '%')
-                        ->orWhere('prioridad', 'like', '%' . $this->search . '%')
-                        ->orWhere('clasificacion', 'like', '%' . $this->search . '%')
+            $ostickets = Osticket::select('ostickets.*')
+                        ->join('sites', 'sites.id', '=', 'ostickets.site_id')
+                        ->where('detalle', 'like', '%' . $this->search . '%')
+                        ->orWhere('siom', 'like', '%' . $this->search . '%')
+                        ->orWhere('nombre', 'like', '%' . $this->search . '%')
                         ->orderby($this->sort, $this->direcion)
                         ->paginate($this->cant);
         } else {
-            $sites = [];
+            $ostickets = [];
         }
-        return view('livewire.sites.show-sites', compact('sites', 'roles'));
+        return view('livewire.ostickets.show-ostickets', compact('ostickets', 'roles'));
     }
 
     // tiempo de espera para carga de formulario, trabaja con la carga del gif de espera
-    public function loadSites() {
+    public function loadOstickets() {
         $this->readyToLoad=true;
     }
 
@@ -73,12 +72,12 @@ class ShowSites extends Component
 
     // funcion llamada por el boton de creacion, para redirigir al otro componente
     public function gotocreate() {
-        return redirect()->route('sites.create');
+        return redirect()->route('ostickets.create');
     }
 
     // recibe desde el formulario principal la peticion de borrar a travez del script del sweetalert
     // que manda a ejecutar este evento una vez que se pasa la confirmacion solicitada
-    public function delete(Site $site) {
-        $site->delete();
+    public function delete(Osticket $osticket) {
+        $osticket->delete();
     }
 }

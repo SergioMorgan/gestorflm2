@@ -2,7 +2,7 @@
     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
         <div wire:init="loadSites">
-            <!-- Al cargar el formulario, llama a la funcion loadUser() = $this->readyToLoad=true; -->
+            <!-- Al cargar el formulario, llama a la funcion loadxxxx() = $this->readyToLoad=true; -->
             <span>LISTADO DE LOCALES </span>
             <x-table>
 
@@ -20,14 +20,9 @@
                     </div>
                     <x-jet-input type="text" wire:model="search" class="flex-1 mx-4" placeholder="buscar..." />
                     @can('sites.create')
-
                         <x-jet-danger-button wire:click="gotocreate">
                             Crear nuevo local
                         </x-jet-danger-button>
-{{--                     
-                        <div>
-                            <a href="{{ route('sites.create') }}">Crear</a>
-                        </div> --}}
                     @endcan
                 </div>
 
@@ -58,6 +53,11 @@
                                     @else
                                         <i class="fas fa-sort float-right mt-1"></i>
                                     @endif
+                                </th>
+
+                                <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Estado
                                 </th>
 
                                 <th class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
@@ -98,19 +98,14 @@
                                 </th>
                                 <th
                                     class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    Tipo
+                                    SLA
                                 </th>
+
                                 <th
                                     class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                    Estado
+                                    Config
                                 </th>
-                                <!--PERMISO DE VISUALIZACION PARA LAS CONFIGURACIONES A USUARIOS CUYO ROL PERMITA USERS.EDIT-->
-                                {{-- @can('sites.create') --}}
-                                    <th
-                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Config
-                                    </th>
-                                {{-- @endcan --}}
+
                             </tr>
                         </thead>
 
@@ -126,6 +121,37 @@
 
                                     <td class="w-[75px] px-3 py-3 border-b border-gray-200 bg-white text-sm">
                                         <p class="text-gray-900 whitespace-no-wrap">{{ $item->localid }}</p>
+                                    </td>
+
+                                    <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
+                                        {{-- @if ($item->estado == 'ACTIVO')
+                                            <img class="object-fill h-8 w-16" src="/img/activeicon.png" alt="">
+                                        @else
+                                            <img class="object-fill h-8 w-16" src="/img/inactiveicon.png"
+                                                alt="">
+                                        @endif --}}
+
+                                        @switch($item->estado)
+                                        @case('ACTIVO')
+                                            <div
+                                                class="mx-4 flex place-content-center text-xs font-bold bg-green-400 text-gray-900 whitespace-no-wrap">
+                                                <p>{{ $item->estado }}</p>
+                                            </div>
+                                        @break
+
+                                        @case('INACTIVO')
+                                            <div
+                                                class="mx-4 flex place-content-center text-xs font-bold bg-gray-500 text-gray-50 whitespace-no-wrap">
+                                                <p>{{ $item->estado }}</p>
+                                            </div>
+                                        @break
+
+
+                                        @default
+                                    @endswitch
+
+
+
                                     </td>
 
                                     <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
@@ -178,14 +204,7 @@
                                         @endswitch
                                     </td>
 
-                                    <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">
-                                        @if ($item->estado == 'ACTIVO')
-                                            <img class="object-fill h-8 w-16" src="/img/activeicon.png" alt="">
-                                        @else
-                                            <img class="object-fill h-8 w-16" src="/img/inactiveicon.png"
-                                                alt="">
-                                        @endif
-                                    </td>
+
 
                                     <!--Asignacion de permiso para edicion-->
                                     <td class="px-3 py-3 border-b border-gray-200 bg-white text-sm">

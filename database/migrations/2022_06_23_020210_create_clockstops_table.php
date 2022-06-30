@@ -20,6 +20,7 @@ return new class extends Migration
             $table->datetime('fin')->nullable();
             $table->string('motivo')->nullable();
             $table->string('sustento')->nullable();
+            $table->timestamps();
 
             $table->foreign('osticket_id')
                 ->references('id')

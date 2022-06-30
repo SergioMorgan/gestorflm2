@@ -12,37 +12,37 @@ use Spatie\Permission\Models\Role;
 class SiteController extends Controller
 {
 
-    public $site;
-    protected $listeners = ['render'];
+    // public $site;
+    // protected $listeners = ['render'];
 
-    //Dejar esta funcion, es la que reenvia al controller de ShowXxxx
-    public function index () {
-        return view('sites.index');
-    }
+    // //Dejar esta funcion, es la que reenvia al controller de ShowXxxx
+    // public function index () {
+    //     return view('sites.index');
+    // }
 
-    //Reenvia al formulario de creacion
-    public function create () {
-        return view('sites.create');
-    }
+    // //Reenvia al formulario de creacion
+    // public function create () {
+    //     return view('sites.create');
+    // }
 
-    //ejecuta el guardado de nuevo registro
-    public function store (StoreSite $request) {
-        $site = Site::create($request->all());
-        // $this->emit('alertOk', 'Registro creado correctamente');
-        return redirect()->route('sites.index');
-    }
+    // //ejecuta el guardado de nuevo registro
+    // public function store (StoreSite $request) {
+    //     $site = Site::create($request->all());
+    //     // $this->emit('alertOk', 'Registro creado correctamente');
+    //     return redirect()->route('sites.index');
+    // }
 
-    // reenvia al formulario de edit
-    public function edit(Site $site) {
-        return view('sites.edit', ['site' => $site]);
-    }
+    // // reenvia al formulario de edit
+    // public function edit(Site $site) {
+    //     return view('sites.edit', ['site' => $site]);
+    // }
 
-    //ejecuta la actualizacion de datos
-    public function update(StoreSite $request, Site $site) {
-        $site->update($request->all());
-        // $this->emit('alert', 'Registro actualizado correctamente');
-        return redirect()->route('sites.index');
-    }
+    // //ejecuta la actualizacion de datos
+    // public function update(StoreSite $request, Site $site) {
+    //     $site->update($request->all());
+    //     // $this->emit('alert', 'Registro actualizado correctamente');
+    //     return redirect()->route('sites.index');
+    // }
 
     // reglas de validacion para el guardado
     // protected function rules() {

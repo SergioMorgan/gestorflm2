@@ -9,6 +9,12 @@ class Osticket extends Model
 {
     use HasFactory;
 
+    
+    protected $guarded = [
+        // especificar los campos de la tabla a proteger
+    ];
+    
+    
     //relacion uno a muchos con actions, clockstops
     public function actions() {
         return $this->hasMany('App\Models\Action');

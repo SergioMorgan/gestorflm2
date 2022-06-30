@@ -18,8 +18,8 @@ class UserSeeder extends Seeder
     {
 
         User::create([
-            'name'              => 'Sergio Morgan',
-            'email'             => 'morgan.sergio@gmail.com',
+            'name'              => 'admin',
+            'email'             => 'admin@gmail.com',
             'password'          => bcrypt('password'),
             'email_verified_at' => now(),
             'remember_token'    => Str::random(10),
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
         ])->assignRole('admin');
 
         User::create([
-            'name'              => 'Un supervisor',
+            'name'              => 'supervisor',
             'email'             => 'supervisor@gmail.com',
             'password'          => bcrypt('password'),
             'email_verified_at' => now(),
@@ -38,8 +38,28 @@ class UserSeeder extends Seeder
         ])->assignRole('supervisor');
 
         User::create([
-            'name'              => 'telefonica',
-            'email'             => 'telefonica@gmail.com',
+            'name'              => 'operador',
+            'email'             => 'operador@gmail.com',
+            'password'          => bcrypt('password'),
+            'email_verified_at' => now(),
+            'remember_token'    => Str::random(10),
+            // 'profile'           => 'USUARIO',
+            'status'            => 'ACTIVO',
+        ])->assignRole('operador');
+
+        User::create([
+            'name'              => 'usuario',
+            'email'             => 'usuario@gmail.com',
+            'password'          => bcrypt('password'),
+            'email_verified_at' => now(),
+            'remember_token'    => Str::random(10),
+            // 'profile'           => 'USUARIO',
+            'status'            => 'ACTIVO',
+        ])->assignRole('usuario');
+
+        User::create([
+            'name'              => 'cliente',
+            'email'             => 'cliente@gmail.com',
             'password'          => bcrypt('password'),
             'email_verified_at' => now(),
             'remember_token'    => Str::random(10),
@@ -47,23 +67,25 @@ class UserSeeder extends Seeder
             'status'            => 'ACTIVO',
         ])->assignRole('cliente');
 
-        User::factory(20)->create()->each(function($user){
+
+
+        User::factory(2)->create()->each(function($user){
             $user->assignRole('admin');
         });
 
-        User::factory(20)->create()->each(function($user){
+        User::factory(3)->create()->each(function($user){
             $user->assignRole('supervisor');
         });
 
-        User::factory(20)->create()->each(function($user){
+        User::factory(10)->create()->each(function($user){
             $user->assignRole('operador');
         });
 
-        User::factory(20)->create()->each(function($user){
+        User::factory(5)->create()->each(function($user){
             $user->assignRole('usuario');
         });
 
-        User::factory(20)->create()->each(function($user){
+        User::factory(5)->create()->each(function($user){
             $user->assignRole('cliente');
         });
     }

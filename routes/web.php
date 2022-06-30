@@ -46,9 +46,13 @@ Route::middleware([
 //     Route::resource('sites', SiteController::class);
 // });
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites', \App\Http\Livewire\sites\ShowSites::class)->name('sites.index');
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites/create', \App\Http\Livewire\sites\CreateSites::class)->name('sites.create');
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites/{item}/edit', \App\Http\Livewire\sites\CreateSites::class)->name('sites.edit');
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites',                    \App\Http\Livewire\sites\ShowSites::class)              ->name('sites.index');
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites/create',             \App\Http\Livewire\sites\CreateSites::class)            ->name('sites.create');
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites/{item}/edit',        \App\Http\Livewire\sites\CreateSites::class)            ->name('sites.edit');
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('ostickets',                \App\Http\Livewire\ostickets\ShowOstickets::class)      ->name('ostickets.index');
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('ostickets/create',         \App\Http\Livewire\ostickets\CreateOstickets::class)    ->name('ostickets.create');
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('ostickets/{item}/edit',    \App\Http\Livewire\ostickets\CreateOstickets::class)    ->name('ostickets.edit');
 
 // Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites/{$site}', CreateSites::class)->name('sites.create');
 // Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('users', ShowUsers::class)->name('users.index');

@@ -17,13 +17,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('site_id');
             $table->unsignedBigInteger('user_id');
+            $table->string('siom', 10)->unique();
             $table->string('estado');
             $table->string('tipo');
             $table->dateTime('fechaasignacion');
             $table->dateTime('fechallegada')->nullable();
             $table->dateTime('fechacierre')->nullable();
             $table->string('remedy')->nullable();
-            $table->text('detalle');
+            $table->text('detalle')->nullable();
             $table->text('cierre')->nullable();
             $table->string('categoria')->nullable();
             $table->string('resultadoslap')->nullable();

@@ -4,8 +4,6 @@ namespace App\Http\Livewire\Sites;
 
 use Livewire\Component;
 use App\Models\Site;
-use Spatie\Permission\Models\Role;
-
 
 class CreateSites extends Component {
 
