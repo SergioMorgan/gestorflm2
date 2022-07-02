@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
 
     @livewireStyles
+ 
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
@@ -50,7 +51,7 @@
     {{-- va a colocar los scritps que pasemos desde @push('js') --}}
     @stack('js')
 
-
+ 
     <script>
         Livewire.on('alertOk', function(message) {
             Swal.fire(

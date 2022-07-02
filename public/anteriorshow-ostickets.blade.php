@@ -17,7 +17,9 @@
                     </div>
                     <x-jet-input type="text" wire:model="search" class="flex-1 mx-4" placeholder="buscar..." />
                     @can('ostickets.create')
-                        @livewire('ostickets.create-ostickets')
+                        <x-jet-danger-button wire:click="gotocreate">
+                            Crear nuevo ticket
+                        </x-jet-danger-button>
                     @endcan
                 </div>
 
@@ -109,13 +111,11 @@
                                     <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
                                         {{ $item->site->nombre }}</div>
                                     <div class="min-w-[100px] align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
-                                        {{ date('d/m/Y H:i', strtotime($item->fechaasignacion)) }}</div>
-                                        
+                                        {{ $item->fechaasignacion }}</div>
                                     <div class="max-w-[800px] table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
                                         {{ $item->detalle }}</div>
                                     <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
                                         <a class="btn btn-green" href="{{ route('ostickets.edit', $item->id) }}">
-                                        {{-- <a class="btn btn-green" href=""> --}}
                                             <i class="fa-solid fa-edit"></i>
                                         </a>
                                     </div>

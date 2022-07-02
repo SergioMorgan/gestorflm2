@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('osticket_id');
             $table->unsignedBigInteger('user_id');
-            $table->text('detalle');
+            $table->text('detalle')->nullable();
             $table->timestamps();
 
             $table->foreign('osticket_id')

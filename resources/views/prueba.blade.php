@@ -1,5 +1,12 @@
+
 <x-app-layout>
+
 <div class="container">
+
+
+
+
+
     {{--
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4  lg:grid-cols-4 xl:grid-cols-8  2xl:grid-cols-12 gap-2">
             <div class="bg-blue-100 sm:col-span-2 ">A</div>
@@ -181,7 +188,7 @@
     <p class="mb-2">Vitae fugiat voluptatem, id tempora error corporis numquam nesciunt quia explicabo deleniti quidem, quasi ratione voluptatibus eos architecto eveniet, mollitia nobis placeat fugit consectetur repellat ut similique odit alias! Autem?</p>
 </div>
 --}}
-<div class="container bg-gray-300">
+{{-- <div class="container bg-gray-300">
     <img class="w-full h-64 object-contain" src="https://cdn.pixabay.com/photo/2022/01/17/11/16/alpine-6944487_960_720.jpg" alt="">
 </div>
 <div class="container bg-gray-300">
@@ -192,7 +199,7 @@
 </div>
 <div class="container bg-gray-300">
     <img class="w-full h-64 object-none" src="https://cdn.pixabay.com/photo/2022/01/17/11/16/alpine-6944487_960_720.jpg" alt="">
-</div>
+</div> --}}
 {{--
 <div class="contauiner">
     <div class="bg-gray-300 p-4 h-64 overflow-auto">
@@ -206,17 +213,17 @@
         <p>Laborum ut nesciunt sit vitae mollitia fuga vero ratione, quae iusto eum fugiat, excepturi soluta aperiam doloremque eos. Quisquam voluptates et saepe culpa ex nam quod commodi impedit. Consectetur, repellendus!</p>
     </div>
 </div>
-
-<div class="container mt-4">
-    <div class="bg-gray-300 p-4 relative">
-        <div class="bg-gray-400 p-4">
+--}}
+{{-- <div class="container mt-4">
+    <div class="bg-gray-300 p-4 ">
+        <div class="bg-gray-400 p-4 relative">
             <div class="bg-blue-400 p-4"></div>
             <div class="bg-green-400 p-4"></div>
             <div class="bg-blue-600 p-4 absolute inset-y-0 left-0"></div>
         </div>
     </div>
-</div>
-
+</div> --}}
+{{--
 <div>
     <nav class="bg-blue-300 h-16 fixed w-full z-50"> Menuuuuu</nav>
     <aside class="w-64 bg-gray-800 fixed inset-y-0 z-40"></aside>
@@ -307,3 +314,7 @@
 
 </div>
 </x-app-layout>
+<script src="pikaday.js"></script>
+<script>
+    var picker = new Pikaday({ field: document.getElementById('datepicker') });
+</script>

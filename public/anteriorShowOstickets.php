@@ -9,7 +9,7 @@ use Spatie\Permission\Models\Role;
 
 class ShowOstickets extends Component
 {
-    
+
     use WithPagination;
 
     public $osticket;
@@ -43,7 +43,6 @@ class ShowOstickets extends Component
                         ->where('detalle', 'like', '%' . $this->search . '%')
                         ->orWhere('siom', 'like', '%' . $this->search . '%')
                         ->orWhere('nombre', 'like', '%' . $this->search . '%')
-                        ->orWhere('ostickets.estado', 'like', '%' . $this->search . '%')
                         ->orderby($this->sort, $this->direcion)
                         ->paginate($this->cant);
         } else {

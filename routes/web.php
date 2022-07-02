@@ -52,7 +52,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' 
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('ostickets',                \App\Http\Livewire\ostickets\ShowOstickets::class)      ->name('ostickets.index');
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('ostickets/create',         \App\Http\Livewire\ostickets\CreateOstickets::class)    ->name('ostickets.create');
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('ostickets/{item}/edit',    \App\Http\Livewire\ostickets\CreateOstickets::class)    ->name('ostickets.edit');
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('ostickets/{item}/edit',    \App\Http\Livewire\ostickets\EditOstickets::class)      ->name('ostickets.edit');
 
 // Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites/{$site}', CreateSites::class)->name('sites.create');
 // Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('users', ShowUsers::class)->name('users.index');
