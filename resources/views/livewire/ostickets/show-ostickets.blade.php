@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto sm:px-2 lg:px-4 py-4">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
             <div wire:init="loadOstickets">
-                <!-- Al cargar el formulario, llama a la funcion loadxxx() = $this->readyToLoad=true; -->
+
                 <span>LISTADO DE TICKETS </span>
                 <div class="px-4 pb-4 flex items-center">
                     <div class="flex items-center">

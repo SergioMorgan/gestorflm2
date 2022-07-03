@@ -1,14 +1,17 @@
 <div>
     <div class="max-w-7xl mx-auto sm:px-2 lg:px-4 py-4">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-            {{-- <div class="container"> --}}
+            @can('ostickets.create')
                 <form wire:submit.prevent="submit">
-                    <div class="pt-4 px-4 w-full flex justify-between ">
-                        <span>TICKETS</span>
-                            <x-jet-danger-button type="submit">
-                                Guardar
-                            </x-jet-danger-button>
-                    </div>
+            @endcan
+            <div class="pt-4 px-4 w-full flex justify-between ">
+                <span>TICKETS</span>
+                    @can('ostickets.create')
+                        <x-jet-danger-button type="submit">
+                            Guardar
+                        </x-jet-danger-button>
+                    @endcan
+            </div>
 
 <!-------------- DATOS DE LOCAL ---------------------->
                     <div class="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
@@ -98,7 +101,9 @@
                             <x-jet-label value="PARADAS DE RELOJ" />
                         </div>
                         <div>
-                            @livewire('clockstops.create-clockstops', ['osticket_id' => $osticket_id])
+                            @can('clockstops.create')
+                                @livewire('clockstops.create-clockstops', ['osticket_id' => $osticket_id])
+                            @endcan
                         </div>
                     </div>
                     <div class="px-4 py-2 gap-2">
@@ -120,12 +125,16 @@
                                     <div class="{{ $colorEtiquetas }} table-cell  text-center px-2 py-2 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                         Sustento
                                     </div>
-                                    <div class="{{ $colorEtiquetas }} max-w-[50px] table-cell  text-center px-2 py-2 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider relative">
-                                        Act
-                                    </div>
-                                    <div class="{{ $colorEtiquetas }} max-w-[50px] table-cell  text-center px-2 py-2 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider relative">
-                                        Elim
-                                    </div>
+                                    @can('clockstops.create')
+                                        <div class="{{ $colorEtiquetas }} max-w-[50px] table-cell  text-center px-2 py-2 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider relative">
+                                            Act
+                                        </div>
+                                    @endcan
+                                    @can('clockstops.destroy')
+                                        <div class="{{ $colorEtiquetas }} max-w-[50px] table-cell  text-center px-2 py-2 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider relative">
+                                            Elim
+                                        </div>
+                                    @endcan
                                 </div>
                             </div>
                             <div class="table-row-group">
@@ -154,16 +163,20 @@
                                         <div class="max-w-[800px] align-middle text-left table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
                                             {{ $item3->sustento }}
                                         </div>
-                                        <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
-                                            <a class="btn btn-green" wire:click="editClockstop({{ $item3 }})">
-                                                <i class="fa-solid fa-edit"></i>
-                                            </a>
-                                        </div>
-                                        <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
-                                            <a class="btn btn-red" wire:click="$emit('borrarPR', {{ $item3->id }})">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </a>
-                                        </div>
+                                        @can('clockstops.create')
+                                            <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
+                                                <a class="btn btn-green" wire:click="editClockstop({{ $item3 }})">
+                                                    <i class="fa-solid fa-edit"></i>
+                                                </a>
+                                            </div>
+                                        @endcan
+                                        @can('clockstops.destroy')
+                                            <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
+                                                <a class="btn btn-red" wire:click="$emit('borrarPR', {{ $item3->id }})">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        @endcan
                                     </div>
                                 @endforeach
                             </div>
@@ -229,9 +242,11 @@
                     <div class="{{ $colorEtiquetas }}">
                         <x-jet-label value="ACTUACIONES" />
                     </div>
-                    <div>
-                        @livewire('actions.create-actions', ['osticket_id' => $osticket_id])
-                    </div>
+                    @can('actions.create')
+                        <div>
+                            @livewire('actions.create-actions', ['osticket_id' => $osticket_id])
+                        </div>
+                    @endcan
                 </div>
                 <div class="p-4 gap-2">
                     <div class="table w-full ">
@@ -246,12 +261,14 @@
                                 <div class="{{ $colorEtiquetas }} table-cell  text-center px-2 py-2 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                     Detalle
                                 </div>
-                                <div class="{{ $colorEtiquetas }} max-w-[50px] table-cell  text-center px-2 py-2 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider relative">
-                                    Act
-                                </div>
-                                <div class="{{ $colorEtiquetas }} max-w-[50px] table-cell  text-center px-2 py-2 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider relative">
-                                    Elim
-                                </div>
+                                @can('actions.destroy')
+                                    <div class="{{ $colorEtiquetas }} max-w-[50px] table-cell  text-center px-2 py-2 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider relative">
+                                        Act
+                                    </div>
+                                    <div class="{{ $colorEtiquetas }} max-w-[50px] table-cell  text-center px-2 py-2 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider relative">
+                                        Elim
+                                    </div>
+                                @endcan
                             </div>
                         </div>
                         <div class="table-row-group">
@@ -266,16 +283,18 @@
                                     <div class="max-w-[800px] align-middle text-left table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
                                         {{ $item2->detalle }}
                                     </div>
-                                    <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
-                                        <a class="btn btn-green" wire:click="editAction({{ $item2 }})">
-                                            <i class="fa-solid fa-edit"></i>
-                                        </a>
-                                    </div>
-                                    <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
-                                        <a class="btn btn-red" wire:click="$emit('borrarActuacion', {{ $item2->id }})">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </a>
-                                    </div>
+                                    @can('actions.destroy')
+                                        <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
+                                            <a class="btn btn-green" wire:click="editAction({{ $item2 }})">
+                                                <i class="fa-solid fa-edit"></i>
+                                            </a>
+                                        </div>
+                                        <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
+                                            <a class="btn btn-red" wire:click="$emit('borrarActuacion', {{ $item2->id }})">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    @endcan
                                 </div>
                             @endforeach
                         </div>
