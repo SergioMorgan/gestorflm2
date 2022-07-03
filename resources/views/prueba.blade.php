@@ -58,8 +58,8 @@
                 <div class="bg-yellow-900">9</div>
             </div>
         </div>
-
-        <div class="container">
+--}}
+        {{-- <div class="container">
             <h1 class="font-sans text-6xl md:text-3xl font-bold	">Este es un elemento de prueba</h1>
             <p class="font-serif italic leading-loose">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto accusantium dicta amet quam illum, itaque cum molestiae eaque animi. Officiis maxime enim, exercitationem autem nihil perspiciatis! Vero accusamus libero vel.</p>
             <ul>
@@ -67,8 +67,8 @@
                 <li class="font-mono text-sm">Elemento 02</li>
                 <li class="font-mono text-sm">Elemento 03</li>
             </ul>
-        </div>
-
+        </div>  --}}
+{{-- 
     <style>
         .imagen {
             background-image: url("{{asset('img/backgroundhome.jpg')}}");
@@ -314,7 +314,3 @@
 
 </div>
 </x-app-layout>
-<script src="pikaday.js"></script>
-<script>
-    var picker = new Pikaday({ field: document.getElementById('datepicker') });
-</script>
