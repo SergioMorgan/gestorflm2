@@ -102,7 +102,7 @@
                         </div>
                         <div>
                             @can('clockstops.create')
-                                @livewire('clockstops.create-clockstops', ['osticket_id' => $osticket_id])
+                                @livewire('clockstops.create-clockstops', ['osticket_id' => $osticket_id, 'fechaasignacion' => $fechaasignacion])
                             @endcan
                         </div>
                     </div>

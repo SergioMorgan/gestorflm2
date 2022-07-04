@@ -53,11 +53,11 @@
 
  
     <script>
-        Livewire.on('alertOk', function(message) {
+        Livewire.on('alertOk', function(message, icon) {
             Swal.fire(
                 message,
                 '',
-                'success'
+                icon
             )
         })
     </script>

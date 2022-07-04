@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class CreateClockstops extends Component
 {
-    public $osticket_id;
+    public $osticket_id, $fechaasignacion;
     public $open = false;
     public $inicio;
     public $fin;
@@ -17,33 +17,38 @@ class CreateClockstops extends Component
     public $motivo = 'CORTE DE ENERGÍA COMERCIAL CON/SIN INSTALACIÓN DE GE';      //VALOR POR DEFECTO del campo, para prevenir posibles llenados vacios
     // public $motivo = $selectMotivo[1];  //NO FUNCIONA
 
-    public function mount($osticket_id) {
+    public function mount($osticket_id, $fechaasignacion) {
         $this->osticket_id = $osticket_id;
+        $this->fechaasignacion = $fechaasignacion;
     }
-
-    // protected $listeners = ['render' => 'render' ];
-    // protected $listeners = ['render', 'delete' ];
 
     protected $rules = [
         'inicio'    => 'required',
-        'fin'       => 'nullable',
+        'fin'       => 'nullable|date|after:inicio',
         'motivo'    => 'required',
         'sustento'  => 'required',
     ];
 
     public function save() {
         $this->validate();
-        Clockstop::create([
-            'inicio'        => $this->inicio,
-            'fin'           => $this->fin,
-            'motivo'        => $this->motivo,
-            'sustento'      => $this->sustento,
-            'osticket_id'   => $this->osticket_id,
-        ]);
+        $lastclockstop = Clockstop::select('clockstops.*')->where('osticket_id', '=', $this->osticket_id )->orderby('inicio', 'desc')->first();
+        If ((empty($lastclockstop->inicio) || !empty($lastclockstop->fin)) && 
+            (date('Y-m-d H:i', strtotime($this->inicio)) > date('Y-m-d H:i', strtotime($this->fechaasignacion)))
+            ) {
+            Clockstop::create([
+                'inicio'        => $this->inicio,
+                'fin'           => $this->fin,
+                'motivo'        => $this->motivo,
+                'sustento'      => $this->sustento,
+                'osticket_id'   => $this->osticket_id,
+            ]);
 
-        $this->reset(['open', 'inicio', 'fin', 'motivo',  'sustento']);
-        $this->emitTo('ostickets.edit-ostickets', 'refrescar');
-        $this->emit('alertOk', 'Registro creado correctamente');
+            $this->reset(['open', 'inicio', 'fin', 'motivo',  'sustento']);
+            $this->emitTo('ostickets.edit-ostickets', 'refrescar');
+            $this->emit('alertOk', 'Registro creado correctamente');
+        } else {
+            $this->emit('alertOk', 'Error de continuidad de PR');
+        }
     }
 
     public function render() {
