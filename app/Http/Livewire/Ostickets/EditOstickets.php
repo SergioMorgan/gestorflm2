@@ -59,6 +59,7 @@ class EditOstickets extends Component
         $this->init($item);
     }
 
+
     public function init($item) {
         $osticket       = null;
         $actiontable    = null;
@@ -69,6 +70,8 @@ class EditOstickets extends Component
         $osticket_id                = $osticket->id;
         $actiontable                = Action::select('actions.*', 'users.name')->join('users', 'users.id', '=', 'actions.user_id')->where('osticket_id', '=', $this->item)->orderby('created_at', 'desc')->get();
         $clockstoptable             = Clockstop::select('clockstops.*')->where('osticket_id', '=', $this->item)->orderby('inicio', 'desc')->get();
+        
+        
         $this->actiontable          = $actiontable;
         $this->osticket             = $osticket;
         $this->clockstoptable       = $clockstoptable;
@@ -200,6 +203,7 @@ class EditOstickets extends Component
     public function editClockstop(Clockstop $clockstop) {
         $this->clockstop = $clockstop;
         $this->open_editclockstop = true;
+        $test = 
         $this->finanteriorpr      = empty($this->clockstoptable->where('inicio', '<', $this->clockstop->inicio)->sortByDesc('inicio')->first())  ? null : $this->clockstoptable->where('inicio', '<', $this->clockstop->inicio)->sortByDesc('inicio')->first()->fin;
         $this->iniciosiguientepr = empty($this->clockstoptable->where('inicio', '>', $this->clockstop->inicio)->sortByDesc('inicio')->last()) ? null : $this->clockstoptable->where('inicio', '>', $this->clockstop->inicio)->sortByDesc('inicio')->first()->inicio;
     }

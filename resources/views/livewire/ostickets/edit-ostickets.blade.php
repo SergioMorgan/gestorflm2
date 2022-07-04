@@ -43,7 +43,6 @@
                         <div class="{{ $colorEtiquetas }} lg:col-span-4">
                             <x-jet-label value="Estado" />
                             <p> cuantas h van, cuantas quedan,  resumen de la pr + acumulado, estadao automatico dentro fuera</p>
-                            {{-- <x-jet-input type="text" class="w-full" readonly/> --}}
                         </div>
 
                     </div>
@@ -234,10 +233,7 @@
                     </div>
                 </form>
 
-
-
 <!--------ACTUACIONESA-------------->
-
                 <div class="px-4 w-full flex justify-between">
                     <div class="{{ $colorEtiquetas }}">
                         <x-jet-label value="ACTUACIONES" />

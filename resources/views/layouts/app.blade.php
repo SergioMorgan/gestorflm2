@@ -51,7 +51,7 @@
     {{-- va a colocar los scritps que pasemos desde @push('js') --}}
     @stack('js')
 
- 
+
     <script>
         Livewire.on('alertOk', function(message, icon) {
             Swal.fire(
@@ -61,6 +61,7 @@
             )
         })
     </script>
+
 
 
 </body>
