@@ -16,11 +16,10 @@
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
 
     @livewireStyles
- 
+
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
-
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
@@ -36,13 +35,13 @@
 
         <!-- Page Content -->
         <main>
-            {{-- Trae los contenidos etiquetados dentro de SLOT de las paginas 
+            {{-- Trae los contenidos etiquetados dentro de SLOT de las paginas
                 por el momento no hay --}}
             {{ $slot }}
         </main>
     </div>
 
-    {{-- va a colocar acá todo lo que venga de push('modals') 
+    {{-- va a colocar acá todo lo que venga de push('modals')
     creo que no hay ninguno aun --}}
     @stack('modals')
 

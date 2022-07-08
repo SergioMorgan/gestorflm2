@@ -24,14 +24,14 @@
                 @if (count($ostickets))
                     <div class="table w-full ">
                         <div class="table-header-group">
-                            <div class="table-row">
+                            <div class="table-row text-xs">
 
-                                <div class="table-cell  text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                                <div class="table-cell  text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider"
                                     ">id
                                 </div>
 
 
-                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider"
                                     wire:click="order('siom')">Siom
                                     @if ($sort == 'siom')
                                         @if ($direcion == 'asc')
@@ -43,7 +43,7 @@
                                         <i class="fas fa-sort float-right mt-1"></i>
                                     @endif
                                 </div>
-                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider"
                                     wire:click="order('siom')">Estado
                                     @if ($sort == 'estado')
                                         @if ($direcion == 'asc')
@@ -56,7 +56,7 @@
                                     @endif
                                 </div>
 
-                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider"
                                     wire:click="order('siom')">Local
                                     @if ($sort == 'nombre')
                                         @if ($direcion == 'asc')
@@ -69,7 +69,7 @@
                                     @endif
                                 </div>
 
-                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider"
                                     wire:click="order('siom')">Inicio
                                     @if ($sort == 'fechaasignacion')
                                         @if ($direcion == 'asc')
@@ -82,15 +82,15 @@
                                     @endif
                                 </div>
 
-                                <div class="table-cell  text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                                <div class="table-cell  text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider"
                                     ">Detalle
                                 </div>
 
-                                <div class="col-span-2 table-cell px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                                <div class="col-span-2 table-cell px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider"
                                     ">Editar
                                 </div>
                                 @can('ostickets.destroy')
-                                    <div class="col-span-2 table-cell px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                                    <div class="col-span-2 table-cell px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider"
                                         ">Borrar
                                     </div>
                                 @endcan
@@ -99,28 +99,38 @@
 
                         <div class="table-row-group">
                             @foreach ($ostickets as $item)
-                                <div class="table-row ">
-                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
-                                        {{ $item->id }}</div>
-                                    <div class="min-w-[90px] align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
-                                        {{ $item->siom }}</div>
-                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
-                                        {{ $item->estado }}</div>
-                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
-                                        {{ $item->site->nombre }}</div>
-                                    <div class="min-w-[100px] align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
-                                        {{ date('d/m/Y H:i', strtotime($item->fechaasignacion)) }}</div>
-                                        
-                                    <div class="max-w-[800px] table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
-                                        {{ $item->detalle }}</div>
-                                    <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
+                                <div class="table-row text-xs">
+                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                        {{ $item->id }}
+                                    </div>
+                                    <div class="min-w-[90px] align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                        {{ $item->siom }}
+                                    </div>
+                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                        {{ $item->estado }}
+                                    </div>
+                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                        {{ $item->site->nombre }}
+                                    </div>
+                                    <div class="min-w-[100px] align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                        {{ date('d/m/Y H:i', strtotime($item->fechaasignacion)) }}
+                                    </div>
+                                    <div class="max-w-[800px] table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                        {{-- {{ $item->detalle }} --}}
+                                        {{-- {{ str_limit($item->detalle, 50, '...') }} --}}
+                                        {{substr($item->detalle,0,75)}}
+                                        @if (strlen($item->detalle) > 75)
+                                            <span class="font-bold">...</span>
+                                        @endif
+                                    </div>
+                                    <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         <a class="btn btn-green" href="{{ route('ostickets.edit', $item->id) }}">
                                         {{-- <a class="btn btn-green" href=""> --}}
                                             <i class="fa-solid fa-edit"></i>
                                         </a>
                                     </div>
                                     @can('ostickets.destroy')
-                                        <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-sm text-gray-900 whitespace-no-wrap">
+                                        <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                             <a class="btn btn-red ml-2"
                                                 wire:click="$emit('deleteOsticket', {{ $item->id }})">
                                                 <i class="fa-solid fa-trash"></i>

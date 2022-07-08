@@ -7,6 +7,7 @@ use App\Models\Clockstop;
 use App\Models\Osticket;
 use App\Models\Site;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class EditOstickets extends Component
@@ -40,8 +41,8 @@ class EditOstickets extends Component
         'estado'                => 'required',
         'tipo'                  => 'required',
         'fechaasignacion'       => 'required',
-        'fechallegada'          => 'nullable',
-        'fechacierre'           => 'nullable',
+        'fechallegada'          => 'nullable|date|after:fechaasignacion|required_with:fechacierre',
+        'fechacierre'           => 'nullable|date|after:fechaasignacion|after:fechallegada',
         'remedy'                => 'nullable',
         'detalle'               => 'nullable',
         'cierre'                => 'nullable',
@@ -64,17 +65,27 @@ class EditOstickets extends Component
         $osticket       = null;
         $actiontable    = null;
         $clockstoptable = null;
+        // $clockstoptableaux = null;
 
         $osticket                   = Osticket::findOrFail($item);
         $localasociado              = Site::findOrFail($osticket->site_id);
         $osticket_id                = $osticket->id;
         $actiontable                = Action::select('actions.*', 'users.name')->join('users', 'users.id', '=', 'actions.user_id')->where('osticket_id', '=', $this->item)->orderby('created_at', 'desc')->get();
-        $clockstoptable             = Clockstop::select('clockstops.*')->where('osticket_id', '=', $this->item)->orderby('inicio', 'desc')->get();
-        
-        
+        // $clockstoptable             = Clockstop::select('clockstops.*')->where('osticket_id', '=', $this->item)->orderby('inicio', 'desc')->get();
+
+        $clockstoptable             = Clockstop::select(Clockstop::raw("id, inicio, fin, motivo, sustento, TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin))) AS duracion"))
+                                        ->where('osticket_id', '=', $this->item)->orderby('inicio', 'desc')->get();
+        // dd($clockstoptable );
+        $clockstopresults           = Clockstop::select(Clockstop::raw("count(distinct id) as cantidadpr, TIME_FORMAT(SEC_TO_TIME(sum(TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin))))),'%H:%i') as duracionpr, sum(TIMESTAMPDIFF(minute, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin)))) as duracionprmin "))
+                                        ->where('osticket_id', '=', $this->item)->orderby('inicio', 'desc')->get();
+        // dd($clockstopresults);
         $this->actiontable          = $actiontable;
         $this->osticket             = $osticket;
         $this->clockstoptable       = $clockstoptable;
+        $this->clockstopresults     = $clockstopresults;
+
+        $duracionticket = Carbon::parse($this->osticket->fechaasignacion)->diffInHours(Carbon::parse($this->osticket->fechacierre)) . ':' . Carbon::parse($this->osticket->fechaasignacion)->diff(Carbon::parse($this->osticket->fechacierre))->format('%I');
+        $duracionticket2 = Carbon::parse($this->osticket->fechaasignacion)->diffInMinutes(Carbon::parse($this->osticket->fechacierre));
 
         $this->site_id              = $this->osticket->site_id;
         $this->siom                 = $this->osticket->siom;
@@ -91,43 +102,50 @@ class EditOstickets extends Component
         $this->resultadoslar        = $this->osticket->resultadoslar;
         $this->osticket_id          = $osticket_id;
 
+        $this->duracionticket       = $duracionticket;
+        $this->cantidadpr           = $this->clockstopresults[0]->cantidadpr;
+        $this->duracionpr           = $this->clockstopresults[0]->duracionpr;
+        $this->duracionprmin       = $this->clockstopresults[0]->duracionprmin;
+        // dump($this->duracionpr, $this->duracionticket);
+        // dump($this->duracionprmin, $duracionticket2);
+        // dump($this->duracionprmin + $duracionticket2);
+
         $this->localzonal = $localasociado->zonal;
         $this->localnombre = $localasociado->nombre;
-        $this->localslap = $localasociado->slapresencia . ' DENTRO';
-        $this->localslar = $localasociado->slaresolucion . ' FUERA';
+        $this->localslap = $localasociado->slapresencia;
+        $this->localslar = $localasociado->slaresolucion;
         $this->localprioridad = $localasociado->prioridad;
+;
     }
 
     public function refrescar() {
-        $osticket                   = Osticket::findOrFail($this->item);
-        $localasociado              = Site::findOrFail($osticket->site_id);
-        $osticket_id                = $osticket->id;
-        $actiontable                = Action::select('actions.*', 'users.name')->join('users', 'users.id', '=', 'actions.user_id')->where('osticket_id', '=', $this->item)->orderby('created_at', 'desc')->get();
-        $clockstoptable             = Clockstop::select('clockstops.*')->where('osticket_id', '=', $this->item)->orderby('inicio', 'desc')->get();
-        $this->actiontable          = $actiontable;
-        $this->osticket             = $osticket;
-        $this->clockstoptable       = $clockstoptable;
+        // $osticket                   = Osticket::findOrFail($this->item);
+        // $localasociado              = Site::findOrFail($osticket->site_id);
+        // $osticket_id                = $osticket->id;
+        // $actiontable                = Action::select('actions.*', 'users.name')->join('users', 'users.id', '=', 'actions.user_id')->where('osticket_id', '=', $this->item)->orderby('created_at', 'desc')->get();
+        // $this->actiontable          = $actiontable;
+        // $this->osticket             = $osticket;
 
-        $this->site_id              = $this->osticket->site_id;
-        $this->siom                 = $this->osticket->siom;
-        $this->estado               = $this->osticket->estado;
-        $this->tipo                 = $this->osticket->tipo;
-        $this->fechaasignacion      = $this->osticket->fechaasignacion;
-        $this->fechallegada         = $this->osticket->fechallegada;
-        $this->fechacierre          = $this->osticket->fechacierre;
-        $this->remedy               = $this->osticket->remedy;
-        $this->detalle              = $this->osticket->detalle;
-        $this->cierre               = $this->osticket->cierre;
-        $this->categoria            = $this->osticket->categoria;
-        $this->resultadoslap        = $this->osticket->resultadoslap;
-        $this->resultadoslar        = $this->osticket->resultadoslar;
-        $this->osticket_id          = $osticket_id;
+        // $this->site_id              = $this->osticket->site_id;
+        // $this->siom                 = $this->osticket->siom;
+        // $this->estado               = $this->osticket->estado;
+        // $this->tipo                 = $this->osticket->tipo;
+        // $this->fechaasignacion      = $this->osticket->fechaasignacion;
+        // $this->fechallegada         = $this->osticket->fechallegada;
+        // $this->fechacierre          = $this->osticket->fechacierre;
+        // $this->remedy               = $this->osticket->remedy;
+        // $this->detalle              = $this->osticket->detalle;
+        // $this->cierre               = $this->osticket->cierre;
+        // $this->categoria            = $this->osticket->categoria;
+        // $this->resultadoslap        = $this->osticket->resultadoslap;
+        // $this->resultadoslar        = $this->osticket->resultadoslar;
+        // $this->osticket_id          = $osticket_id;
 
-        $this->localzonal = $localasociado->zonal;
-        $this->localnombre = $localasociado->nombre;
-        $this->localslap = $localasociado->slapresencia . ' DENTRO';
-        $this->localslar = $localasociado->slaresolucion . ' FUERA';
-        $this->localprioridad = $localasociado->prioridad;
+        // $this->localzonal = $localasociado->zonal;
+        // $this->localnombre = $localasociado->nombre;
+        // $this->localslap = $localasociado->slapresencia . ' DENTRO';
+        // $this->localslar = $localasociado->slaresolucion . ' FUERA';
+        // $this->localprioridad = $localasociado->prioridad;
     }
 
 
@@ -137,11 +155,29 @@ class EditOstickets extends Component
         $this->validate();
         $preFechaAsignacion = null;
         $preFechaLlegada = null;
-        $proFechaCierre = null;
+        $preFechaCierre = null;
+
 
         if (!empty($this->fechaasignacion)) $preFechaAsignacion = Carbon::parse($this->fechaasignacion)->format('Y-m-d H:i:s');
         if (!empty($this->fechallegada)) $preFechaLlegada = Carbon::parse($this->fechallegada)->format('Y-m-d H:i:s');
-        if (!empty($this->fechacierre)) $proFechaCierre = Carbon::parse($this->fechacierre)->format('Y-m-d H:i:s');
+        if (!empty($this->fechacierre)) $preFechaCierre = Carbon::parse($this->fechacierre)->format('Y-m-d H:i:s');
+
+        // if (empty($this->fechallegada)) 
+
+        // if (!empty($this->fechacierre)) {
+        //     if ((!empty($this->fechallegada) && $this->fechacierre < $this->fechallegada) || (empty($this->fechallegada)))
+        //         dd($this->fechallegada, $preFechaLlegada);    
+        //         $this->emit('alertOk', 'Revisar consistencia de fecha de cierre', 'error');
+        //     } else {
+        //         dump($this->fechaasignacion, $this->fechallegada, $this->fechacierre);
+        //         dump($preFechaAsignacion, $preFechaLlegada, $preFechaCierre);
+        //         $preFechaCierre = Carbon::parse($this->fechacierre)->format('Y-m-d H:i:s');
+        //     }
+
+        // if (!empty($this->fechacierre)) $preFechaCierre = Carbon::parse($this->fechacierre)->format('Y-m-d H:i:s');
+
+        // dump($preFechaAsignacion, $preFechaLlegada, $preFechaCierre, $preFechaLlegada < $preFechaCierre);
+
         $this->osticket->update([
             'site_id'           => $this->site_id,
             'siom'              => $this->siom,
@@ -149,7 +185,7 @@ class EditOstickets extends Component
             'tipo'              => $this->tipo,
             'fechaasignacion'   => $preFechaAsignacion,
             'fechallegada'      => $preFechaLlegada,
-            'fechacierre'       => $proFechaCierre,
+            'fechacierre'       => $preFechaCierre,
             'remedy'            => $this->remedy,
             'detalle'           => $this->detalle,
             'cierre'            => $this->cierre,
@@ -182,7 +218,15 @@ class EditOstickets extends Component
         $this->refrescar();
     }
 
+    public function editClockstop(Clockstop $clockstop) {
+        $this->clockstop = $clockstop;
+        $this->open_editclockstop = true;
+        $this->finanteriorpr      = empty($this->clockstoptable->where('inicio', '<', $this->clockstop->inicio)->sortByDesc('inicio')->first())  ? null : $this->clockstoptable->where('inicio', '<', $this->clockstop->inicio)->sortByDesc('inicio')->first()->fin;
+        $this->iniciosiguientepr = empty($this->clockstoptable->where('inicio', '>', $this->clockstop->inicio)->sortByDesc('inicio')->last()) ? null : $this->clockstoptable->where('inicio', '>', $this->clockstop->inicio)->sortByDesc('inicio')->first()->inicio;
+    }
+
     public function updateClockstop() {
+        // dd($this->finanteriorp);
         if ($this->clockstop->fin < $this->clockstop->inicio && !empty($this->clockstop->fin)) {
             $this->emit('alertOk', 'Fecha fin debe ser mayor a inicio', 'error');
         } elseif (  (empty($this->finanteriorpr)            || date('Y-m-d H:i', strtotime($this->finanteriorpr)) < date('Y-m-d H:i', strtotime($this->clockstop->inicio))) &&
@@ -200,13 +244,6 @@ class EditOstickets extends Component
         }
     }
 
-    public function editClockstop(Clockstop $clockstop) {
-        $this->clockstop = $clockstop;
-        $this->open_editclockstop = true;
-        $test = 
-        $this->finanteriorpr      = empty($this->clockstoptable->where('inicio', '<', $this->clockstop->inicio)->sortByDesc('inicio')->first())  ? null : $this->clockstoptable->where('inicio', '<', $this->clockstop->inicio)->sortByDesc('inicio')->first()->fin;
-        $this->iniciosiguientepr = empty($this->clockstoptable->where('inicio', '>', $this->clockstop->inicio)->sortByDesc('inicio')->last()) ? null : $this->clockstoptable->where('inicio', '>', $this->clockstop->inicio)->sortByDesc('inicio')->first()->inicio;
-    }
 
     public function deleteClockStop(Clockstop $clockstop) {
         $clockstop->delete();

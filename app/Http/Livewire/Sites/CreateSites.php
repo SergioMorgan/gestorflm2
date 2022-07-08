@@ -23,8 +23,8 @@ class CreateSites extends Component {
     public $selectFacturacion = ['FEE MENSUAL', 'RUTA', 'BAJO DEMANDA'];
     public $selectTipolocal = ['URA', 'URA/EBC', 'CT', 'EBC'];
     public $selectTipozona = ['URBANO', 'INTERURBANO', 'RURAL'];
-    public $selectSlapresencia = ['05:00', '08:00', '10:00', '35:00'];
-    public $selectSlaresolucion = ['07:30', '09:30', '15:30', '35:00'];
+    public $selectSlapresencia = ['03:00', '04:30', '06:30', '08:00', '08:30', '13:30', '18:30', '20:00', '35:00'];
+    public $selectSlaresolucion = ['06:00', '07:00', '09:00', '11:00', '11:30', '19:00', '20:00', '21:30', '32:00', '35:00'];
 
     //Reglas de validacion
     //FALTA EXTENDER

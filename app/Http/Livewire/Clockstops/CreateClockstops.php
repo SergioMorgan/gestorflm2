@@ -23,10 +23,13 @@ class CreateClockstops extends Component
     }
 
     protected $rules = [
-        'inicio'    => 'required',
+        'inicio'    => 'required|date|required_with:fin',
         'fin'       => 'nullable|date|after:inicio',
         'motivo'    => 'required',
         'sustento'  => 'required',
+
+
+
     ];
 
     public function save() {
@@ -35,6 +38,7 @@ class CreateClockstops extends Component
         If ((empty($lastclockstop->inicio) || !empty($lastclockstop->fin)) && 
             (date('Y-m-d H:i', strtotime($this->inicio)) > date('Y-m-d H:i', strtotime($this->fechaasignacion)))
             ) {
+            if (empty($this->fin)) $this->fin = null;
             Clockstop::create([
                 'inicio'        => $this->inicio,
                 'fin'           => $this->fin,
