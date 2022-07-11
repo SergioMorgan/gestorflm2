@@ -34,26 +34,44 @@ class ShowDashboard extends Component
 
     public function render() {
         if ($this->readyToLoad) {
-            $ostickets = Osticket::select( Osticket::raw("
+            $osticketsPendientes = Osticket::select( Osticket::raw("
                             COUNT(clockstops.id) as cantidadpr,
                             COUNT(clockstops.inicio) as prsconinicio,
                             COUNT(clockstops.fin) as prsconfin,
                             sum(TIMESTAMPDIFF(second, clockstops.inicio, (if(clockstops.fin is null, convert_tz(now(), '+00:00','+00:00'), clockstops.fin)))) AS duraciondepr,
                             sites.zonal as zonal, sites.nombre as nombre, sites.prioridad as prioridad, sites.slaresolucion as sla, 
-                            ostickets.siom as siom, ostickets.estado as estado, ostickets.fechaasignacion as fechaasignacion, ostickets.fechacierre as fechacierre, 
+                            ostickets.id as idsiom, ostickets.siom as siom, ostickets.estado as estado, ostickets.fechaasignacion as fechaasignacion, ostickets.fechacierre as fechacierre, 
                             TIMESTAMPDIFF(second, ostickets.fechaasignacion, (if(ostickets.fechacierre is null, convert_tz(now(), '+00:00','+00:00'), ostickets.fechacierre))) AS duracionsinpr
                         "))
                         ->join('sites', 'sites.id', '=', 'ostickets.site_id')
                         ->leftjoin('clockstops', 'clockstops.osticket_id', '=', 'ostickets.id')
                         ->where('ostickets.estado', '=', 'PENDIENTE')
+                        // ->orwhere('ostickets.estado', '=', 'RECHAZADO')
+                        ->groupby('ostickets.id')
+                        ->orderby('siom', 'desc')
+                        ->get();
+
+            $osticketsRechazados = Osticket::select( Osticket::raw("
+                            COUNT(clockstops.id) as cantidadpr,
+                            COUNT(clockstops.inicio) as prsconinicio,
+                            COUNT(clockstops.fin) as prsconfin,
+                            sum(TIMESTAMPDIFF(second, clockstops.inicio, (if(clockstops.fin is null, convert_tz(now(), '+00:00','+00:00'), clockstops.fin)))) AS duraciondepr,
+                            sites.zonal as zonal, sites.nombre as nombre, sites.prioridad as prioridad, sites.slaresolucion as sla, 
+                            ostickets.id as idsiom, ostickets.siom as siom, ostickets.estado as estado, ostickets.fechaasignacion as fechaasignacion, ostickets.fechacierre as fechacierre, 
+                            TIMESTAMPDIFF(second, ostickets.fechaasignacion, (if(ostickets.fechacierre is null, convert_tz(now(), '+00:00','+00:00'), ostickets.fechacierre))) AS duracionsinpr
+                        "))
+                        ->join('sites', 'sites.id', '=', 'ostickets.site_id')
+                        ->leftjoin('clockstops', 'clockstops.osticket_id', '=', 'ostickets.id')
+                        // ->where('ostickets.estado', '=', 'PENDIENTE')
                         ->orwhere('ostickets.estado', '=', 'RECHAZADO')
                         ->groupby('ostickets.id')
                         ->orderby('siom', 'desc')
                         ->get();
         } else {
-            $ostickets = [];
+            $osticketsPendientes = [];
+            $osticketsRechazados = [];
         }
-        return view('livewire.show-dashboard', compact('ostickets'));
+        return view('livewire.show-dashboard', compact('osticketsPendientes', 'osticketsRechazados'));
     }
 
     public function loadOstickets() {
