@@ -115,13 +115,12 @@
                                     <div class="min-w-[100px] align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ date('d/m/Y H:i', strtotime($item->fechaasignacion)) }}
                                     </div>
-                                    <div class="max-w-[800px] table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        {{-- {{ $item->detalle }} --}}
-                                        {{-- {{ str_limit($item->detalle, 50, '...') }} --}}
-                                        {{substr($item->detalle,0,75)}}
+                                    <div class=" break-all max-w-[800px] table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                        {{ $item->detalle }}
+                                        {{-- {{substr($item->detalle,0,75)}}
                                         @if (strlen($item->detalle) > 75)
                                             <span class="font-bold">...</span>
-                                        @endif
+                                        @endif --}}
                                     </div>
                                     <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         <a class="btn btn-green" href="{{ route('ostickets.edit', $item->id) }}">

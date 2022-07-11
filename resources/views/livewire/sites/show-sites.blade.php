@@ -131,7 +131,7 @@
                                                 alt="">
                                         @endif --}}
 
-                                        @switch($item->estado)
+                                    @switch($item->estado)
                                         @case('ACTIVO')
                                             <div
                                                 class="mx-4 flex place-content-center text-xs font-bold bg-green-400 text-gray-900 whitespace-no-wrap">

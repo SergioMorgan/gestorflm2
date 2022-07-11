@@ -22,9 +22,9 @@ class DatabaseSeeder extends Seeder
     public function run() {
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
-        Site::factory(4000)->create();
-        Osticket::factory(1000)->create();
-        Action::factory(4000)->create();
-        Clockstop::factory(1500)->create();
+        // Site::factory(4000)->create();
+        // Osticket::factory(1000)->create();
+        // Action::factory(4000)->create();
+        // Clockstop::factory(1500)->create();
     }
 }

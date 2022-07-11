@@ -76,14 +76,14 @@ class EditOstickets extends Component
         $clockstoptable             = Clockstop::select(Clockstop::raw("id, inicio, fin, motivo, sustento, TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin))) AS duracion"))
                                         ->where('osticket_id', '=', $this->item)->orderby('inicio', 'desc')->get();
         // dd($clockstoptable );
-        $clockstopresults           = Clockstop::select(Clockstop::raw("count(distinct id) as cantidadpr, TIME_FORMAT(SEC_TO_TIME(sum(TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin))))),'%H:%i') as duracionpr, sum(TIMESTAMPDIFF(minute, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin)))) as duracionprmin "))
+        $clockstopresults           = Clockstop::select(Clockstop::raw("count(distinct id) as cantidadpr, TIME_FORMAT(SEC_TO_TIME(sum(TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin))))),'%H:%i') as duracionpr, sum(TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin)))) as duracionprseg "))
                                         ->where('osticket_id', '=', $this->item)->orderby('inicio', 'desc')->get();
         // dd($clockstopresults);
         $this->actiontable          = $actiontable;
         $this->osticket             = $osticket;
         $this->clockstoptable       = $clockstoptable;
         $this->clockstopresults     = $clockstopresults;
-
+        // dump($clockstopresults);
         $duracionticket = Carbon::parse($this->osticket->fechaasignacion)->diffInHours(Carbon::parse($this->osticket->fechacierre)) . ':' . Carbon::parse($this->osticket->fechaasignacion)->diff(Carbon::parse($this->osticket->fechacierre))->format('%I');
         $duracionticket2 = Carbon::parse($this->osticket->fechaasignacion)->diffInMinutes(Carbon::parse($this->osticket->fechacierre));
 
@@ -104,7 +104,7 @@ class EditOstickets extends Component
 
         $this->duracionticket       = $duracionticket;
         $this->cantidadpr           = $this->clockstopresults[0]->cantidadpr;
-        $this->duracionpr           = $this->clockstopresults[0]->duracionpr;
+        $this->duracionprseg           = $this->clockstopresults[0]->duracionprseg;
         $this->duracionprmin       = $this->clockstopresults[0]->duracionprmin;
         // dump($this->duracionpr, $this->duracionticket);
         // dump($this->duracionprmin, $duracionticket2);

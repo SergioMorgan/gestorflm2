@@ -14,9 +14,13 @@
                     <x-jet-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
                         Inicio
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('prueba') }}" :active="request()->routeIs('prueba')">
-                        Prueba
-                    </x-jet-nav-link>
+
+                    @can('dashboard.index')
+                        <x-jet-nav-link href="{{ route('dashboard.index') }}" :active="request()->routeIs('Dashboard.*')">
+                            Dashboard
+                        </x-jet-nav-link>
+                    @endcan
+
                     @can('ostickets.index')
                         <x-jet-nav-link href="{{ route('ostickets.index') }}" :active="request()->routeIs('ostickets.*')">
                             Tickets OS
@@ -179,9 +183,11 @@
                 Inicio
             </x-jet-responsive-nav-link>
 
-            <x-jet-responsive-nav-link href="{{ route('prueba') }}" :active="request()->routeIs('prueba')">
-                Prueba
-            </x-jet-responsive-nav-link>
+            @can('dashboard.index')
+                <x-jet-responsive-nav-link href="{{ route('dashboard.index') }}" :active="request()->routeIs('dashboard.*')">
+                    Dashboard
+                </x-jet-responsive-nav-link>
+            @endcan
 
             @can('ostickets.index')
                 <x-jet-responsive-nav-link href="{{ route('ostickets.index') }}" :active="request()->routeIs('ostickets.*')">

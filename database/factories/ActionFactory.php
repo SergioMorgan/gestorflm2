@@ -18,10 +18,10 @@ class ActionFactory extends Factory
      */
     public function definition()
     {
-        return [
-            'user_id'           => User::all()->random()->id,
-            'osticket_id'       => Osticket::all()->random()->id,
-            'detalle'            => $this->faker->paragraph($nbSentences = 3, $variableNbSentences = true),
-        ];
+        // return [
+        //     'user_id'           => User::all()->random()->id,
+        //     'osticket_id'       => Osticket::all()->random()->id,
+        //     'detalle'            => $this->faker->paragraph($nbSentences = 3, $variableNbSentences = true),
+        // ];
     }
 }

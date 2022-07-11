@@ -15,24 +15,24 @@ return new class extends Migration
     {
         Schema::create('sites', function (Blueprint $table) {
             $table->id();
-            $table->string('localid', 10)->unique();
+            $table->string('localid', 20)->unique();
             $table->string('zonal', 20);
-            $table->string('nombre', 50);
+            $table->string('nombre', 100);
             $table->string('estado', 20);
             $table->string('clasificacion', 20)->nullable();
             $table->string('prioridad', 20)->nullable();
             $table->string('facturacion', 50)->nullable();
             $table->string('tipolocal', 50)->nullable();
             $table->string('tipozona', 20)->nullable();
-            $table->decimal('latitud', $precision = 10, $scale = 8)->nullable();
-            $table->decimal('longitud', $precision = 10, $scale = 8)->nullable();
+            $table->decimal('latitud', $precision = 16, $scale = 14)->nullable();
+            $table->decimal('longitud', $precision = 16, $scale = 14)->nullable();
             $table->string('suministro')->nullable();
             $table->string('distribuidor')->nullable();
             $table->string('torrera')->nullable();
             $table->string('departamento', 20)->nullable();
             $table->string('provincia', 100)->nullable();
             $table->string('distrito', 100)->nullable();
-            $table->string('direccion')->nullable();
+            $table->text('direccion')->nullable();
             $table->string('urlimagen')->nullable();
             $table->text('observaciones')->nullable();
             $table->string('slapresencia', 10)->nullable();

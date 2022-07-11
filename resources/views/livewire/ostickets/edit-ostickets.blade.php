@@ -13,7 +13,7 @@
                 @endcan
             </div>
             <div>
-            <div x-data="indicadores()"  x-init="start()">
+            <div x-data="indicadores()"  x-init="kpidetalleos()">
 
                 <!-------------- DATOS DE LOCAL ---------------------->
                 <div class="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
@@ -56,7 +56,7 @@
                     </div>
                     <div class="{{ $colorEtiquetas }}">
                         <x-jet-label value="Duracion de PR" />
-                        <x-jet-input type="text" class="w-full text-sm" id="duracionpr" wire:model.defer="duracionpr" readonly/>
+                        <x-jet-input type="text" class="w-full text-sm" id="duracionprseg" wire:model.defer="duracionprseg" readonly/>
                     </div>
                     <div class="{{ $colorEtiquetas }}">
                         <x-jet-label value="Res. Toda Causa" />
@@ -339,7 +339,7 @@
         </div>
     </div>
 
-    <script>
+    {{-- <script>
         function prueba() {
             return {
                 vars: {
@@ -367,7 +367,7 @@
                 },
             }
         }
-    </script>
+    </script> --}}
 
     @push('js')
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -485,15 +485,16 @@
     </x-jet-dialog-modal>
 
 </div>
-
+{{-- 
 <script>
     function indicadores() {
         return {
             start() {
                 let $slaresolucion  = this.convertirSegundos(document.getElementById('localslar').value);
                 let $duracionsinpr  = this.convertirSegundos(document.getElementById('duracionticket').value);
-                let $duracionpr     = this.convertirSegundos(document.getElementById('duracionpr').value);
+                let $duracionpr     = document.getElementById('duracionprseg').value;
                 let $duracionconpr  = $duracionsinpr - $duracionpr + 0;
+                // console.log($duracionpr);
                 document.getElementById('duracionticketconpr').value = this.convertirHora($duracionconpr+0);
 
                 if (($slaresolucion) >($duracionsinpr)) {
@@ -506,6 +507,7 @@
                 } else {
                     document.getElementById('resultadoconpr').value = 'FUERA';
                 }
+                document.getElementById('duracionprseg').value = this.convertirHora(document.getElementById('duracionprseg').value);
             },
 
             convertirSegundos($valor) {
@@ -525,4 +527,4 @@
             },
         }
     }
-</script>
+</script> --}}

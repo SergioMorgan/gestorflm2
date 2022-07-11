@@ -128,11 +128,33 @@
                             </td>
 
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+
+
+                                @switch($item->status)
+                                @case('ACTIVO')
+                                    <div
+                                        class="mx-4 flex place-content-center text-xs font-bold bg-green-400 text-gray-900 whitespace-no-wrap">
+                                        <p>{{ $item->status }}</p>
+                                    </div>
+                                @break
+
+                                @case('INACTIVO')
+                                    <div
+                                        class="mx-4 flex place-content-center text-xs font-bold bg-gray-500 text-gray-50 whitespace-no-wrap">
+                                        <p>{{ $item->status }}</p>
+                                    </div>
+                                @break
+
+
+                                @default
+                            @endswitch
+{{-- 
+
                                 @if ($item->status == "ACTIVO")
                                     <img class="object-fill h-8 w-16" src="/img/activeicon.png" alt="">
                                 @else
                                     <img class="object-fill h-8 w-16" src="/img/inactiveicon.png" alt="">
-                                @endif
+                                @endif --}}
                             </td>
 
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">

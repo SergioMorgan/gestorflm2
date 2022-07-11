@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/prueba', function () {
-    return view('prueba');
-})->name('prueba');
+// Route::get('/prueba', function () {
+//     return view('prueba');
+// })->name('prueba');
 
 Route::middleware([
     'auth:sanctum',
@@ -45,6 +45,7 @@ Route::middleware([
 // ])->group(function () {
 //     Route::resource('sites', SiteController::class);
 // });
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('dashboard',                \App\Http\Livewire\ShowDashboard::class)                ->name('dashboard.index');
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites',                    \App\Http\Livewire\sites\ShowSites::class)              ->name('sites.index');
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites/create',             \App\Http\Livewire\sites\CreateSites::class)            ->name('sites.create');
