@@ -10,6 +10,12 @@ module.exports = {
 
     theme: {
         extend: {
+            colors: {
+                'flmceleste': '#CAEBF2',
+                'flmgris': '#A9A9A9',
+                'flmmelon': '#FF383F',
+                'flmneutral': '#EFEFEF',
+            },    
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },

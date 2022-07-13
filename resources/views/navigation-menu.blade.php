@@ -16,7 +16,7 @@
                     </x-jet-nav-link>
 
                     @can('dashboard.index')
-                        <x-jet-nav-link href="{{ route('dashboard.index') }}" :active="request()->routeIs('Dashboard.*')">
+                        <x-jet-nav-link href="{{ route('dashboard.index') }}" :active="request()->routeIs('dashboard.*')">
                             Dashboard
                         </x-jet-nav-link>
                     @endcan

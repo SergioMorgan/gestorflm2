@@ -17,7 +17,7 @@ class ShowUsers extends Component
     public $search = '';            // inicializa la barra de busqueda
     public $sort = 'id';            // inicializa criterio de orden
     public $direcion = 'desc';      // inicializa criterio de orden
-    public $cant='10';              // inicializa criterio de orden
+    public $cant='20';              // inicializa criterio de orden
     public $open_edit = false;      // controla aparicion de ventana modal
     public $readyToLoad = false;    //para aplarzar la carga
 
@@ -25,7 +25,7 @@ class ShowUsers extends Component
 
     //para que se refrlejen en la url los cambios en el filtro
     protected $queryString = [
-        'cant' => ['except' => '10'],
+        'cant' => ['except' => '20'],
         'sort' => ['except' => 'id'],
         'direcion' => ['except' => 'desc'],
         'search' => ['except' => ''],

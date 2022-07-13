@@ -2,9 +2,9 @@
     <!------VENTANA MODAL PARA LA CREACION, NOMBRE "OPEN"------>
     <!------BOTON ROJO DE CREACION------>
 
-    <x-jet-danger-button wire:click="$set('open',true)">
-        Crear
-    </x-jet-danger-button>
+    <x-jet-button wire:click="$set('open',true)"  class="bg-blue-700">
+        Crear nuevo ticket
+    </x-jet-button>
 
 
     <x-jet-dialog-modal wire:model="open">

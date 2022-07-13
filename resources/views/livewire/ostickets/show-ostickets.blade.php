@@ -3,8 +3,15 @@
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
             <div wire:init="loadOstickets">
 
-                <span>LISTADO DE TICKETS </span>
-                <div class="px-4 pb-4 flex items-center">
+
+                <div class="p-2 w-full flex justify-between bg-gray-800 text-white items-center">
+                    <span class="px-2 ">LISTADO DE TICKETS </span>
+                    @can('ostickets.create')
+                        @livewire('ostickets.create-ostickets')
+                    @endcan
+                </div>
+
+                <div class="p-2 flex items-center  bg-white text-gray-900">
                     <div class="flex items-center">
                         <span>Mostrar</span>
                         <select wire:model="cant" class="mx-2 form-control">
@@ -16,22 +23,15 @@
                         <span>entradas</span>
                     </div>
                     <x-jet-input type="text" wire:model="search" class="flex-1 mx-4" placeholder="buscar..." />
-                    @can('ostickets.create')
-                        @livewire('ostickets.create-ostickets')
-                    @endcan
+
                 </div>
 
                 @if (count($ostickets))
                     <div class="table w-full ">
                         <div class="table-header-group">
-                            <div class="table-row text-xs">
+                            <div class="table-row text-xs bg-gray-300 font-bold text-center text-gray-800">
 
-                                <div class="table-cell  text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider"
-                                    ">id
-                                </div>
-
-
-                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider"
+                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200    uppercase tracking-wider"
                                     wire:click="order('siom')">Siom
                                     @if ($sort == 'siom')
                                         @if ($direcion == 'asc')
@@ -43,7 +43,7 @@
                                         <i class="fas fa-sort float-right mt-1"></i>
                                     @endif
                                 </div>
-                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider"
+                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200  uppercase tracking-wider"
                                     wire:click="order('siom')">Estado
                                     @if ($sort == 'estado')
                                         @if ($direcion == 'asc')
@@ -56,7 +56,7 @@
                                     @endif
                                 </div>
 
-                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider"
+                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200  uppercase tracking-wider"
                                     wire:click="order('siom')">Local
                                     @if ($sort == 'nombre')
                                         @if ($direcion == 'asc')
@@ -69,7 +69,7 @@
                                     @endif
                                 </div>
 
-                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider"
+                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200  uppercase tracking-wider"
                                     wire:click="order('siom')">Inicio
                                     @if ($sort == 'fechaasignacion')
                                         @if ($direcion == 'asc')
@@ -82,16 +82,16 @@
                                     @endif
                                 </div>
 
-                                <div class="table-cell  text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider"
-                                    ">Detalle
+                                <div class="table-cell  px-3 py-3 border-b-2 border-gray-200 uppercase tracking-wider">
+                                    Detalle
                                 </div>
 
-                                <div class="col-span-2 table-cell px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider"
-                                    ">Editar
+                                <div class="col-span-2 table-cell px-3 py-3 border-b-2 border-gray-200  uppercase tracking-wider">
+                                    Editar
                                 </div>
                                 @can('ostickets.destroy')
-                                    <div class="col-span-2 table-cell px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider"
-                                        ">Borrar
+                                    <div class="col-span-2 table-cell px-3 py-3 border-b-2 border-gray-200  uppercase tracking-wider">
+                                        Borrar
                                     </div>
                                 @endcan
                             </div>
@@ -100,10 +100,8 @@
                         <div class="table-row-group">
                             @foreach ($ostickets as $item)
                                 <div class="table-row text-xs">
-                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        {{ $item->id }}
-                                    </div>
-                                    <div class="min-w-[90px] align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+
+                                    <div class="min-w-[90px] align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap font-bold">
                                         {{ $item->siom }}
                                     </div>
                                     <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
@@ -117,21 +115,15 @@
                                     </div>
                                     <div class=" break-all max-w-[800px] table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ $item->detalle }}
-                                        {{-- {{substr($item->detalle,0,75)}}
-                                        @if (strlen($item->detalle) > 75)
-                                            <span class="font-bold">...</span>
-                                        @endif --}}
                                     </div>
                                     <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        <a class="btn btn-green" href="{{ route('ostickets.edit', $item->id) }}">
-                                        {{-- <a class="btn btn-green" href=""> --}}
+                                        <a class="btn btn-green" href="{{ route('ostickets.edit', $item->id) }}" target="_blank">
                                             <i class="fa-solid fa-edit"></i>
                                         </a>
                                     </div>
                                     @can('ostickets.destroy')
                                         <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                            <a class="btn btn-red ml-2"
-                                                wire:click="$emit('deleteOsticket', {{ $item->id }})">
+                                            <a class="btn btn-red ml-2" wire:click="$emit('deleteOsticket', {{ $item->id }})">
                                                 <i class="fa-solid fa-trash"></i>
                                             </a>
                                         </div>

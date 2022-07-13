@@ -1,33 +1,23 @@
+
 @can('dashboard.index')
+
     <div class="max-w-7xl mx-auto sm:px-2 lg:px-4 py-4">
+        {{-- <script>
+            window.document.title = 'Dashboard';
+        </script> --}}
+
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
             <div wire:init="loadOstickets" >
 
 
-                <div class="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
-                    PENDIENTES
-                    {{-- <div class="bg-blue-300"> <!-- sm:col-span-1	md:col-span-1"> -->
-                        <x-jet-label value="Cantidad pendientes" />
-                        <x-jet-input type="text" class="w-full text-sm" readonly/>
-                    </div>
-                    <div class="bg-blue-300">
-                        <x-jet-label value="Fuera objetivo" />
-                        <x-jet-input type="text" class="w-full text-sm" readonly/>
-                    </div>
-                    <div class="bg-blue-300">
-                        <x-jet-label value="Cantidad rechazados" />
-                        <x-jet-input type="text" class="w-full text-sm" readonly/>
-                    </div> --}}
+                <div class="p-2 w-full flex justify-between bg-gray-800 text-white items-center">
+                    <span class="w-full px-2 font-bold text-center">PENDIENTES</span>
                 </div>
-
 
                 @if (count($osticketsPendientes))
                     <div class="table w-full ">
                         <div class="table-header-group">
                             <div class="table-row text-xs">
-                                <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
-                                    Estado
-                                </div>
                                 <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
                                     Siom
                                 </div>
@@ -44,14 +34,13 @@
                                     Inicio
                                 </div>
                                 <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
-                                    Duracion neta
+                                    Dur. neta
                                 </div>
                                 <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
                                     SLA
                                 </div>
-
                                 <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
-                                    Duracion con PR
+                                    Dur. con PR
                                 </div>
                                 <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
                                     EstadoPR
@@ -61,33 +50,11 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="table-row-group">
                             @foreach ($osticketsPendientes as $item)
                                 <div class="table-row text-xs">
-                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        @switch($item->estado)
-                                        @case('PENDIENTE')
-                                            <div
-                                                class="mx-4 flex place-content-center text-xs bg-green-300 text-gray-900 whitespace-no-wrap">
-                                                <p>{{ $item->estado }}</p>
-                                            </div>
-                                        @break
-                                        @case('RECHAZADO')
-                                                <div
-                                                class="mx-4 flex place-content-center text-xs bg-purple-300 text-gray-900 whitespace-no-wrap">
-                                                <p>{{ $item->estado }}</p>
-                                            </div>
-                                        @break
-                                        @default
-                                    @endswitch
-
-                                    </div>
                                     <div class="min-w-[90px] align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        <a href="{{ route('ostickets.edit', $item->idsiom) }}"> {{ $item->siom }} </a>
-                                        
-                                        
-                                        {{-- {{ $item->siom }} --}}
+                                        <a href="{{ route('ostickets.edit', $item->idsiom) }}" target="_blank"> {{ $item->siom }} </a>
                                     </div>
                                     <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ $item->zonal }}
@@ -101,15 +68,12 @@
                                     <div class="min-w-[100px] align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ date('d/m/Y H:i', strtotime($item->fechaasignacion)) }}
                                     </div>
-                                    
                                     <div id ="duracionsinpr" class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ convertirHora($item->duracionsinpr) }}
                                     </div>
                                     <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ $item->sla}}
                                     </div>
-
-
                                     <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ convertirHora($item->duracionsinpr - $item->duraciondepr) }}
                                     </div>
@@ -137,16 +101,15 @@
                     </div>
                 @endif
 
-                <div class="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
-                    RECHAZADOS
+                <div class="p-4 bg-white"></div>
+
+                <div class="p-2 w-full flex justify-between bg-gray-800 text-white items-center">
+                    <span class="w-full px-2 font-bold text-center">RECHAZADOS</span>
                 </div>
                 @if (count($osticketsRechazados))
                     <div class="table w-full ">
                         <div class="table-header-group">
                             <div class="table-row text-xs">
-                                <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
-                                    Estado
-                                </div>
                                 <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
                                     Siom
                                 </div>
@@ -163,20 +126,7 @@
                                     Inicio
                                 </div>
                                 <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
-                                    Duracion neta
-                                </div>
-                                <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
-                                    SLA
-                                </div>
-
-                                <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
-                                    Duracion con PR
-                                </div>
-                                <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
-                                    EstadoPR
-                                </div>
-                                <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
-                                    KPI
+                                    Detalle
                                 </div>
                             </div>
                         </div>
@@ -184,26 +134,8 @@
                         <div class="table-row-group">
                             @foreach ($osticketsRechazados as $item)
                                 <div class="table-row text-xs">
-                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        @switch($item->estado)
-                                        @case('PENDIENTE')
-                                            <div
-                                                class="mx-4 flex place-content-center text-xs bg-green-300 text-gray-900 whitespace-no-wrap">
-                                                <p>{{ $item->estado }}</p>
-                                            </div>
-                                        @break
-                                        @case('RECHAZADO')
-                                                <div
-                                                class="mx-4 flex place-content-center text-xs bg-purple-300 text-gray-900 whitespace-no-wrap">
-                                                <p>{{ $item->estado }}</p>
-                                            </div>
-                                        @break
-                                        @default
-                                    @endswitch
-
-                                    </div>
                                     <div class="min-w-[90px] align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        {{ $item->siom }}
+                                        <a href="{{ route('ostickets.edit', $item->idsiom) }}" target="_blank"> {{ $item->siom }} </a>
                                     </div>
                                     <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ $item->zonal }}
@@ -217,31 +149,8 @@
                                     <div class="min-w-[100px] align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ date('d/m/Y H:i', strtotime($item->fechaasignacion)) }}
                                     </div>
-                                    
-                                    <div id ="duracionsinpr" class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        {{ convertirHora($item->duracionsinpr) }}
-                                    </div>
-                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        {{ $item->sla}}
-                                    </div>
-
-
-                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        {{ convertirHora($item->duracionsinpr - $item->duraciondepr) }}
-                                    </div>
-                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        {{ $item->prsconinicio == 0 ? 'NO TIENE PR' : ($item->prsconinicio > $item->prsconfin ? 'PR ABIERTA' : 'PR CERRADA') }}
-                                    </div>
-                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        @if (($item->duracionsinpr - $item->duraciondepr) > convertirSegundos($item->sla))
-                                            <div class="mx-4 flex place-content-center text-xs bg-red-500 text-white whitespace-no-wrap">
-                                                <p>FUERA</p>
-                                            </div>
-                                        @else
-                                            <div class="mx-4 flex place-content-center text-xs bg-green-300 text-gray-900 whitespace-no-wrap">
-                                                <p>DENTRO</p>
-                                            </div>
-                                        @endif
+                                    <div id ="duracionsinpr" class="break-all align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                        {{ $item->detalle }}
                                     </div>
                                 </div>
                             @endforeach

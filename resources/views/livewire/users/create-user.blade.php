@@ -2,38 +2,39 @@
     <!------VENTANA MODAL PARA LA CREACION, NOMBRE "OPEN"------>
     <!------BOTON ROJO DE CREACION------>
 
-    <x-jet-danger-button wire:click="$set('open',true)">
+    <x-jet-button wire:click="$set('open',true)" class="bg-blue-700">
         Crear nuevo usuario
-    </x-jet-danger-button>
+    </x-jet-button>
 
     <!------VENTANA MODAL PRINCIPAL------>
     <x-jet-dialog-modal wire:model="open">
 
         <!---- TITULO ---->
-        <x-slot name="title">
-            Crear nuevo usuario
+        <x-slot name="title" >
+            <span class="text-gray-900"> Crear nuevo usuario</span>
+            
         </x-slot>
 
         <!----  CONTENIDO ---->
         <x-slot name="content">
-            <div class="mb-4">
+            <div class="mb-4 text-gray-900">
                 <x-jet-label value="Nombre" />
                 <!----------Usamos DEFER para evitar que se dispare una solicitud de actualizacion si cambiamos el valor del imput-------->
                 <x-jet-input type="text" class="w-full" wire:model.defer="name" />
                 <!---- input error muestra un mensaje de error asociado al campo con el mismo nombre del imput ---->
                 <x-jet-input-error for="name" />
             </div>
-            <div class="mb-4">
+            <div class="mb-4 text-gray-900">
                 <x-jet-label value="Correo electrónico" />
                 <x-jet-input type="email" class="w-full" wire:model.defer="email" />
                 <x-jet-input-error for="email" />
             </div>
-            <div class="mb-4">
+            <div class="mb-4 text-gray-900">
                 <x-jet-label value="Password" />
                 <x-jet-input type="password" class="w-full" wire:model.defer="password" />
                 <x-jet-input-error for="password" />
             </div>
-            <div class="mb-4">
+            <div class="mb-4 text-gray-900">
                 <x-jet-label value="Estado" />
                 <select class="form-control w-full" wire:model.defer="status">
                     <option value="ACTIVO" selected>
