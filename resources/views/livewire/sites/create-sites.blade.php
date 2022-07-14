@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="border-b-2 px-4 py-4 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-8 gap-2">
-                    <div class="sm:row-span-1">
+                    <div class="sm:row-span-1 ">
                         <x-jet-label value="ID Local" />
                         <x-jet-input type="text" class="w-full text-sm" wire:model.defer="localid" />
                         <x-jet-input-error for="localid" />
@@ -151,7 +151,7 @@
                     </div>
                     <div class="text-xs  sm:col-span-2 lg:col-span-4">
                         <x-jet-label class="text-xs" value="Imagen" />
-                        <x-jet-input type="text" class="w-full text-sm" wire:model.defer="urlimagen" />
+                        <x-jet-input type="text" class="w-full" wire:model.defer="urlimagen" />
                         <x-jet-input-error for="urlimagen" />
                     </div>
                 </div>

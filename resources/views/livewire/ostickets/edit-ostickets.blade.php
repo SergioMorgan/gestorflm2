@@ -1,6 +1,7 @@
 <div>
     <div class="max-w-7xl mx-auto sm:px-2 lg:px-4 py-4">
         <div class="bg-gray-300 overflow-hidden shadow-xl sm:rounded-lg">
+
             @can('ostickets.create')
             <form wire:submit.prevent="submit">
             @endcan
@@ -13,79 +14,87 @@
                     @endcan
                 </div>
 
-                <div x-data="indicadores()"  x-init="kpidetalleos()">
+                <div >
 
                     <!-------------- DATOS DE LOCAL ---------------------->
-                    <div class="border-b-2 p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-7 lg:grid-cols-7 gap-2 text-sm">
+                    <div class="border-b-2 p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-7 lg:grid-cols-7 gap-2">
                         <div class="sm:col-span-1	md:col-span-1">
                             <x-jet-label value="ID local" />
-                            <x-jet-input type="text" class="w-full" wire:model.defer="site_id" />
+                            <x-jet-input type="text" class="w-full text-sm" wire:model.defer="site_id" />
                             <x-jet-input-error for="site_id" />
                         </div>
                         <div class="">
                             <x-jet-label value="Zonal" />
-                            <x-jet-input type="text" class="w-full" wire:model.defer="localzonal" readonly/>
+                            <x-jet-input type="text" class="w-full text-sm" wire:model.defer="localzonal" readonly/>
                         </div>
                         <div class="sm:col-span-2	md:col-span-3 lg:col-span-2">
                             <x-jet-label value="Nombre" />
-                            <x-jet-input type="text" class="w-full" wire:model.defer="localnombre" readonly/>
+                            <x-jet-input type="text" class="w-full text-sm" wire:model.defer="localnombre" readonly/>
                         </div>
                         <div class="sm:col-span-2 lg:col-span-1">
                             <x-jet-label value="Prioridad" />
-                            <x-jet-input type="text" class="w-full" wire:model.defer="localprioridad" readonly/>
+                            <x-jet-input type="text" class="w-full text-sm" wire:model.defer="localprioridad" readonly/>
                         </div>
                         <div class="">
                             <x-jet-label value="Presencia" />
-                            <x-jet-input type="text" class="w-full" wire:model.defer="localslap" readonly/>
+                            <x-jet-input type="text" class="w-full text-sm" wire:model.defer="localslap" readonly/>
                         </div>
                         <div class="">
                             <x-jet-label value="Resolucion" />
-                            <x-jet-input type="text" class="w-full" id="localslar" wire:model.defer="localslar" readonly/>
+                            <x-jet-input type="text" class="w-full text-sm" id="localslar" wire:model.defer="localslar" readonly/>
                         </div>
                         <div class="md:col-span-2 lg:col-span-1">
                             <x-jet-label value="Duracion sin PR" />
-                            <x-jet-input type="text" class="w-full" id="duracionticket" wire:model.defer="duracionticket" readonly/>
+                            <x-jet-input type="text" class="w-full text-sm" id="duracionticket" wire:model.defer="duracionticket" readonly/>
                         </div>
                         <div class="md:col-span-2 lg:col-span-1">
                             <x-jet-label value="Duracion con PR" />
-                            <x-jet-input type="text" class="w-full" id="duracionticketconpr" readonly/>
+                            {{-- <x-jet-input type="text" class="w-full text-sm" id="duracionticketconpr" readonly/> --}}
+                            <x-jet-input type="text" class="w-full text-sm" value="{{convertirHora(convertirSegundos($this->duracionticket) - $this->duracionprseg)}}" readonly/>
                         </div>
                         <div class="">
                             <x-jet-label value="Cantidad de PR" />
-                            <x-jet-input type="text" class="w-full" wire:model.defer="cantidadpr" readonly/>
+                            <x-jet-input type="text" class="w-full text-sm" wire:model.defer="cantidadpr" readonly/>
                         </div>
                         <div class="md:col-span-2 lg:col-span-1">
                             <x-jet-label value="Duracion de PR" />
-                            <x-jet-input type="text" class="w-full" id="duracionprseg" wire:model.defer="duracionprseg" readonly/>
+                            <x-jet-input type="text" class="w-full text-sm" value="{{convertirHora($this->duracionprseg)}}" readonly/>
+                            {{-- <x-jet-input type="text" class="w-full text-sm" id="duracionprseg" wire:model.defer="duracionprseg" readonly/>  --}}
                         </div>
                         <div class="md:col-span-2 lg:col-span-1">
                             <x-jet-label value="Res. Toda Causa" />
-                            <x-jet-input type="text" class="w-full" id="resultadotodacausa" readonly/>
+                            {{-- <x-jet-input type="text" class="w-full" id="resultadotodacausa" readonly/> --}}
+                            <x-jet-input type="text" class="w-full text-sm" value="{{calculoSla($this->estado, convertirSegundos($this->localslar),convertirSegundos($this->duracionticket) )}}" readonly/>
                         </div>
                         <div class="md:col-span-2 lg:col-span-1">
                             <x-jet-label value="Resul. c/Pr" />
-                            <x-jet-input type="text" class="w-full" id="resultadoconpr" readonly/>
+                            {{-- <x-jet-input type="text" class="w-full text-sm" id="resultadoconpr" readonly/> --}}
+                            <x-jet-input type="text" class="w-full text-sm" id="resultadoconpr" value="{{calculoSla($this->estado, convertirSegundos($this->localslar),(convertirSegundos($this->duracionticket) - $this->duracionprseg) )}}"/>
                         </div>
                         <div class="sm:col-span-2 md:col-span-1 grid content-center">
-                            <x-jet-label value="+detalles" />
+                            <x-jet-label class="text-gray-300" value="." />
+                            <a class="btn btn-red inline-flex items-center justify-center  border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition"
+                            href="{{ route('sites.edit', $osticket->site_id) }}" target="_blank">
+                                Detalle local
+                            </a>
                         </div>
                     </div>
 
                     <!-------------- DATOS DE INICIO ---------------------->
-                    <div class="border-b-2 p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-10 gap-2 text-sm">
+                    <div class="border-b-2 p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-10 gap-2">
                         <div class="">
                             <x-jet-label value="Siom" />
-                            <x-jet-input type="text" class="w-full" wire:model.defer="siom" />
+                            <x-jet-input type="text" class="w-full text-sm" wire:model.defer="siom" />
                             <x-jet-input-error for="siom" />
                         </div>
                         <div class="lg:col-span-2">
                             <x-jet-label value="Remedy" />
-                            <x-jet-input type="text" class="w-full" wire:model.defer="remedy" />
+                            <x-jet-input type="text" class="w-full text-sm" wire:model.defer="remedy" />
                             <x-jet-input-error for="remedy" />
                         </div>
                         <div class="md:col-span-2">
                             <x-jet-label value="Estado" />
-                            <select class="form-control w-full" wire:model.defer="estado">
+                            <select class="form-control w-full text-sm" wire:model.defer="estado">
                                 <option selected>Seleccione estado</option>
                                 <?php foreach($selectEstado as $item): ?>
                                 <option value="<?= $item ?>"> <?= $item ?> </option>
@@ -95,12 +104,12 @@
                         </div>
                         <div class="lg:col-span-2">
                             <x-jet-label value="Fecha de asignacion" />
-                            <x-jet-input type="datetime-local" class="w-full" wire:model.defer="fechaasignacion" id="fechaasignacion"/>
+                            <x-jet-input type="datetime-local" class="w-full text-sm" wire:model.defer="fechaasignacion" id="fechaasignacion"/>
                             <x-jet-input-error for="fechaasignacion" />
                         </div>
                         <div class="md:col-span-2">
                             <x-jet-label value="Tipo" />
-                            <select class="form-control w-full" wire:model.defer="tipo">
+                            <select class="form-control w-full text-sm" wire:model.defer="tipo">
                                 <option selected>Seleccione tipo</option>
                                 <?php foreach($selectTipo as $item): ?>
                                 <option value="<?= $item ?>"> <?= $item ?> </option>
@@ -109,12 +118,17 @@
                             <x-jet-input-error for="tipo" />
                         </div>
                         <div>
-                            <x-jet-label value="enviar wsap" />
-                            <x-jet-input type="text" class="w-full" />
+                            <x-jet-label class="text-gray-300" value="." />
+                            <a class="btn btn-red inline-flex items-center justify-center  border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition"
+                            wire:click="copiarDetalles()">
+                                Resumen
+                            </a>
                         </div>
+
+
                         <div class="sm:col-span-3 md:col-span-4 lg:col-span-10">
                             <x-jet-label value="Detalle" />
-                            <textarea class="form-control w-full" name="detalle" wire:model.defer="detalle" rows="4"></textarea>
+                            <textarea class="form-control w-full text-sm" id="detalle" name="detalle" wire:model.defer="detalle" rows="4"></textarea>
                             <x-jet-input-error for="detalle" />
                         </div>
                     </div>
@@ -128,7 +142,7 @@
                             @endcan
                         </div>
                         <div class="pt-4">
-                            <div class="table w-full ">
+                            <div class="table w-full">
                                 <div class="table-header-group">
                                     <div class="table-row text-sm">
                                         <div class="table-cell  text-center px-2 py-2 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 tracking-wider">
@@ -164,7 +178,7 @@
                                 <div class="table-row-group">
                                     @foreach ($clockstoptable as $item3)
                                         <div class="table-row text-sm">
-                                            <div class="align-middle text-left table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap text-xs">
+                                            <div class="align-middle text-left table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap ">
                                                 @if($item3->fin > 0)
                                                     <div class="mx-2 flex place-content-center font-bold bg-green-400 text-gray-900 whitespace-no-wrap">
                                                         <p>Cerrado</p>
@@ -215,22 +229,22 @@
                     <div class="border-b-2 p-4 text-sm grid grid-cols-1 sm:grid-row-3 sm:grid-cols-3 lg:grid-cols-12 gap-2">
                         <div class="lg:col-span-3">
                             <x-jet-label value="Fecha de llegada" />
-                            <x-jet-input type="datetime-local" class="w-full" wire:model.defer="fechallegada" />
+                            <x-jet-input type="datetime-local" class="w-full text-sm" wire:model.defer="fechallegada" />
                             <x-jet-input-error for="fechallegada" />
                         </div>
                         <div class="lg:col-span-3">
                             <x-jet-label value="Fecha de cierre" />
-                            <x-jet-input type="datetime-local" class="w-full" wire:model.defer="fechacierre" id="fechacierre" />
+                            <x-jet-input type="datetime-local" class="w-full text-sm" wire:model.defer="fechacierre" id="fechacierre" />
                             <x-jet-input-error for="fechacierre" />
                         </div>
                         <div class="sm:row-span-2 sm:col-span-2 sm:row-start-1 sm:col-start-2 lg:col-span-9 lg-row-span-2 lg:col-start-4 lg:row-start-1">
                             <x-jet-label value="Cierre" />
-                            <textarea class="form-control w-full" name="detalle" wire:model.defer="cierre" rows="4"></textarea>
+                            <textarea class="form-control w-full text-sm" name="detalle" wire:model.defer="cierre" rows="4"></textarea>
                             <x-jet-input-error for="cierre" />
                         </div>
                         <div class="lg:col-span-6">
                             <x-jet-label value="Categoria" />
-                            <select class="form-control w-full" wire:model.defer="categoria">
+                            <select class="form-control w-full text-sm" wire:model.defer="categoria">
                                 <option selected>Seleccione categoria</option>
                                 <?php foreach($selectCategoria as $item): ?>
                                 <option value="<?= $item ?>"> <?= $item ?> </option>
@@ -240,7 +254,7 @@
                         </div>
                         <div class="lg:col-span-3">
                             <x-jet-label value="Resultado Presencia" />
-                            <select class="form-control w-full" wire:model.defer="resultadoslap">
+                            <select class="form-control w-full text-sm" wire:model.defer="resultadoslap">
                                 <option selected>Seleccione SLA</option>
                                 <?php foreach($selectResultado as $item): ?>
                                 <option value="<?= $item ?>"> <?= $item ?> </option>
@@ -250,7 +264,7 @@
                         </div>
                         <div class="lg:col-span-3">
                             <x-jet-label value="Resultado Resolucion" />
-                            <select class="form-control w-full" wire:model.defer="resultadoslar">
+                            <select id="selecresultado" class="form-control w-full text-sm" wire:model.defer="resultadoslar">
                                 <option selected>Seleccione SLA</option>
                                 <?php foreach($selectResultado as $item): ?>
                                 <option value="<?= $item ?>"> <?= $item ?> </option>
@@ -438,6 +452,22 @@
             <x-jet-danger-button class="mr-2" wire:click="updateClockstop" wire:loading.attr="disabled" wire:target="updateClockstop" class="disabled:opacity-25">
                 Guardar
             </x-jet-danger-button>
+        </x-slot>
+    </x-jet-dialog-modal>
+
+
+    <x-jet-dialog-modal wire:model="open_details">
+        <x-slot name="title">
+        </x-slot>
+        <x-slot name="content">
+            <div class="mb-4">
+                <x-jet-label value="Detalles para enviar" />
+                <textarea class="form-control w-full text-xs text-gray-800" wire:model.defer="pruebadetalle" rows="20"></textarea>
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+
         </x-slot>
     </x-jet-dialog-modal>
 

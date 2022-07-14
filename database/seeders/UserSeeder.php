@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'remember_token'    => Str::random(10),
             // 'profile'           => 'USUARIO',
-            'status'            => 'ACTIVO',
+            // 'status'            => 'ACTIVO',
         ])->assignRole('admin');
 
         User::create([
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'remember_token'    => Str::random(10),
             // 'profile'           => 'USUARIO',
-            'status'            => 'ACTIVO',
+            // 'status'            => 'ACTIVO',
         ])->assignRole('supervisor');
 
         User::create([
@@ -44,7 +44,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'remember_token'    => Str::random(10),
             // 'profile'           => 'USUARIO',
-            'status'            => 'ACTIVO',
+            // 'status'            => 'ACTIVO',
         ])->assignRole('operador');
 
         User::create([
@@ -54,7 +54,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'remember_token'    => Str::random(10),
             // 'profile'           => 'USUARIO',
-            'status'            => 'ACTIVO',
+            // 'status'            => 'ACTIVO',
         ])->assignRole('usuario');
 
         User::create([
@@ -64,7 +64,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'remember_token'    => Str::random(10),
             // 'profile'           => 'USUARIO',
-            'status'            => 'ACTIVO',
+            // 'status'            => 'ACTIVO',
         ])->assignRole('cliente');
 
 

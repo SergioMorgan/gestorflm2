@@ -17,6 +17,7 @@
 
         <!----  CONTENIDO ---->
         <x-slot name="content">
+            
             <div class="mb-4 text-gray-900">
                 <x-jet-label value="Nombre" />
                 <!----------Usamos DEFER para evitar que se dispare una solicitud de actualizacion si cambiamos el valor del imput-------->
@@ -34,6 +35,19 @@
                 <x-jet-input type="password" class="w-full" wire:model.defer="password" />
                 <x-jet-input-error for="password" />
             </div>
+            
+            <div class="mb-4 text-gray-900">
+                <x-jet-label value="Perfil" />
+                <select class="form-control w-full text-sm" wire:model.defer="perfil">
+                    <option selected >Seleccione estado</option>
+                    <?php foreach($selectorroles as $item): ?>
+                    <option value="<?= $item->id ?>"> <?= $item->name ?> </option>
+                    <?php endforeach; ?>
+                </select>
+                <x-jet-input-error for="perfil" />
+            </div>
+
+<!--
             <div class="mb-4 text-gray-900">
                 <x-jet-label value="Estado" />
                 <select class="form-control w-full" wire:model.defer="status">
@@ -45,6 +59,7 @@
                     </option>
                 </select>
             </div>
+-->
         </x-slot>
 
         <!----  FOOTER ---->

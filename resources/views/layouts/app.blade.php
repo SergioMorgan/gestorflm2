@@ -70,40 +70,45 @@
             //     document.getElementById("text").textContent="hola";
             // },
 
-            kpidetalleos() { //este es para la vista editosticket, ayuda a formatear y calcular los kpi
-                let $slaresolucion  = this.convertirSegundos(document.getElementById('localslar').value);
-                let $duracionsinpr  = this.convertirSegundos(document.getElementById('duracionticket').value);
-                let $duracionpr     = document.getElementById('duracionprseg').value;
-                let $duracionconpr  = $duracionsinpr - $duracionpr + 0;
-                document.getElementById('duracionticketconpr').value = this.convertirHora($duracionconpr+0);
-                if (($slaresolucion) >($duracionsinpr)) {
-                    document.getElementById('resultadotodacausa').value = 'DENTRO';
-                } else {
-                    document.getElementById('resultadotodacausa').value = 'FUERA';
-                }
-                if (($slaresolucion) >($duracionconpr)) {
-                    document.getElementById('resultadoconpr').value = 'DENTRO';
-                } else {
-                    document.getElementById('resultadoconpr').value = 'FUERA';
-                }
-                document.getElementById('duracionprseg').value = this.convertirHora(document.getElementById('duracionprseg').value);
-            },
+            // kpiresultadopordefecto() { //este es para la vista editosticket, ayuda a formatear y calcular los kpi
+                
+            //     if document.getElementById('selecresultado').value =  document.getElementById('resultadoconpr').value 
+            // },
 
-            convertirSegundos($valor) {
-                let $mitad = $valor.indexOf(':');
-                let $hora = $valor.substr(0, parseInt($mitad,10));
-                let $minuto = $valor.substr(parseInt($mitad,10)+1, 2);
-                return (parseInt($hora, 10) * 60 * 60) + (parseInt($minuto, 10) * 60);
-            },
+            // kpidetalleos() { //este es para la vista editosticket, ayuda a formatear y calcular los kpi
+            //     let $slaresolucion  = this.convertirSegundos(document.getElementById('localslar').value);
+            //     let $duracionsinpr  = this.convertirSegundos(document.getElementById('duracionticket').value);
+            //     let $duracionpr     = document.getElementById('duracionprseg').value;
+            //     let $duracionconpr  = $duracionsinpr - $duracionpr + 0;
+            //     document.getElementById('duracionticketconpr').value = this.convertirHora($duracionconpr+0);
+            //     if (($slaresolucion) >($duracionsinpr)) {
+            //         document.getElementById('resultadotodacausa').value = 'DENTRO';
+            //     } else {
+            //         document.getElementById('resultadotodacausa').value = 'FUERA';
+            //     }
+            //     if (($slaresolucion) >($duracionconpr)) {
+            //         document.getElementById('resultadoconpr').value = 'DENTRO';
+            //     } else {
+            //         document.getElementById('resultadoconpr').value = 'FUERA';
+            //     }
+            //     document.getElementById('duracionprseg').value = this.convertirHora(document.getElementById('duracionprseg').value);
+            // },
 
-            convertirHora($valor) {
-                let $horas = Math.trunc($valor/ 3600)+0;
-                let $minutos = Math.trunc(($valor/ 3600 - Math.trunc($valor/ 3600))*60)+0;
-                $horas < 10     ? $horas = "0" + $horas : $horas;
-                $minutos < 10   ? $minutos = "0" + $minutos : $minutos;
-                return $horas + ":" + $minutos;
+            // convertirSegundos($valor) {
+            //     let $mitad = $valor.indexOf(':');
+            //     let $hora = $valor.substr(0, parseInt($mitad,10));
+            //     let $minuto = $valor.substr(parseInt($mitad,10)+1, 2);
+            //     return (parseInt($hora, 10) * 60 * 60) + (parseInt($minuto, 10) * 60);
+            // },
 
-            },
+            // convertirHora($valor) {
+            //     let $horas = Math.trunc($valor/ 3600)+0;
+            //     let $minutos = Math.trunc(($valor/ 3600 - Math.trunc($valor/ 3600))*60)+0;
+            //     $horas < 10     ? $horas = "0" + $horas : $horas;
+            //     $minutos < 10   ? $minutos = "0" + $minutos : $minutos;
+            //     return $horas + ":" + $minutos;
+
+            // },
         }
     }
 </script>

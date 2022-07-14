@@ -91,12 +91,12 @@
                                         <i class="fas fa-sort float-right mt-1"></i>
                                     @endif
                                 </th>
-
+<!--
                                 <th
                                     class="px-5 py-3 border-b-2 border-gray-200 text-center uppercase tracking-wider">
                                     Estado
                                 </th>
-
+-->
                                 <th
                                     class="px-5 py-3 border-b-2 border-gray-200 text-center uppercase tracking-wider">
                                     Perfil
@@ -133,11 +133,11 @@
                                     <td class="px-5 py-5 border-b border-gray-200">
                                         <p class="text-gray-900 whitespace-no-wrap">{{ $item->created_at }}</p>
                                     </td>
-
+<!--
                                     <td class="px-5 py-5 border-b border-gray-200">
 
 
-                                        @switch($item->status)
+                                        {{-- @switch($item->status)
                                         @case('ACTIVO')
                                             <div
                                                 class="mx-4 flex place-content-center text-xs font-bold bg-green-400 text-gray-900 whitespace-no-wrap">
@@ -154,7 +154,8 @@
 
 
                                         @default
-                                    @endswitch
+                                    @endswitch --}}
+
         {{--
 
                                         @if ($item->status == "ACTIVO")
@@ -163,7 +164,7 @@
                                             <img class="object-fill h-8 w-16" src="/img/inactiveicon.png" alt="">
                                         @endif --}}
                                     </td>
-
+                                -->
                                     <td class="px-5 py-5 border-b border-gray-200">
                                         @if (!empty($item->getRoleNames()))
                                             @foreach ($item->getRoleNames() as $role)
@@ -228,16 +229,34 @@
                 <x-slot name="content">
                     <div class="mb-4">
                         <x-jet-label value="Nombre" />
-                        <x-jet-input type="text" class="w-full" wire:model="user.name" />
+                        <x-jet-input type="text" class="w-full" wire:model.defer="user.name" />
                         <x-jet-input-error for="user.name" />
                     </div>
                     <div class="mb-4">
                         <x-jet-label value="Correo electrónico" />
-                        <x-jet-input type="email" class="w-full" wire:model="user.email" />
+                        <x-jet-input type="email" class="w-full" wire:model.defer="user.email" />
                         <x-jet-input-error for="user.email" />
                     </div>
-                    <!--FALTA DISPLAY PARA ROLES-->
+
                     <div class="mb-4">
+                        <x-jet-label value="Password" />
+                        <x-jet-input type="password" class="w-full" wire:model.defer="user.password" value="$2y$10$OET6LfBOVRyp3V0wrN3ame3n5cj6QgWtUH/B0J7HU.xYXIgnfYamy" />
+                        <x-jet-input-error for="password" />
+                    </div>
+
+                    <div class="mb-4">
+                        <x-jet-label value="Perfil" />
+                        <select class="form-control w-full text-sm" wire:model.defer="perfil">
+                            <?php foreach($roles as $item): ?>
+                            <option value="<?= $item->id ?>"> <?= $item->name ?> </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <x-jet-input-error for="perfil" />
+                    </div>
+
+
+                    <!--FALTA DISPLAY PARA ROLES-->
+<!--                <div class="mb-4">
                         <x-jet-label value="Estado" />
                         <select class="form-control w-full" wire:model="user.status">
                             <option value="ACTIVO" selected>
@@ -248,6 +267,7 @@
                             </option>
                         </select>
                     </div>
+                -->
                 </x-slot>
 
                 <!--Footer para los botones-->

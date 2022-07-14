@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Users;
 
 use Livewire\Component;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
 
@@ -20,6 +21,7 @@ class ShowUsers extends Component
     public $cant='20';              // inicializa criterio de orden
     public $open_edit = false;      // controla aparicion de ventana modal
     public $readyToLoad = false;    //para aplarzar la carga
+    public $selectorroles;
 
     protected $listeners = ['render', 'delete' ];   //activa los listener para disparar procedimientos SUJETO A REVISION
 
@@ -36,17 +38,22 @@ class ShowUsers extends Component
         $this->resetPage();
     }
 
+    
     // reglas de validacion para el guardado
     protected function rules() {
         return [
             'user.name'     => 'required|min:5',
-            'user.status'   => 'required',
-            'user.email'    => 'required|email|unique:users,email,' . $this->user->id
+            // 'user.status'   => 'required',
+            'user.email'    => 'required|email|unique:users,email,' . $this->user->id,
+            'user.password' => 'nullable',
         ];
     }
 
+    
+    
     // funcion principal que se ejecuta al invocar o actualizar formulario asociado
     public function render() {
+        
         $roles = Role::all();
         if ($this->readyToLoad) {
             $users = User::where('name', 'like', '%' . $this->search . '%')
@@ -56,6 +63,7 @@ class ShowUsers extends Component
         } else {
             $users = [];
         }
+        
         return view('livewire.users.show-users', compact('users', 'roles'));
     }
 
@@ -84,13 +92,28 @@ class ShowUsers extends Component
     // Edit abre la venta edit-open, mientas que update guarda los cambios en la BBDD
     public function edit(User $user) {
         $this->user = $user;    // $this->user ya tiene la  informacion del registro
+        $this->perfil = $user->roles[0]->id;
+        // $roles = Role::all();
+        // dd($user->roles($user->id));
+
+        // dd($usuario);
+        // $user1 = $usuario->roles[0]->name;
+        // foreach($usuario->roles as $role) {
+        //     dump($role->name);
+        // }
+
         $this->open_edit = true;    //con esto prende la ventan modal
     }
 
     // actualiza en la BBDD una vez que se dispara desde el boton de guardar
     public function update() {
-        $this->validate();              //ejecuta las validaciones
-        $this->user->save();            //guardar el registro
+        // dd($this->user->roles[0]->id, $this->perfil);
+        $this->validate();  
+        // $this->password = Hash::make($this->password);      //ejecuta las validaciones
+        $this->user->save();
+        $this->user->syncRoles($this->perfil);
+
+        // $this->user->roles[0]->id = $this->perfil ;
         $this->reset(['open_edit']);    //resetea los campos (para que al volver a ingresar, se reflejen los cambios)
         $this->emit('alertOk', 'Registro guardado correctamente');    //dispara la alerta guardada en app.blade
     }

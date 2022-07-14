@@ -7,8 +7,10 @@ use App\Models\Clockstop;
 use App\Models\Osticket;
 use App\Models\Site;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Spatie\Permission\Models\Role;
 
 class EditOstickets extends Component
 {
@@ -17,6 +19,7 @@ class EditOstickets extends Component
     public $iniciosiguientepr= null;
     public $open_editaction = false;
     public $open_editclockstop = false;
+    public $open_details = false;
     public $colorEtiquetas = 'bg-green-300';  //estilos del formulario (color fondo etiquetas)
     public $item;   //para identificar el elemento a editar
     public $osticket;
@@ -101,11 +104,11 @@ class EditOstickets extends Component
         $this->resultadoslap        = $this->osticket->resultadoslap;
         $this->resultadoslar        = $this->osticket->resultadoslar;
         $this->osticket_id          = $osticket_id;
-
         $this->duracionticket       = $duracionticket;
         $this->cantidadpr           = $this->clockstopresults[0]->cantidadpr;
-        $this->duracionprseg           = $this->clockstopresults[0]->duracionprseg;
-        $this->duracionprmin       = $this->clockstopresults[0]->duracionprmin;
+        $this->duracionprseg        = $this->clockstopresults[0]->duracionprseg;
+        // dd($this->duracionprseg);
+        $this->duracionprmin        = $this->clockstopresults[0]->duracionprmin;
         // dump($this->duracionpr, $this->duracionticket);
         // dump($this->duracionprmin, $duracionticket2);
         // dump($this->duracionprmin + $duracionticket2);
@@ -156,7 +159,14 @@ class EditOstickets extends Component
         $preFechaAsignacion = null;
         $preFechaLlegada = null;
         $preFechaCierre = null;
+        
+        $usuario = auth()->user();
+        $user1 = $usuario->roles[0]->name;
+        // foreach($usuario->roles as $role) {
+        //     dump($role->name);
+        // }
 
+        // dd($user1, $usuario);
 
         if (!empty($this->fechaasignacion)) $preFechaAsignacion = Carbon::parse($this->fechaasignacion)->format('Y-m-d H:i:s');
         if (!empty($this->fechallegada)) $preFechaLlegada = Carbon::parse($this->fechallegada)->format('Y-m-d H:i:s');
@@ -244,9 +254,27 @@ class EditOstickets extends Component
         }
     }
 
-
     public function deleteClockStop(Clockstop $clockstop) {
         $clockstop->delete();
         $this->refrescar();
     }
+
+    public function copiarDetalles() {
+        $this->open_details = true;
+        // dd($this->osticket->detalle, $this->detalle, $saludo);
+        // $this->pruebadetalle = $saludo;
+        $this->pruebadetalle =  '*Siom:* ' . $this->siom . PHP_EOL . 
+                                '*Zonal:* ' . $this->localzonal . '  *Local: ' . $this->localnombre . '*' . PHP_EOL . 
+                                '*Fecha de inicio:* ' . $this->fechaasignacion . '  *Prioridad:* ' . $this->localprioridad . PHP_EOL . 
+                                '*SLA llegada:* ' . $this->localslap . '  *SLA llegada:* ' . $this->localslar . PHP_EOL . PHP_EOL . 
+                                '*Detalle:* ' . $this->detalle;
+    }
+    public function copiarportapapeles() {
+        
+    }
+
+
+
+
+
 }
