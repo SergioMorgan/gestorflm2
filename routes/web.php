@@ -18,3 +18,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('ostickets',                \App\Http\Livewire\ostickets\ShowOstickets::class)      ->name('ostickets.index');
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('ostickets/create',         \App\Http\Livewire\ostickets\CreateOstickets::class)    ->name('ostickets.create');
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('ostickets/{item}/edit',    \App\Http\Livewire\ostickets\EditOstickets::class)      ->name('ostickets.edit');
+
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('ostickets/excel/export',  '\App\Http\Livewire\ostickets\ShowOstickets@export')      ->name('ostickets.export');
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified' ])->get('sites/excel/export',       '\App\Http\Livewire\sites\ShowSites@export')      ->name('sites.export');

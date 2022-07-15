@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Sites;
 
-use Livewire\Component;
 use App\Models\Site;
+use Livewire\Component;
+use App\Exports\SitesExport;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Role;
 
 class ShowSites extends Component
@@ -32,6 +34,10 @@ class ShowSites extends Component
     // con el parametro updatign, se ejecutar el resetPage de la pagina antes de la actualizacion
     public function updatingSearch() {
         $this->resetPage();
+    }
+
+    public function export() {
+        return Excel::download(new SitesExport, 'sites.xlsx');
     }
 
     // funcion principal que se ejecuta al invocar o actualizar formulario asociado

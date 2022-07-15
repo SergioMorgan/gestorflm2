@@ -198,6 +198,12 @@
                             {{ $sites->links() }}
                         </div>
                     @endif
+
+                    <div class="p-2 w-full flex bg-gray-800 text-white justify-end">
+                        <a class="btn btn-green ml-2" href="{{ route ('sites.export') }}">
+                            Exportar
+                        </a>
+                    </div>
                 @else
                     <!--wire:loading.remove oculta un elemento durante la carga-->
                     <div wire:loading.remove class="px-6 py-4 ">

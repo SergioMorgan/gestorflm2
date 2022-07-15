@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Ostickets;
 
+use App\Exports\OsticketsExport;
 use Livewire\Component;
 use App\Models\Osticket;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Role;
 
 class ShowOstickets extends Component
@@ -28,6 +30,11 @@ class ShowOstickets extends Component
         'direcion' => ['except' => 'desc'],
         'search' => ['except' => ''],
     ];
+
+
+    public function export() {
+        return Excel::download(new OsticketsExport, 'ostickets.xlsx');
+    }
 
     // con el parametro updatign, se ejecutar el resetPage de la pagina antes de la actualizacion
     public function updatingSearch() {
