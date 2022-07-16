@@ -18,10 +18,9 @@ class CreateSites extends Component {
     // Inicializar los valores de los controles SELECT del formulario
     public $selectEstado = ['ACTIVO', 'INACTIVO'];
     public $selectZonal = ['LIMA', 'AREQUIPA', 'CUSCO', 'PUNO', 'TACNA'];
-    public $selectClasificacion = ['TIPO 8_K', 'TIPO 8_L', '12_CLIENTES', 'TIPO 8_C', 'TIPO 8_1'];
+    public $selectClasificacion = ['TIPO 8_N', 'TIPO 8_C', 'TIPO 10_C', 'TIPO 8_1', 'TIPO 8_2', 'TIPO 8_3', 'TIPO 8_4', 'TIPO 8_5', 'TIPO 8_E', 'TIPO 8_F', 'TIPO 8_G', 'TIPO 8_K', 'TIPO 8_L', 'TIPO 9_C', 'TIPO 12_CLIENTES', 'TIPO 13_INTERNOS', 'SCELL'];
     public $selectPrioridad = ['BLACK', 'ORO', 'PLATA', 'CLASICO'];
     public $selectFacturacion = ['FEE MENSUAL', 'RUTA', 'BAJO DEMANDA'];
-    public $selectTipolocal = ['URA', 'URA/EBC', 'CT', 'EBC'];
     public $selectTipozona = ['URBANO', 'INTERURBANO', 'RURAL'];
     public $selectSlapresencia = ['03:00', '04:30', '06:30', '08:00', '08:30', '13:30', '18:30', '20:00', '35:00'];
     public $selectSlaresolucion = ['06:00', '07:00', '09:00', '11:00', '11:30', '19:00', '20:00', '21:30', '32:00', '35:00'];

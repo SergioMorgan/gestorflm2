@@ -27,7 +27,7 @@ class EditOstickets extends Component
     public $action;
     public $osticket_id;
     public $inicio, $fin, $motivo, $sustento;
-    public $site_id, $siom, $estado, $tipo, $fechaasignacion, $fechallegada, $fechacierre, $remedy, $detalle, $cierre, $categoria, $resultadoslap, $resultadoslar;
+    public $site_id, $siom, $estado, $tipo, $fechaasignacion, $fechallegada, $fechacierre, $remedy, $detalle, $cierre, $categoria, $resultadoslar; // $resultadoslap,  ;
     public $user_id;
     public $selectEstado = ['PENDIENTE', 'CERRADO', 'ANULADO', 'RECHAZADO'];
     public $selectTipo = ['ENERGIA', 'RADIO', 'TRANSPORTE'];
@@ -50,7 +50,7 @@ class EditOstickets extends Component
         'detalle'               => 'nullable',
         'cierre'                => 'nullable',
         'categoria'             => 'nullable',
-        'resultadoslap'         => 'nullable',
+        // 'resultadoslap'         => 'nullable',
         'resultadoslar'         => 'nullable',
         'action.detalle'        => 'nullable',
         'clockstop.inicio'      => 'nullable',
@@ -68,29 +68,20 @@ class EditOstickets extends Component
         $osticket       = null;
         $actiontable    = null;
         $clockstoptable = null;
-        // $clockstoptableaux = null;
-
         $osticket                   = Osticket::findOrFail($item);
         $localasociado              = Site::findOrFail($osticket->site_id);
         $osticket_id                = $osticket->id;
         $actiontable                = Action::select('actions.*', 'users.name')->join('users', 'users.id', '=', 'actions.user_id')->where('osticket_id', '=', $this->item)->orderby('created_at', 'desc')->get();
-        // $clockstoptable             = Clockstop::select('clockstops.*')->where('osticket_id', '=', $this->item)->orderby('inicio', 'desc')->get();
-
         $clockstoptable             = Clockstop::select(Clockstop::raw("id, inicio, fin, motivo, sustento, TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin))) AS duracion"))
                                         ->where('osticket_id', '=', $this->item)->orderby('inicio', 'desc')->get();
-        // dd($clockstoptable );
         $clockstopresults           = Clockstop::select(Clockstop::raw("count(distinct id) as cantidadpr, TIME_FORMAT(SEC_TO_TIME(sum(TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin))))),'%H:%i') as duracionpr, sum(TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin)))) as duracionprseg "))
                                         ->where('osticket_id', '=', $this->item)->orderby('inicio', 'desc')->get();
-        // dd($clockstopresults);
         $this->actiontable          = $actiontable;
         $this->osticket             = $osticket;
         $this->clockstoptable       = $clockstoptable;
         $this->clockstopresults     = $clockstopresults;
-        // dump($clockstopresults);
-        $duracionticket = Carbon::parse($this->osticket->fechaasignacion)->diffInHours(Carbon::parse($this->osticket->fechacierre)) . ':' . Carbon::parse($this->osticket->fechaasignacion)->diff(Carbon::parse($this->osticket->fechacierre))->format('%I');
-        $duracionticket2 = Carbon::parse($this->osticket->fechaasignacion)->diffInMinutes(Carbon::parse($this->osticket->fechacierre));
-
-        $this->site_id              = $this->osticket->site_id;
+        $duracionticket             = Carbon::parse($this->osticket->fechaasignacion)->diffInSeconds(Carbon::parse($this->osticket->fechacierre));
+        $this->site_id              = $localasociado->localid;
         $this->siom                 = $this->osticket->siom;
         $this->estado               = $this->osticket->estado;
         $this->tipo                 = $this->osticket->tipo;
@@ -101,23 +92,18 @@ class EditOstickets extends Component
         $this->detalle              = $this->osticket->detalle;
         $this->cierre               = $this->osticket->cierre;
         $this->categoria            = $this->osticket->categoria;
-        $this->resultadoslap        = $this->osticket->resultadoslap;
+        // $this->resultadoslap        = $this->osticket->resultadoslap;
         $this->resultadoslar        = $this->osticket->resultadoslar;
         $this->osticket_id          = $osticket_id;
         $this->duracionticket       = $duracionticket;
         $this->cantidadpr           = $this->clockstopresults[0]->cantidadpr;
         $this->duracionprseg        = $this->clockstopresults[0]->duracionprseg;
-        // dd($this->duracionprseg);
         $this->duracionprmin        = $this->clockstopresults[0]->duracionprmin;
-        // dump($this->duracionpr, $this->duracionticket);
-        // dump($this->duracionprmin, $duracionticket2);
-        // dump($this->duracionprmin + $duracionticket2);
-
-        $this->localzonal = $localasociado->zonal;
-        $this->localnombre = $localasociado->nombre;
-        $this->localslap = $localasociado->slapresencia;
-        $this->localslar = $localasociado->slaresolucion;
-        $this->localprioridad = $localasociado->prioridad;
+        $this->localzonal           = $localasociado->zonal;
+        $this->localnombre          = $localasociado->nombre;
+        $this->localslap            = $localasociado->slapresencia;
+        $this->localslar            = $localasociado->slaresolucion;
+        $this->localprioridad       = $localasociado->prioridad;
 ;
     }
 
@@ -189,7 +175,7 @@ class EditOstickets extends Component
         // dump($preFechaAsignacion, $preFechaLlegada, $preFechaCierre, $preFechaLlegada < $preFechaCierre);
 
         $this->osticket->update([
-            'site_id'           => $this->site_id,
+            // 'site_id'           => $this->site_id,
             'siom'              => $this->siom,
             'estado'            => $this->estado,
             'tipo'              => $this->tipo,
@@ -200,7 +186,7 @@ class EditOstickets extends Component
             'detalle'           => $this->detalle,
             'cierre'            => $this->cierre,
             'categoria'         => $this->categoria,
-            'resultadoslap'     => $this->resultadoslap,
+            // 'resultadoslap'     => $this->resultadoslap,
             'resultadoslar'     => $this->resultadoslar,
         ]);
         $this->emit('alertOk', 'Actualizado', 'success');

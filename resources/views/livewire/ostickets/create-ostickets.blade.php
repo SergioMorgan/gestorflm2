@@ -14,11 +14,21 @@
             
         </x-slot>
 
-        <x-slot name="content">
-            <div class="mb-4">
+        <x-slot name="content" >
+            <div class="mb-4  text-gray-800"">
                 <x-jet-label value="ID Site" />
-                {{-- corregir el caso del value --}}
-                <x-jet-input type="text" class="w-full text-gray-800" wire:model.defer="site_id" />
+                {{-- <x-jet-input type="text" class="w-full text-gray-800" wire:model.defer="site_id" /> --}}
+
+                
+
+                <select class="form-control w-full text-sm  text-gray-800"" wire:model.defer="site_id">
+                    <option selected>Seleccione tipo</option>
+                    <?php foreach($sites as $item): ?>
+                    <option value="<?= $item->id ?>"> <?= $item->nombre . ' || ' . $item->localid  ?> </option>
+                    <?php endforeach; ?>
+                </select> 
+
+
                 <x-jet-input-error for="site_id" />
             </div>
             <div class="mb-4">

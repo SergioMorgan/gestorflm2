@@ -45,12 +45,8 @@
                     </div>
                     <div class="text-xs">
                         <x-jet-label value="Tipo de local" />
-                        <select class="form-control w-full text-sm" wire:model.defer="tipolocal">
-                            <option selected>Seleccione tipo</option>
-                            <?php foreach($selectTipolocal as $item): ?>
-                            <option value="<?= $item ?>"> <?= $item ?> </option>
-                            <?php endforeach; ?>
-                        </select>
+                        <x-jet-input type="text" class="w-full text-sm" wire:model.defer="tipolocal" />
+
                         <x-jet-input-error for="tipolocal" />
                     </div>
                     <div class="text-xs lg:col-span-2">

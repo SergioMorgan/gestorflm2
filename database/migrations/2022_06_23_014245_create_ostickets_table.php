@@ -27,7 +27,7 @@ return new class extends Migration
             $table->text('detalle')->nullable();
             $table->text('cierre')->nullable();
             $table->string('categoria')->nullable();
-            $table->string('resultadoslap')->nullable();
+            // $table->string('resultadoslap')->nullable();
             $table->string('resultadoslar')->nullable();
             $table->timestamps();
 

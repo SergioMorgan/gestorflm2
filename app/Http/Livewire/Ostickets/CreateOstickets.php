@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Ostickets;
 
 use App\Models\Osticket;
+use App\Models\Site;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class CreateOstickets extends Component
@@ -14,11 +16,16 @@ class CreateOstickets extends Component
 
     public function render()
     {
-        return view('livewire.ostickets.create-ostickets');
+        $sites = Site::with('ostickets')->orderby('nombre', 'asc')->get();
+        // dd($datos);
+        // $sites = Site::pluck('localid','id');
+        // dd(implode(',', $sites));
+        return view('livewire.ostickets.create-ostickets', compact('sites'));
     }
 
     protected $rules = [
         'site_id'           => 'required',
+        // 'site_id'           => 'in:' . implode(',' , $sites),
         'user_id'           => 'required',
         'siom'              => 'required',
         'estado'            => 'required',
