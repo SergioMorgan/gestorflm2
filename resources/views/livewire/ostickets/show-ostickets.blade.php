@@ -150,7 +150,7 @@
                 @endif
 
                 <div class="flex justify-center">
-                    <img wire:loading src="{{ asset('img/loading.gif') }}" class="w-30 p-5">
+                    <img wire:loading src="../../../img/loading.gif" class="w-30 p-5">
                 </div>
 
                 <!-- script que se pasa a app.blade.php para mensaje de confirmacion de borrado-->
