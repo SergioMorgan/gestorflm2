@@ -45,18 +45,16 @@
                         </div>
                         <div class="md:col-span-2 lg:col-span-1">
                             <x-jet-label value="Duracion sin PR" />
-                            {{-- <x-jet-input type="text" class="w-full text-sm" id="duracionticket" wire:model.defer="duracionticket" readonly/> --}}
                             <x-jet-input type="text" class="w-full text-sm" value="
-                            {{-- {{convertirHora($this->duracionticket)}} --}}
-                            {{($this->duracionticket)}}
+                            {{convertirHora($this->duracionticket)}}
+                            {{-- {{($this->duracionticket)}} --}}
                             " readonly/>
                         </div>
                         <div class="md:col-span-2 lg:col-span-1">
                             <x-jet-label value="Duracion con PR" />
-                            {{-- <x-jet-input type="text" class="w-full text-sm" id="duracionticketconpr" readonly/> --}}
                             <x-jet-input type="text" class="w-full text-sm" value="
-                            {{-- {{convertirHora($this->duracionticket - $this->duracionprseg)}} --}}
-                            {{($this->duracionticket - $this->duracionprseg)}}
+                            {{convertirHora($this->duracionticket - $this->duracionprseg)}}
+                            {{-- {{($this->duracionticket - $this->duracionprseg)}} --}}
                                 " readonly/>
                         </div>
                         <div class="">
@@ -66,18 +64,16 @@
                         <div class="md:col-span-2 lg:col-span-1">
                             <x-jet-label value="Duracion de PR" />
                             <x-jet-input type="text" class="w-full text-sm" value="
-                            {{-- {{convertirHora($this->duracionprseg)}} --}}
-                            {{($this->duracionprseg)}}
+                            {{convertirHora($this->duracionprseg)}}
+                            {{-- {{($this->duracionprseg)}} --}}
                                 " readonly/>
                         </div>
                         <div class="md:col-span-2 lg:col-span-1">
                             <x-jet-label value="Res. Toda Causa" />
-                            {{-- <x-jet-input type="text" class="w-full" id="resultadotodacausa" readonly/> --}}
                             <x-jet-input type="text" class="w-full text-sm" value="{{calculoSla($this->estado, convertirSegundos($this->localslar),$this->duracionticket )}}" readonly/>
                         </div>
                         <div class="md:col-span-2 lg:col-span-1">
                             <x-jet-label value="Resul. c/Pr" />
-                            {{-- <x-jet-input type="text" class="w-full text-sm" id="resultadoconpr" readonly/> --}}
                             <x-jet-input type="text" class="w-full text-sm" id="resultadoconpr" value="{{calculoSla($this->estado, convertirSegundos($this->localslar),($this->duracionticket - $this->duracionprseg) )}}"/>
                         </div>
                         <div class="sm:col-span-2 md:col-span-1 grid content-center">
