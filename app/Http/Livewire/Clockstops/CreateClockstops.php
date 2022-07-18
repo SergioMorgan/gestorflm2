@@ -27,15 +27,16 @@ class CreateClockstops extends Component
         'fin'       => 'nullable|date|after:inicio',
         'motivo'    => 'required',
         'sustento'  => 'required',
-
-
-
     ];
 
     public function save() {
         $this->validate();
         $lastclockstop = Clockstop::select('clockstops.*')->where('osticket_id', '=', $this->osticket_id )->orderby('inicio', 'desc')->first();
-        If ((empty($lastclockstop->inicio) || !empty($lastclockstop->fin)) && 
+
+        // permite guadar si no hay PR anterior O la PR anterior esta cerrada y el inicio de la actual es mayor al cierre anterior, Y
+        // la fecha de inicio de PR es mayor a la fecha de inicio del ticket
+
+        If ((empty($lastclockstop->inicio) || (!empty($lastclockstop->fin && date('Y-m-d H:i', strtotime($this->inicio)) > date('Y-m-d H:i', strtotime($lastclockstop->fin))))) &&
             (date('Y-m-d H:i', strtotime($this->inicio)) > date('Y-m-d H:i', strtotime($this->fechaasignacion)))
             ) {
             if (empty($this->fin)) $this->fin = null;

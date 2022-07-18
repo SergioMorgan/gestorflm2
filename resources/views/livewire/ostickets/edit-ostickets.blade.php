@@ -20,61 +20,74 @@
                     <div class="border-b-2 p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-7 lg:grid-cols-7 gap-2">
                         <div class="sm:col-span-1	md:col-span-1">
                             <x-jet-label value="ID local" />
-                            <x-jet-input type="text" class="w-full text-sm" wire:model.defer="site_id" readonly />
+                            <x-jet-input type="text" class="w-full text-center text-sm bg-gray-200" wire:model.defer="site_id" readonly disabled />
                             <x-jet-input-error for="site_id" />
                         </div>
                         <div class="">
                             <x-jet-label value="Zonal" />
-                            <x-jet-input type="text" class="w-full text-sm" wire:model.defer="localzonal" readonly/>
+                            <x-jet-input type="text" class="w-full text-center text-sm bg-gray-200" wire:model.defer="localzonal" readonly disabled />
                         </div>
                         <div class="sm:col-span-2	md:col-span-3 lg:col-span-2">
                             <x-jet-label value="Nombre" />
-                            <x-jet-input type="text" class="w-full text-sm" wire:model.defer="localnombre" readonly/>
+                            <x-jet-input type="text" class="w-full font-bold text-sm bg-gray-200" wire:model.defer="localnombre" readonly disabled />
                         </div>
                         <div class="sm:col-span-2 lg:col-span-1">
                             <x-jet-label value="Prioridad" />
-                            <x-jet-input type="text" class="w-full text-sm" wire:model.defer="localprioridad" readonly/>
+                            <x-jet-input type="text" class="w-full text-sm bg-gray-200" wire:model.defer="localprioridad" readonly disabled />
                         </div>
                         <div class="">
                             <x-jet-label value="Presencia" />
-                            <x-jet-input type="text" class="w-full text-sm" wire:model.defer="localslap" readonly/>
+                            <x-jet-input type="text" class="w-full text-center text-sm bg-gray-200" wire:model.defer="localslap" readonly disabled/>
                         </div>
                         <div class="">
                             <x-jet-label value="Resolucion" />
-                            <x-jet-input type="text" class="w-full text-sm" id="localslar" wire:model.defer="localslar" readonly/>
+                            <x-jet-input type="text" class="w-full text-center text-sm bg-gray-200" id="localslar" wire:model.defer="localslar" readonly disabled/>
                         </div>
                         <div class="md:col-span-2 lg:col-span-1">
                             <x-jet-label value="Duracion sin PR" />
-                            <x-jet-input type="text" class="w-full text-sm" value="
+                            <x-jet-input type="text" class="w-full text-center text-sm bg-gray-200" value="
                             {{convertirHora($this->duracionticket)}}
                             {{-- {{($this->duracionticket)}} --}}
-                            " readonly/>
+                            " readonly disabled/>
                         </div>
                         <div class="md:col-span-2 lg:col-span-1">
                             <x-jet-label value="Duracion con PR" />
-                            <x-jet-input type="text" class="w-full text-sm" value="
+                            <x-jet-input type="text" class="w-full text-center text-sm bg-gray-200" value="
                             {{convertirHora($this->duracionticket - $this->duracionprseg)}}
                             {{-- {{($this->duracionticket - $this->duracionprseg)}} --}}
-                                " readonly/>
+                                " readonly disabled/>
                         </div>
                         <div class="">
                             <x-jet-label value="Cantidad de PR" />
-                            <x-jet-input type="text" class="w-full text-sm" wire:model.defer="cantidadpr" readonly/>
+                            <x-jet-input type="text" class="w-full text-center text-sm bg-gray-200" wire:model.defer="cantidadpr" readonly disabled/>
                         </div>
                         <div class="md:col-span-2 lg:col-span-1">
                             <x-jet-label value="Duracion de PR" />
-                            <x-jet-input type="text" class="w-full text-sm" value="
+                            <x-jet-input type="text" class="w-full text-center text-sm bg-gray-200" value="
                             {{convertirHora($this->duracionprseg)}}
                             {{-- {{($this->duracionprseg)}} --}}
-                                " readonly/>
+                                " readonly disabled/>
                         </div>
                         <div class="md:col-span-2 lg:col-span-1">
                             <x-jet-label value="Res. Toda Causa" />
-                            <x-jet-input type="text" class="w-full text-sm" value="{{calculoSla($this->estado, convertirSegundos($this->localslar),$this->duracionticket )}}" readonly/>
+                            <x-jet-input type="text" class="w-full text-center text-sm bg-gray-200" value="{{calculoSla($this->estado, convertirSegundos($this->localslar),$this->duracionticket )}}" readonly disabled/>
                         </div>
                         <div class="md:col-span-2 lg:col-span-1">
                             <x-jet-label value="Resul. c/Pr" />
-                            <x-jet-input type="text" class="w-full text-sm" id="resultadoconpr" value="{{calculoSla($this->estado, convertirSegundos($this->localslar),($this->duracionticket - $this->duracionprseg) )}}"/>
+                            @switch(calculoSla($this->estado, convertirSegundos($this->localslar),($this->duracionticket - $this->duracionprseg)))
+                            @case('N.A.')
+                                <x-jet-input type="text" class="w-full text-center text-sm  bg-gray-200" id="resultadoconpr" value="N.A." readonly disabled/>
+                            @break
+                            @case('DENTRO')
+                                <x-jet-input type="text" class="w-full text-center text-sm bg-green-300 text-blue-700 font-bold" id="resultadoconpr" value="DENTRO" readonly disabled/>
+                            @break
+                            @case('FUERA')
+                                <x-jet-input type="text" class="w-full text-center text-sm bg-yellow-300  text-red-700 font-bold" id="resultadoconpr" value="FUERA" readonly disabled/>
+                            @break
+                            @default
+                            @endswitch
+
+
                         </div>
                         <div class="sm:col-span-2 md:col-span-1 grid content-center">
                             <x-jet-label class="text-gray-300" value="." />
@@ -89,12 +102,12 @@
                     <div class="border-b-2 p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-10 gap-2">
                         <div class="">
                             <x-jet-label value="Siom" />
-                            <x-jet-input type="text" class="w-full text-sm" wire:model.defer="siom" />
+                            <x-jet-input type="text" class="w-full text-center font-bold text-sm" wire:model.defer="siom" />
                             <x-jet-input-error for="siom" />
                         </div>
                         <div class="lg:col-span-2">
                             <x-jet-label value="Remedy" />
-                            <x-jet-input type="text" class="w-full text-sm" wire:model.defer="remedy" />
+                            <x-jet-input type="text" class="w-full text-center text-sm" wire:model.defer="remedy" />
                             <x-jet-input-error for="remedy" />
                         </div>
                         <div class="md:col-span-2">
@@ -194,13 +207,13 @@
                                                     </div>
                                                 @endif
                                             </div>
-                                            <div class="align-middle text-left table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                            <div class="align-middle text-center table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                                 {{ date('d/m/Y H:i', strtotime($item3->inicio )) }}
                                             </div>
-                                            <div class="align-middle text-left table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                            <div class="align-middle text-center table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                                 {{ !empty($item3->fin) ? date('d/m/Y H:i', strtotime($item3->fin )) : '' }}
                                             </div>
-                                            <div class="align-middle text-left table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                            <div class="align-middle text-center table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                                 {{ round(($item3->duracion)/3600,1) . ' hrs' }}
                                             </div>
                                             <div class="max-w-[800px] align-middle text-left table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
@@ -256,16 +269,6 @@
                                 <?php endforeach; ?>
                             </select>
                             <x-jet-input-error for="categoria" />
-                        </div>
-                        <div class="lg:col-span-3">
-                            <x-jet-label value="Resultado Presencia" />
-                            <select class="form-control w-full text-sm" wire:model.defer="resultadoslap">
-                                <option selected>Seleccione SLA</option>
-                                <?php foreach($selectResultado as $item): ?>
-                                <option value="<?= $item ?>"> <?= $item ?> </option>
-                                <?php endforeach; ?>
-                            </select>
-                            <x-jet-input-error for="resultadoslap" />
                         </div>
                         <div class="lg:col-span-3">
                             <x-jet-label value="Resultado Resolucion" />
