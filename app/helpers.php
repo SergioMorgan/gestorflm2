@@ -15,15 +15,15 @@
     // }
 
     
-    function calculoSla ($estado, $sla, $duracion){
+    // function calculoSla ($estado, $sla, $duracion){
         
-        if ($estado == 'ANULADO') {
-            $resultado = "N.A.";
-        } else if ($duracion > $sla) {
-            $resultado = "FUERA";
-        } else {
-            $resultado = "DENTRO";
-        }
+    //     if ($estado == 'ANULADO') {
+    //         $resultado = "N.A.";
+    //     } else if ($duracion > $sla) {
+    //         $resultado = "FUERA";
+    //     } else {
+    //         $resultado = "DENTRO";
+    //     }
 
-        return $resultado;
-    }
+    //     return $resultado;
+    //}
