@@ -69,13 +69,15 @@
                                         {{ date('d/m/Y H:i', strtotime($item->fechaasignacion)) }}
                                     </div>
                                     <div id ="duracionsinpr" class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        {{ convertirHora($item->duracionsinpr) }}
+                                        {{-- {{ convertirHora($item->duracionsinpr) }} --}}
+                                        {{ ($item->duracionsinpr) }}
                                     </div>
                                     <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ $item->sla}}
                                     </div>
                                     <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        {{ convertirHora($item->duracionsinpr - $item->duraciondepr) }}
+                                        {{-- {{ convertirHora($item->duracionsinpr - $item->duraciondepr) }} --}}
+                                        {{ ($item->duracionsinpr - $item->duraciondepr) }}
                                     </div>
                                     <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ $item->prsconinicio == 0 ? 'NO TIENE PR' : ($item->prsconinicio > $item->prsconfin ? 'PR ABIERTA' : 'PR CERRADA') }}
