@@ -17,7 +17,7 @@ class CreateSites extends Component {
 
     // Inicializar los valores de los controles SELECT del formulario
     public $selectEstado = ['ACTIVO', 'INACTIVO'];
-    public $selectZonal = ['LIMA', 'AREQUIPA', 'CUSCO', 'PUNO', 'TACNA'];
+    public $selectZonal = ['AREQUIPA', 'CHICLAYO', 'CHIMBOTE', 'CUSCO', 'HUANCAYO', 'ICA', 'IQUITOS', 'LIMA', 'PIURA', 'PUNO', 'TACNA', 'TRUJILLO'];
     public $selectClasificacion = ['TIPO 8_N', 'TIPO 8_C', 'TIPO 10_C', 'TIPO 8_1', 'TIPO 8_2', 'TIPO 8_3', 'TIPO 8_4', 'TIPO 8_5', 'TIPO 8_E', 'TIPO 8_F', 'TIPO 8_G', 'TIPO 8_K', 'TIPO 8_L', 'TIPO 9_C', 'TIPO 12_CLIENTES', 'TIPO 13_INTERNOS', 'SCELL'];
     public $selectPrioridad = ['BLACK', 'ORO', 'PLATA', 'CLASICO'];
     public $selectFacturacion = ['FEE MENSUAL', 'RUTA', 'BAJO DEMANDA'];

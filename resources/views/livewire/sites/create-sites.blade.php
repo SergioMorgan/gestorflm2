@@ -14,7 +14,7 @@
                 <div class="border-b-2 px-4 py-4 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-8 gap-2">
                     <div class="sm:row-span-1 ">
                         <x-jet-label value="ID Local" />
-                        <x-jet-input type="text" class="w-full text-sm" wire:model.defer="localid" />
+                        <x-jet-input type="text" class="w-full text-sm text-center" wire:model.defer="localid" />
                         <x-jet-input-error for="localid" />
                     </div>
                     <div class="text-xs md:col-span-2 xl:col-span-1">
@@ -39,7 +39,7 @@
                     </div>
                     <div class="text-xs sm:col-span-2 md:col-span-3 lg:col-span-3 xl:col-span-3">
                         <x-jet-label value="Nombre" />
-                        <x-jet-input type="text" class="w-full text-sm" wire:model.defer="nombre" />
+                        <x-jet-input type="text" class="w-full text-sm font-bold" wire:model.defer="nombre" />
                         {{-- <textarea name="nombre" id="nombre" cols="30" rows="10"></textarea> --}}
                         <x-jet-input-error for="nombre" />
                     </div>
@@ -91,7 +91,7 @@
                     </div>
                     <div class="text-xs">
                         <x-jet-label value="SLA Presencia" />
-                        <select class="form-control w-full text-sm" wire:model.defer="slapresencia">
+                        <select class="form-control w-full text-sm text-center" wire:model.defer="slapresencia">
                             <option selected>Seleccione SLA</option>
                             <?php foreach($selectSlapresencia as $item): ?>
                             <option value="<?= $item ?>"> <?= $item ?> </option>
@@ -101,7 +101,7 @@
                     </div>
                     <div class="text-xs">
                         <x-jet-label value="SLA Resolucion" />
-                        <select class="form-control w-full text-sm" wire:model.defer="slaresolucion">
+                        <select class="form-control w-full text-sm text-center" wire:model.defer="slaresolucion">
                             <option selected>Seleccione SLA</option>
                             <?php foreach($selectSlaresolucion as $item): ?>
                             <option value="<?= $item ?>"> <?= $item ?> </option>
@@ -145,11 +145,20 @@
                         <x-jet-input type="text" class="w-full text-sm" wire:model.defer="longitud" />
                         <x-jet-input-error for="longitud" />
                     </div>
-                    <div class="text-xs  sm:col-span-2 lg:col-span-4">
+                    <div class="text-xs lg:col-span-3">
                         <x-jet-label class="text-xs" value="Imagen" />
                         <x-jet-input type="text" class="w-full" wire:model.defer="urlimagen" />
                         <x-jet-input-error for="urlimagen" />
                     </div>
+                    <div class="text-xs ">
+                        <x-jet-label class="text-gray-300" value="." />
+                        <a class="btn btn-red inline-flex items-center justify-center  border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition"
+                        href={{'https://www.google.com/maps/search/?api=1&query=' . $latitud .',' . $longitud}} target="_blank">
+                            Abrir ubicacion
+                        </a>
+
+                    </div>
+
                 </div>
 
                 <div class="border-b-2 px-4 py-4 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">

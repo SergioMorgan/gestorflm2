@@ -104,6 +104,11 @@ class EditOstickets extends Component
         $this->localslap            = $localasociado->slapresencia;
         $this->localslar            = $localasociado->slaresolucion;
         $this->localprioridad       = $localasociado->prioridad;
+        $this->localsuministro      = $localasociado->suministro;
+        $this->localdistribuidor    = $localasociado->distribuidor;
+        $this->localtorrera         = $localasociado->torrera;
+        $this->locallatitud         = $localasociado->latitud;
+        $this->locallongitud        = $localasociado->longitud;
 ;
     }
 
@@ -203,6 +208,7 @@ class EditOstickets extends Component
         } else {
             $this->emit('alertOk', 'Actualizado', 'success');
         }
+        $this->refrescar();
     }
 
         // $this->resultadoslar = (calculoSla($this->estado, convertirSegundos($this->localslar),($this->duracionticket - $this->duracionprseg)));
@@ -271,11 +277,16 @@ class EditOstickets extends Component
         $this->open_details = true;
         // dd($this->osticket->detalle, $this->detalle, $saludo);
         // $this->pruebadetalle = $saludo;
-        $this->pruebadetalle =  '*Siom:* ' . $this->siom . PHP_EOL .
-                                '*Zonal:* ' . $this->localzonal . '  *Local: ' . $this->localnombre . '*' . PHP_EOL .
+        $this->enviardetalle =  '*' . $this->siom .'*'. PHP_EOL . 
+                                '*Zonal:* ' . $this->localzonal . PHP_EOL .
+                                '*Local:* ' . $this->localnombre . PHP_EOL .
                                 '*Fecha de inicio:* ' . $this->fechaasignacion . '  *Prioridad:* ' . $this->localprioridad . PHP_EOL .
-                                '*SLA llegada:* ' . $this->localslap . '  *SLA llegada:* ' . $this->localslar . PHP_EOL . PHP_EOL .
-                                '*Detalle:* ' . $this->detalle;
+                                '*SLA llegada:* ' . $this->localslap . '  *SLA resolucion:* ' . $this->localslar . PHP_EOL . PHP_EOL .
+                                '*Detalle:* ' . $this->detalle . PHP_EOL . PHP_EOL .
+                                '*Suministro:* ' . $this->localsuministro . '  (' . $this->localdistribuidor .')' . PHP_EOL .
+                                '*Torrera:* ' . $this->localtorrera . PHP_EOL . PHP_EOL .
+                                '*Ubicacion:* https://www.google.com/maps/search/?api=1&query=' . $this->locallatitud .',' . $this->locallongitud;
+                                
     }
     public function copiarportapapeles() {
 

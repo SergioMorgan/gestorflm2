@@ -22,6 +22,9 @@
                                     Siom
                                 </div>
                                 <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
+                                    KPI
+                                </div>
+                                <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
                                     Zonal
                                 </div>
                                 <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
@@ -45,9 +48,6 @@
                                 <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
                                     EstadoPR
                                 </div>
-                                <div class="table-cell text-center px-3 py-3 border-b-2 border-gray-200 bg-gray-100 font-semibold text-gray-600 uppercase tracking-wider">
-                                    KPI
-                                </div>
                             </div>
                         </div>
                         <div class="table-row-group">
@@ -55,6 +55,17 @@
                                 <div class="table-row text-xs">
                                     <div class="min-w-[90px] align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         <a href="{{ route('ostickets.edit', $item->idsiom) }}" target="_blank"> {{ $item->siom }} </a>
+                                    </div>
+                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                        @if (($item->duracionsinpr - $item->duraciondepr) > convertirSegundos($item->sla))
+                                            <div class="mx-4 gap-2 flex place-content-center text-xs bg-yellow-300 text-red-700 font-bold  whitespace-no-wrap">
+                                                FUERA
+                                            </div>
+                                        @else
+                                            <div class="mx-4 gap-2 flex place-content-center text-xs bg-green-300 text-blue-700 font-bold whitespace-no-wrap">
+                                                DENTRO
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ $item->zonal }}
@@ -82,17 +93,7 @@
                                     <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ $item->prsconinicio == 0 ? 'NO TIENE PR' : ($item->prsconinicio > $item->prsconfin ? 'PR ABIERTA' : 'PR CERRADA') }}
                                     </div>
-                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        @if (($item->duracionsinpr - $item->duraciondepr) > convertirSegundos($item->sla))
-                                            <div class="mx-4 flex place-content-center text-xs bg-red-500 text-white whitespace-no-wrap">
-                                                <p>FUERA</p>
-                                            </div>
-                                        @else
-                                            <div class="mx-4 flex place-content-center text-xs bg-green-300 text-gray-900 whitespace-no-wrap">
-                                                <p>DENTRO</p>
-                                            </div>
-                                        @endif
-                                    </div>
+
                                 </div>
                             @endforeach
                         </div>

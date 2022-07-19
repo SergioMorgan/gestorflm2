@@ -196,7 +196,7 @@
                                 <div class="table-row-group">
                                     @foreach ($clockstoptable as $item3)
                                         <div class="table-row text-sm">
-                                            <div class="align-middle text-left table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap ">
+                                            <div class="align-middle text-center table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap ">
                                                 @if($item3->fin > 0)
                                                     <div class="mx-2 flex place-content-center font-bold bg-green-400 text-gray-900 whitespace-no-wrap">
                                                         <p>Cerrado</p>
@@ -318,10 +318,10 @@
                             <div class="table-row-group">
                                 @foreach ($actiontable as $item2)
                                     <div class="table-row text-sm">
-                                        <div class="align-middle text-left table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                        <div class="align-middle text-center table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                             {{ $item2->name }}
                                         </div>
-                                        <div class="align-middle text-left table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                        <div class="align-middle text-center table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                             {{ date('d/m/Y H:i', strtotime($item2->created_at)) }}
                                         </div>
                                         <div class="max-w-[800px] align-middle text-left table-cell px-2 py-2 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
@@ -470,7 +470,7 @@
         <x-slot name="content">
             <div class="mb-4">
                 <x-jet-label value="Detalles para enviar" />
-                <textarea class="form-control w-full text-xs text-gray-800" wire:model.defer="pruebadetalle" rows="20"></textarea>
+                <textarea class="form-control w-full text-xs text-gray-800" wire:model.defer="enviardetalle" rows="20"></textarea>
             </div>
         </x-slot>
 
