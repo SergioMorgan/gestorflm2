@@ -24,7 +24,7 @@ class RoleSeeder extends Seeder
         $cliente    = Role::create(['name' => 'cliente']);      // usuarioe externos
 
 
-        Permission::create(['name' => 'users.index'])           ->syncRoles([$admin, $supervisor, ]);
+        Permission::create(['name' => 'users.index'])           ->syncRoles([$admin, $supervisor, ]); // usado tambien para lastactions.index
         Permission::create(['name' => 'users.create'])          ->syncRoles([$admin]);
         Permission::create(['name' => 'users.destroy'])         ->syncRoles([$admin]);
         Permission::create(['name' => 'sites.index'])           ->syncRoles([$admin, $supervisor, $operador, $usuario, $cliente]);
@@ -40,5 +40,6 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'actions.create'])        ->syncRoles([$admin, $supervisor, $operador, $usuario]);
         Permission::create(['name' => 'actions.destroy'])       ->syncRoles([$admin, $supervisor]);
         Permission::create(['name' => 'dashboard.index'])       ->syncRoles([$admin, $supervisor, $operador, $usuario]);
+
     }
 }

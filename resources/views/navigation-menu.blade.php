@@ -21,6 +21,12 @@
                         </x-jet-nav-link>
                     @endcan
 
+                    @can('users.index')
+                        <x-jet-nav-link href="{{ route('lastactions.index') }}" :active="request()->routeIs('lastactions.*')">
+                            Actuaciones
+                        </x-jet-nav-link>
+                    @endcan
+
                     @can('ostickets.index')
                         <x-jet-nav-link href="{{ route('ostickets.index') }}" :active="request()->routeIs('ostickets.*')">
                             Tickets OS
@@ -186,6 +192,12 @@
             @can('dashboard.index')
                 <x-jet-responsive-nav-link href="{{ route('dashboard.index') }}" :active="request()->routeIs('dashboard.*')">
                     Dashboard
+                </x-jet-responsive-nav-link>
+            @endcan
+
+            @can('users.index')
+                <x-jet-responsive-nav-link href="{{ route('lastactions.index') }}" :active="request()->routeIs('lastactions.*')">
+                    Actuaciones
                 </x-jet-responsive-nav-link>
             @endcan
 

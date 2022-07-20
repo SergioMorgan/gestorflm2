@@ -51,6 +51,7 @@ class ShowOstickets extends Component
                         ->orWhere('siom', 'like', '%' . $this->search . '%')
                         ->orWhere('nombre', 'like', '%' . $this->search . '%')
                         ->orWhere('zonal', 'like', '%' . $this->search . '%')
+                        ->orWhere('localid', 'like', '%' . $this->search . '%')
                         ->orWhere('ostickets.estado', 'like', '%' . $this->search . '%')
                         ->orderby($this->sort, $this->direcion)
                         ->paginate($this->cant);

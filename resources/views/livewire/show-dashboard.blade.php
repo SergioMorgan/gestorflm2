@@ -54,7 +54,7 @@
                             @foreach ($osticketsPendientes as $item)
                                 <div class="table-row text-xs">
                                     <div class="min-w-[90px] align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        <a href="{{ route('ostickets.edit', $item->idsiom) }}" target="_blank"> {{ $item->siom }} </a>
+                                        <a href="{{ route('ostickets.edit', $item->idsiom) }}"> {{ $item->siom }} </a>
                                     </div>
                                     <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         @if (($item->duracionsinpr - $item->duraciondepr) > convertirSegundos($item->sla))

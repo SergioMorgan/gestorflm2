@@ -5,7 +5,7 @@
 
 
                 <div class="p-2 w-full flex justify-between bg-gray-800 text-white items-center">
-                    <span class="px-2 ">LISTADO DE TICKETS </span>
+                    <span class="px-2 text-sm">LISTADO DE TICKETS </span>
                     @can('ostickets.create')
                         @livewire('ostickets.create-ostickets')
                     @endcan
@@ -13,8 +13,8 @@
 
                 <div class="p-2 flex items-center  bg-white text-gray-900">
                     <div class="flex items-center">
-                        <span>Mostrar</span>
-                        <select wire:model="cant" class="mx-2 form-control">
+                        <span class="text-sm">Mostrar</span>
+                        <select wire:model="cant" class="mx-2 form-control text-sm">
                             <option value="50">50</option>
                             <option value="100">100</option>
                             <option value="200">200</option>
@@ -22,7 +22,7 @@
                         </select>
                         <span>entradas</span>
                     </div>
-                    <x-jet-input type="text" wire:model="search" class="flex-1 mx-4" placeholder="buscar..." />
+                    <x-jet-input type="text" wire:model="search" class="flex-1 mx-4 text-sm" placeholder="buscar..." />
 
                 </div>
 
@@ -57,6 +57,19 @@
                                 </div>
 
                                 <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200  uppercase tracking-wider"
+                                    wire:click="order('localid')">Local
+                                    @if ($sort == 'localid')
+                                        @if ($direcion == 'asc')
+                                            <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
+                                        @else
+                                            <i class="fas fa-sort-alpha-down-alt float-right mt-1"></i>
+                                        @endif
+                                    @else
+                                        <i class="fas fa-sort float-right mt-1"></i>
+                                    @endif
+                                </div>
+
+                                <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200  uppercase tracking-wider"
                                     wire:click="order('zonal')">Zonal
                                     @if ($sort == 'zonal')
                                         @if ($direcion == 'asc')
@@ -70,7 +83,7 @@
                                 </div>
 
                                 <div class="table-cell cursor-pointer px-3 py-3 border-b-2 border-gray-200  uppercase tracking-wider"
-                                    wire:click="order('local')">Local
+                                    wire:click="order('local')">Nombre
                                     @if ($sort == 'nombre')
                                         @if ($direcion == 'asc')
                                             <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
@@ -121,6 +134,9 @@
                                         {{ $item->estado }}
                                     </div>
                                     <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                        {{ $item->site->localid }}
+                                    </div>
+                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ $item->site->zonal }}
                                     </div>
                                     <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
@@ -133,7 +149,7 @@
                                         {{ $item->detalle }}
                                     </div>
                                     <div class="max-w-[50px] align-middle text-center table-cell px-1 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
-                                        <a class="btn btn-green" href="{{ route('ostickets.edit', $item->id) }}" target="_blank">
+                                        <a class="btn btn-green" href="{{ route('ostickets.edit', $item->id) }}">
                                             <i class="fa-solid fa-edit"></i>
                                         </a>
                                     </div>

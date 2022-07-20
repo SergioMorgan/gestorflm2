@@ -2,12 +2,9 @@
     <div class="max-w-7xl mx-auto sm:px-2 lg:px-4 py-4">
         <div class="bg-gray-300 overflow-hidden shadow-xl sm:rounded-lg">
 
-            @can('ostickets.create')
-            <form wire:submit.prevent="submit">
-            @endcan
+            @can('ostickets.create') <form wire:submit.prevent="submit"> @endcan
                 <div class="p-2 w-full flex justify-between bg-gray-800 text-white items-center">
-                    <span class="px-2">TICKETS</span>
-                    <span class="px-2">{{now()}}</span>
+                    <span class="px-2">DETALLE DE TICKET</span>
                     @can('ostickets.create')
                         <x-jet-button type="submit" class="bg-blue-700">
                             Guardar

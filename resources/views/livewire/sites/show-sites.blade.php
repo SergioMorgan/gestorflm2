@@ -177,7 +177,7 @@
                                         <!-- si el componente fuera exteno como el de creacion, usar (arroba)livewire para invocarlo, junto con los parametros --->
                                         <!-- ['site' => $item], key($item->id)) -->
                                         <!-- Llama a la funcion EDIT declarada en showusers -->
-                                        <a class="btn btn-green" href="{{ route('sites.edit', $item->id) }}" target="_blank">
+                                        <a class="btn btn-green" href="{{ route('sites.edit', $item->id) }}">
                                             <i class="fa-solid fa-edit"></i>
                                         </a>
                                         <!-- En vez de llamar a una funcion, emite una alerta de sweetalert2 definida al final de la hoja -->

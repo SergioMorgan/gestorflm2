@@ -3,7 +3,7 @@
         {{-- <div class="container"> --}}
             @can('sites.create') <form wire:submit.prevent="submit"> @endcan
                 <div class="p-2 w-full flex justify-between bg-gray-800 text-white items-center">
-                    <span class="px-2">LOCALES</span>
+                    <span class="px-2">DETALLE DE LOCAL</span>
                     @can('sites.create')
                         <x-jet-button type="submit" class="bg-blue-700">
                             Guardar

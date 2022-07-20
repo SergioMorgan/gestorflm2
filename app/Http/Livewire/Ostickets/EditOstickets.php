@@ -181,6 +181,9 @@ class EditOstickets extends Component
                 Return;
             }
         }
+
+        $this->resultadoslar = (calculoSla($this->estado, convertirSegundos($this->localslar),($this->duracionticket - $this->duracionprseg)));
+
         $this->osticket->update([
             'siom'              => $this->siom,
             'estado'            => $this->estado,
@@ -195,7 +198,7 @@ class EditOstickets extends Component
             'resultadoslar'     => $this->resultadoslar,
         ]);
 
-        $this->resultadoslar = (calculoSla($this->estado, convertirSegundos($this->localslar),($this->duracionticket - $this->duracionprseg)));
+        // dd($this->resultadoslar);
         if ($this->resultadoslar == "FUERA") {
             $this->emit('alertOk', 'Actualizado, pero ticket se encuentra fuera de objetivo', 'info');
         } else {
