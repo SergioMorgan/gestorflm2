@@ -27,7 +27,7 @@ class CreateOstickets extends Component
         'site_id'           => 'required',
         // 'site_id'           => 'in:' . implode(',' , $sites),
         'user_id'           => 'required',
-        'siom'              => 'required',
+        'siom'              => 'required|unique:ostickets,siom',
         'estado'            => 'required',
         'tipo'              => 'required',
         'fechaasignacion'   => 'required',

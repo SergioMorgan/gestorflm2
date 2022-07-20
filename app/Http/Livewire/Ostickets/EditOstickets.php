@@ -238,7 +238,12 @@ class EditOstickets extends Component
 
     public function updateClockstop() {
         //si el fin de PR tiene un valor y es menor a inicio, manda error
-        if ($this->clockstop->fin < $this->clockstop->inicio && !empty($this->clockstop->fin)) {
+
+        // dd(date($this->clockstop->fin), $this->clockstop->inicio, $this->clockstop->fin < $this->clockstop->inicio, !empty($this->clockstop->fin));
+
+        // dd(date('Y-m-d H:i', strtotime($this->clockstop->fin)),date('Y-m-d H:i', strtotime($this->clockstop->inicio)), date('Y-m-d H:i', strtotime($this->clockstop->fin)) < date('Y-m-d H:i', strtotime($this->clockstop->inicio)));
+        // if ($this->clockstop->fin < $this->clockstop->inicio && !empty($this->clockstop->fin)) {
+        if (date('Y-m-d H:i', strtotime($this->clockstop->fin)) < date('Y-m-d H:i', strtotime($this->clockstop->inicio)) && !empty($this->clockstop->fin)) {
             $this->emit('alertOk', 'Fecha fin debe ser mayor a inicio', 'error');
         } elseif    // para que guarde, debe cumplir con las 3 condiciones indicadas:
                     // fin anterior esta vacio (no hay pr previas) O e el fin de la Pr anterior es menor a inicio de la actual, Y
@@ -255,7 +260,7 @@ class EditOstickets extends Component
             $this->emit('alertOk', 'Editado', 'success');
             $this->refrescar();
         } else {
-            $this->emit('alertOk', 'Error con fecha inicio', 'error');
+            $this->emit('alertOk', 'Error con fechas del ticket', 'error');
         }
     }
 

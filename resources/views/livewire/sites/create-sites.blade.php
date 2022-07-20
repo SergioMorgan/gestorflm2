@@ -146,8 +146,8 @@
                         <x-jet-input-error for="longitud" />
                     </div>
                     <div class="text-xs lg:col-span-3">
-                        <x-jet-label class="text-xs" value="Imagen" />
-                        <x-jet-input type="text" class="w-full" wire:model.defer="urlimagen" />
+                        <x-jet-label value="Imagen" />
+                        <x-jet-input type="text" class="w-full text-sm" wire:model.defer="urlimagen" />
                         <x-jet-input-error for="urlimagen" />
                     </div>
                     <div class="text-xs ">

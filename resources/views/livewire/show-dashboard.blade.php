@@ -143,7 +143,7 @@
                                     <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ $item->zonal }}
                                     </div>
-                                    <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                    <div class="align-middle text-left table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ $item->nombre }}
                                     </div>
                                     <div class="align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
@@ -152,7 +152,7 @@
                                     <div class="min-w-[100px] align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ date('d/m/Y H:i', strtotime($item->fechaasignacion)) }}
                                     </div>
-                                    <div id ="duracionsinpr" class="break-all align-middle text-center table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
+                                    <div id ="duracionsinpr" class="break-all align-middle text-left table-cell px-3 py-3 border-b-2 border-gray-300 bg-white text-gray-900 whitespace-no-wrap">
                                         {{ $item->detalle }}
                                     </div>
                                 </div>
