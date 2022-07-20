@@ -158,11 +158,7 @@ class EditOstickets extends Component
         $preFechaAsignacion = null;
         $preFechaLlegada = null;
         $preFechaCierre = null;
-
-
         $this->emit('alertOk', 'test', 'error');
-
-
 
         if (!empty($this->fechaasignacion)) $preFechaAsignacion = Carbon::parse($this->fechaasignacion)->format('Y-m-d H:i:s');
         if (!empty($this->fechallegada)) $preFechaLlegada = Carbon::parse($this->fechallegada)->format('Y-m-d H:i:s');
@@ -175,19 +171,16 @@ class EditOstickets extends Component
             $this->emit('alertOk', 'Complete la informacion de cierre para cerrar ticket', 'error');
             Return;
         }
-
         if (!empty($this->fechacierre)) {
             if ($this->cantinicios > $this->cantfin) {  // si hay PR incompletas (abiertas)
                 $this->emit('alertOk', 'Cierre las PRs pendientes antes de cerrar el ticket', 'error');
                 Return;
             }
-
             if ($this->cantinicios > 0 && $this->fechacierre < $this->ultimapr) {
                 $this->emit('alertOk', 'Fecha de cierre menor a ultima PR', 'error');
                 Return;
             }
         }
-
         $this->osticket->update([
             'siom'              => $this->siom,
             'estado'            => $this->estado,
@@ -211,20 +204,15 @@ class EditOstickets extends Component
         $this->refrescar();
     }
 
-        // $this->resultadoslar = (calculoSla($this->estado, convertirSegundos($this->localslar),($this->duracionticket - $this->duracionprseg)));
-
-        // }
-    
 
     public function render() {
-        // $roles = Role::all();
         return view('livewire.ostickets.edit-ostickets');
     }
 
     public function updateAction() {
         $this->action->save();
         $this->reset(['open_editaction']);
-        $this->emit('alertOk', 'Editado', 'success');
+        $this->emit('alertOk', 'Actuacion editada', 'success');
         $this->refrescar();
     }
 

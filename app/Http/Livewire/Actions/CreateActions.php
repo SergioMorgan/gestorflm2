@@ -19,15 +19,13 @@ class CreateActions extends Component
     ];
 
     public function save() {
-        // $this->validate();
-
         Action::create([
             'osticket_id'   => $this->osticket_id,
             'user_id'       => Auth::user()->id,
             'detalle'       => $this->detalle,
         ]);
 
-        $this->reset(['open', 'detalle', 'osticket_id', 'user_id']);
+        $this->reset(['open', 'detalle']);
         $this->emitTo('ostickets.edit-ostickets', 'refrescar');
         $this->emit('alertOk', 'Actuacion registrada');
     }
@@ -40,8 +38,7 @@ class CreateActions extends Component
         }
     }
 
-    public function render()
-    {
+    public function render()    {
         return view('livewire.actions.create-actions');
     }
 }

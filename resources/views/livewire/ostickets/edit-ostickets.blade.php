@@ -7,6 +7,7 @@
             @endcan
                 <div class="p-2 w-full flex justify-between bg-gray-800 text-white items-center">
                     <span class="px-2">TICKETS</span>
+                    <span class="px-2">{{now()}}</span>
                     @can('ostickets.create')
                         <x-jet-button type="submit" class="bg-blue-700">
                             Guardar
