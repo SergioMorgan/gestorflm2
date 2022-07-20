@@ -16,7 +16,7 @@ class ShowUsers extends Component
     // public $title;  //
     public $user;                   // recibe el registro que se requiere editor
     public $search = '';            // inicializa la barra de busqueda
-    public $sort = 'id';            // inicializa criterio de orden
+    public $sort = 'created_at';            // inicializa criterio de orden
     public $direcion = 'desc';      // inicializa criterio de orden
     public $cant='20';              // inicializa criterio de orden
     public $open_edit = false;      // controla aparicion de ventana modal
@@ -28,7 +28,7 @@ class ShowUsers extends Component
     //para que se refrlejen en la url los cambios en el filtro
     protected $queryString = [
         'cant' => ['except' => '20'],
-        'sort' => ['except' => 'id'],
+        'sort' => ['except' => 'created_at'],
         'direcion' => ['except' => 'desc'],
         'search' => ['except' => ''],
     ];
@@ -109,7 +109,8 @@ class ShowUsers extends Component
     public function update() {
         // dd($this->user->roles[0]->id, $this->perfil);
         $this->validate();  
-        // $this->password = Hash::make($this->password);      //ejecuta las validaciones
+        $this->user->password = Hash::make($this->user->password);      //ejecuta las validaciones
+        // dd($this->user->password);
         $this->user->save();
         $this->user->syncRoles($this->perfil);
 

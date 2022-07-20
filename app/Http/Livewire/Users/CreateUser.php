@@ -32,6 +32,9 @@ class CreateUser extends Component
         
 
         $this->validate();
+        
+        // $x = Hash::make($this->password);
+        // dd($x, $this->password);
         $usuario = User::create([
             'name'     => $this->name,
             'email'    => $this->email,

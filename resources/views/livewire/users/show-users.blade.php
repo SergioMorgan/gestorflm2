@@ -35,23 +35,9 @@
                             <!--cabecera de tabla-->
                             <tr class="bg-gray-300  text-gray-800">
                                 <th class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 text-left uppercase tracking-wider"
-                                    wire:click="order('id')"> <!--asocia la funcion order a la cabecera-->
-                                    ID
-                                    <!--Permite definir el comportamiento de los iconos segun el orden de la tabla-->
-                                    @if ($sort == 'id')
-                                        @if ($direcion == 'asc')
-                                            <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
-                                        @else
-                                            <i class="fas fa-sort-alpha-down-alt float-right mt-1"></i>
-                                        @endif
-                                    @else
-                                        <i class="fas fa-sort float-right mt-1"></i>
-                                    @endif
-                                </th>
-
-                                <th class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 text-left uppercase tracking-wider"
-                                    wire:click="order('name')">
+                                    wire:click="order('name')"><!--asocia la funcion order a la cabecera-->
                                     Nombre
+                                    <!--Permite definir el comportamiento de los iconos segun el orden de la tabla-->
                                     @if ($sort == 'name')
                                         @if ($direcion == 'asc')
                                             <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
@@ -118,10 +104,6 @@
                             <!-- Se traslada al bucle a travez de la variable ITEM-->
                             @foreach ($users as $item)
                                 <tr class=" bg-white text-sm">
-                                    <td class="px-5 py-5 border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">{{ $item->id }}</p>
-                                    </td>
-
                                     <td class="px-5 py-5 border-b border-gray-200">
                                         <p class="text-gray-900 whitespace-no-wrap">{{ $item->name }}</p>
                                     </td>
@@ -292,8 +274,8 @@
                 <script>
                     livewire.on('deleteUser', userId => {
                         Swal.fire({
-                            title: '¿Estas seguro?',
-                            text: "El registro se borarrá permanentemente",
+                            title: 'ALTO! ¿Esta seguro?',
+                            text: "Se borrará al usuario y todos los registros creados por él (cascada)!!",
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',

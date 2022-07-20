@@ -110,7 +110,7 @@
                         <x-jet-input-error for="slaresolucion" />
                     </div>
                     <div class="border grid justify-items-center text-center max-h-80 sm:col-span-3 md:row-span-6 md:col-start-4 md:row-start-1 lg:col-span-4 lg:col-start-5 xl:col-span-5 xl:col-start-4">
-                        @livewire('users.show-imagenlocal', ['urlimagen' => $urlimagen])
+                        @livewire('sites.show-imagenlocal', ['urlimagen' => $urlimagen])
                     </div>
                 </div>
 

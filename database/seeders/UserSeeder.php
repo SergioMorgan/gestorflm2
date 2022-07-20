@@ -18,75 +18,51 @@ class UserSeeder extends Seeder
     {
 
         User::create([
-            'name'              => 'admin',
-            'email'             => 'admin@gmail.com',
+            'name'              => 'Sergio Morgan',
+            'email'             => 'morgan.sergio@gmail.com',
             'password'          => bcrypt('password'),
             'email_verified_at' => now(),
             'remember_token'    => Str::random(10),
-            // 'profile'           => 'USUARIO',
-            // 'status'            => 'ACTIVO',
         ])->assignRole('admin');
 
         User::create([
-            'name'              => 'supervisor',
-            'email'             => 'supervisor@gmail.com',
-            'password'          => bcrypt('password'),
+            'name'              => 'admin general (no borrar)',
+            'email'             => 'admin@gmail.com',
+            'password'          => bcrypt('Admin4321'),
             'email_verified_at' => now(),
             'remember_token'    => Str::random(10),
-            // 'profile'           => 'USUARIO',
-            // 'status'            => 'ACTIVO',
+        ])->assignRole('admin');
+
+        User::create([
+            'name'              => 'Sup general (no borrar)',
+            'email'             => 'supervisor@gmail.com',
+            'password'          => bcrypt('Supervisor4321'),
+            'email_verified_at' => now(),
+            'remember_token'    => Str::random(10),
         ])->assignRole('supervisor');
 
         User::create([
-            'name'              => 'operador',
+            'name'              => 'operador general (no borrar)',
             'email'             => 'operador@gmail.com',
-            'password'          => bcrypt('password'),
+            'password'          => bcrypt('Operador4321'),
             'email_verified_at' => now(),
             'remember_token'    => Str::random(10),
-            // 'profile'           => 'USUARIO',
-            // 'status'            => 'ACTIVO',
         ])->assignRole('operador');
 
         User::create([
-            'name'              => 'usuario',
+            'name'              => 'usuario general (no borrar)',
             'email'             => 'usuario@gmail.com',
-            'password'          => bcrypt('password'),
+            'password'          => bcrypt('Usuario4321'),
             'email_verified_at' => now(),
             'remember_token'    => Str::random(10),
-            // 'profile'           => 'USUARIO',
-            // 'status'            => 'ACTIVO',
         ])->assignRole('usuario');
 
         User::create([
-            'name'              => 'cliente',
+            'name'              => 'cliente general (no borrar)',
             'email'             => 'cliente@gmail.com',
-            'password'          => bcrypt('password'),
+            'password'          => bcrypt('Cliente4321'),
             'email_verified_at' => now(),
             'remember_token'    => Str::random(10),
-            // 'profile'           => 'USUARIO',
-            // 'status'            => 'ACTIVO',
         ])->assignRole('cliente');
-
-
-
-        User::factory(2)->create()->each(function($user){
-            $user->assignRole('admin');
-        });
-
-        User::factory(3)->create()->each(function($user){
-            $user->assignRole('supervisor');
-        });
-
-        User::factory(10)->create()->each(function($user){
-            $user->assignRole('operador');
-        });
-
-        User::factory(5)->create()->each(function($user){
-            $user->assignRole('usuario');
-        });
-
-        User::factory(5)->create()->each(function($user){
-            $user->assignRole('cliente');
-        });
     }
 }
