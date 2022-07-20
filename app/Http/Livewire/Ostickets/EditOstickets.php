@@ -73,9 +73,9 @@ class EditOstickets extends Component
         $localasociado              = Site::findOrFail($osticket->site_id);
         $osticket_id                = $osticket->id;
         $actiontable                = Action::select('actions.*', 'users.name')->join('users', 'users.id', '=', 'actions.user_id')->where('osticket_id', '=', $this->item)->orderby('created_at', 'desc')->get();
-        $clockstoptable             = Clockstop::select(Clockstop::raw("id, inicio, fin, motivo, sustento, TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin))) AS duracion"))
+        $clockstoptable             = Clockstop::select(Clockstop::raw("id, inicio, fin, motivo, sustento, TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','-05:00'), fin))) AS duracion"))
                                         ->where('osticket_id', '=', $this->item)->orderby('inicio', 'desc')->get();
-        $clockstopresults           = Clockstop::select(Clockstop::raw("count(distinct id) as cantidadpr, TIME_FORMAT(SEC_TO_TIME(sum(TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin))))),'%H:%i') as duracionpr, sum(TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin)))) as duracionprseg "))
+        $clockstopresults           = Clockstop::select(Clockstop::raw("count(distinct id) as cantidadpr, TIME_FORMAT(SEC_TO_TIME(sum(TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','-05:00'), fin))))),'%H:%i') as duracionpr, sum(TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','-05:00'), fin)))) as duracionprseg "))
                                         ->where('osticket_id', '=', $this->item)->orderby('inicio', 'desc')->get();
         $this->actiontable          = $actiontable;
         $this->osticket             = $osticket;
@@ -117,9 +117,9 @@ class EditOstickets extends Component
         $localasociado              = Site::findOrFail($osticket->site_id);
         $osticket_id                = $osticket->id;
         $actiontable                = Action::select('actions.*', 'users.name')->join('users', 'users.id', '=', 'actions.user_id')->where('osticket_id', '=', $this->item)->orderby('created_at', 'desc')->get();
-        $clockstoptable             = Clockstop::select(Clockstop::raw("id, inicio, fin, motivo, sustento, TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin))) AS duracion"))
+        $clockstoptable             = Clockstop::select(Clockstop::raw("id, inicio, fin, motivo, sustento, TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','-05:00'), fin))) AS duracion"))
                                         ->where('osticket_id', '=', $this->item)->orderby('inicio', 'desc')->get();
-        $clockstopresults           = Clockstop::select(Clockstop::raw("count(distinct id) as cantidadpr, TIME_FORMAT(SEC_TO_TIME(sum(TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin))))),'%H:%i') as duracionpr, sum(TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','+00:00'), fin)))) as duracionprseg "))
+        $clockstopresults           = Clockstop::select(Clockstop::raw("count(distinct id) as cantidadpr, TIME_FORMAT(SEC_TO_TIME(sum(TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','-05:00'), fin))))),'%H:%i') as duracionpr, sum(TIMESTAMPDIFF(second, inicio, (if(fin is null, convert_tz(now(), '+00:00','-05:00'), fin)))) as duracionprseg "))
                                         ->where('osticket_id', '=', $this->item)->orderby('inicio', 'desc')->get();
         $this->actiontable          = $actiontable;
         $this->osticket             = $osticket;
